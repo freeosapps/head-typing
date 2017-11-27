@@ -28,7 +28,13 @@
         </script>
     </head>
     <body>
-        <canvas id="canvas"></canvas>
-        <button id="snap">SNAP</button>
+        <!--
+            Ideally these elements aren't created until it's confirmed that the 
+            client supports video/camera, but for the sake of illustrating the 
+            elements involved, they are created with markup (not JavaScript)
+        -->
+        <video id="video" width="640" height="480" autoplay></video>
+        <button id="snap">Snap Photo</button>
+        <canvas id="canvas" width="640" height="480"></canvas>     
     </body>
 </html>

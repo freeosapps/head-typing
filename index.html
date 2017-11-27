@@ -1,40 +1,40 @@
 <html>
     <head>
+        <style>
+            #circle {
+                position: absolute;
+                width: 50;
+                height: 50;
+                border-radius: 50;
+                background-color: purple;
+            }
+        </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tracker-js@1.1.5/tracker.min.js"></script>
         <script>
         $(() => {
-            // Grab elements, create settings, etc.
-            var video = document.getElementById('video');
-
-            // Get access to the camera!
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                // Not adding `{ audio: true }` since we only want video now
-                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
-                });
-            }
-
-            // Elements for taking the snapshot
-            var canvas = document.getElementById('canvas');
-            var context = canvas.getContext('2d');
-            var video = document.getElementById('video');
-
-            // Trigger photo take
-            document.getElementById("snap").addEventListener("click", function() {
-                context.drawImage(video, 0, 0, 640, 480);
+            var colors = new tracking.ColorTracker(['purple']);
+            
+            colors.on('track', function(event) {
+                if (event.data.length === 0) {
+                    // No colors were detected in this frame.
+                } else {
+                    event.data.forEach(function(rect) {
+                        console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
+                        $('#circle').css({
+                            top: rect.y,
+                            left: rect.x
+                        });
+                    });
+                }
             });
-        });
+
+            tracking.track('#myVideo', colors);
+        });           
         </script>
     </head>
     <body>
-        <!--
-            Ideally these elements aren't created until it's confirmed that the 
-            client supports video/camera, but for the sake of illustrating the 
-            elements involved, they are created with markup (not JavaScript)
-        -->
-        <video id="video" width="640" height="480" autoplay></video>
-        <button id="snap">Snap Photo</button>
-        <canvas id="canvas" width="640" height="480"></canvas>     
+        <video id="myVideo" width="400" height="300" preload autoplay loop muted></video>
+        <div id="circle"></div>
     </body>
 </html>

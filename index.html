@@ -32,15 +32,7 @@
                 });
             }
 
-            tracking.ColorTracker.registerColor('purple', function(r, g, b) {
-                if (r >= 90 && r <= 150 && g >= 50 && g <= 100 && b >= 90 && b <= 150) {
-                    return true;
-                } else {
-                    return false;
-                }                
-            });
-
-            var colors = new tracking.ColorTracker(['magenta', 'purple']);
+            var colors = new tracking.ColorTracker(['magenta']);
             
             colors.on('track', function(event) {
                 if (event.data.length === 0) {

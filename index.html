@@ -3,10 +3,12 @@
         <style>
             #circle {
                 position: absolute;
-                width: 50;
-                height: 50;
-                border-radius: 50;
-                background-color: purple;
+                width: 0;
+                height: 0;
+                border-radius: 50px;
+                border-color: red;
+                border-width: 0;
+                border-style: dotted;
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -36,7 +38,10 @@
                         console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
                         $('#circle').css({
                             top: rect.y,
-                            left: rect.x
+                            left: rect.x,
+                            width: rect.width,
+                            height: rect.height,
+                            borderWidth: 1
                         });
                     });
                 }

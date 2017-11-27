@@ -6,7 +6,7 @@
                 width: 0;
                 height: 0;
                 border-radius: 50px;
-                border-color: red;
+                border-color: rgb(217, 235, 50);
                 border-width: 0;
                 border-style: dotted;
             }
@@ -32,7 +32,15 @@
                 });
             }
 
-            var colors = new tracking.ColorTracker(['magenta']);
+            tracking.ColorTracker.registerColor('fluo', function(r, g, b) {
+                if (r >= 200 && r <= 230 && g >= 235 && g <= 255 && b >= 0 && b <= 50) {
+                    return true;
+                } else {
+                    return false;
+                }                
+            });
+
+            var colors = new tracking.ColorTracker(['fluo']);
             
             colors.on('track', function(event) {
                 if (event.data.length === 0) {

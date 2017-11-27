@@ -6,7 +6,7 @@
                 width: 0;
                 height: 0;
                 border-radius: 50px;
-                border-color: rgb(217, 235, 50);
+                border-color: rgb(150, 6, 150);
                 border-width: 0;
                 border-style: dotted;
             }
@@ -32,15 +32,15 @@
                 });
             }
 
-            tracking.ColorTracker.registerColor('fluo', function(r, g, b) {
-                if (r >= 200 && r <= 230 && g >= 235 && g <= 255 && b >= 0 && b <= 50) {
+            tracking.ColorTracker.registerColor('purple', function(r, g, b) {
+                if (r >= 100 && r <= 150 && g >= 25 && g <= 40 && b >= 100 && b <= 150) {
                     return true;
                 } else {
                     return false;
                 }                
             });
 
-            var colors = new tracking.ColorTracker(['fluo']);
+            var colors = new tracking.ColorTracker(['purple']);
             
             colors.on('track', function(event) {
                 if (event.data.length === 0) {

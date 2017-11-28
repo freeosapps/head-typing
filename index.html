@@ -16,24 +16,20 @@
                 transform: rotateY(180deg);
                 -webkit-transform:rotateY(180deg); /* Safari and Chrome */
                 -moz-transform:rotateY(180deg); /* Firefox */
-                position: absolute;
-                top: 0;
-                left: 0;
                 z-index: -1;
             }
             #characters {
-                position: absolute;
-                top: 0;
+                position: relative;
+                top: -480px;
                 left: 0;
-                height: 100vh;
+                height: 480px;
             }
             #characters * {
                 border-style: dotted;
                 border-width: 1;
                 border-color: yellow;
                 color: yellow;
-                width: 20%;
-                height: 10%;
+                width: 20%;                
                 display: inline-block;
                 margin: 3;
                 text-align: center;
@@ -42,11 +38,12 @@
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
+        
+        <script src="https://cdn.bootcss.com/tracking.js/1.1.3/tracking-min.js"></script>
         <script src="https://cdn.bootcss.com/tracking.js/1.1.3/data/eye-min.js"></script>
         <script src="https://cdn.bootcss.com/tracking.js/1.1.3/data/face-min.js"></script>
         <script src="https://cdn.bootcss.com/tracking.js/1.1.3/data/mouth-min.js"></script>
-        <script src="https://cdn.bootcss.com/tracking.js/1.1.3/tracking-min.js"></script>
+        
         <script>
         $(() => {
 
@@ -66,7 +63,7 @@
 
             var colors = new tracking.ColorTracker(['magenta']);
             
-            colors = new tracking.ObjectTracker(['face']);
+            colors = new tracking.ObjectTracker(['eye']);
 
             colors.on('track', function(event) {
                 if (event.data.length === 0) {

@@ -42,6 +42,10 @@
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+        <script src="https://cdn.bootcss.com/tracking.js/1.1.3/data/eye-min.js"></script>
+        <script src="https://cdn.bootcss.com/tracking.js/1.1.3/data/face-min.js"></script>
+        <script src="https://cdn.bootcss.com/tracking.js/1.1.3/data/mouth-min.js"></script>
         <script src="https://cdn.bootcss.com/tracking.js/1.1.3/tracking-min.js"></script>
         <script>
         $(() => {
@@ -62,6 +66,8 @@
 
             var colors = new tracking.ColorTracker(['magenta']);
             
+            colors = new tracking.ObjectTracker(['eye']);
+
             colors.on('track', function(event) {
                 if (event.data.length === 0) {
                     // No colors were detected in this frame.

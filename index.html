@@ -18,6 +18,17 @@
                 -webkit-transform:rotateY(180deg); /* Safari and Chrome */
                 -moz-transform:rotateY(180deg); /* Firefox */
             }
+            #characters {
+                display: flex;
+                flex-direction: column;
+            }
+            #characters * {
+                border-color: red;
+                border-style: dotted;
+                border-width: 2;
+                flex-shrink: 1;
+                width: 20%;
+            }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdn.bootcss.com/tracking.js/1.1.3/tracking-min.js"></script>
@@ -26,6 +37,8 @@
 
             // Grab elements, create settings, etc.
             var video = document.getElementById('video');
+
+
 
             // Get access to the camera!
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -61,6 +74,34 @@
     </head>
     <body>
         <video id="video" preload autoplay loop muted></video>
+        <div id="characters">
+            <div>A</div>
+            <div>B</div>
+            <div>C</div>
+            <div>D</div>
+            <div>E</div>
+            <div>F</div>
+            <div>G</div>
+            <div>H</div>
+            <div>I</div>
+            <div>J</div>
+            <div>K</div>
+            <div>L</div>
+            <div>M</div>
+            <div>N</div>
+            <div>O</div>
+            <div>P</div>
+            <div>Q</div>
+            <div>R</div>
+            <div>S</div>
+            <div>T</div>
+            <div>U</div>
+            <div>V</div>
+            <div>W</div>
+            <div>X</div>
+            <div>Y</div>
+            <div>Z</div>
+        </div>
         <div id="circle"></div>
     </body>
 </html>

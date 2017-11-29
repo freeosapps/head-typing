@@ -66,6 +66,9 @@
                                 if (magentaTop - rect.y > 10) {
                                     $('#log').text('←');
                                     magentaMs = new Date().getMilliseconds();
+                                    if (Math.abs(magentaMs - yellowMs) < 1000) {
+                                       $('#log').text('↓');
+                                    }
                                 }
                             }
                             magentaTop = rect.y;
@@ -76,15 +79,16 @@
                                 if (yellowTop - rect.y > 10) {
                                     $('#log').text('→');
                                     yellowMs = new Date().getMilliseconds();
+                                    if (Math.abs(magentaMs - yellowMs) < 1000) {
+                                        $('#log').text('↓');
+                                    }
                                 }
                             }
                             yellowTop = rect.y; 
                         }
                     });
 
-                    if (Math.abs(magentaMs - yellowMs) < 1000) {
-                        $('#log').text('↓');
-                    }
+
                 }
             });
 

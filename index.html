@@ -61,22 +61,22 @@
                 });
             }
 
-            var colors = new tracking.ColorTracker(['magenta']);
-            
-            colors = new tracking.ObjectTracker(['eye']);
+            var colors = new tracking.ColorTracker(['magenta', 'yellow']);
 
             colors.on('track', function(event) {
                 if (event.data.length === 0) {
                     // No colors were detected in this frame.
                 } else {
                     event.data.forEach(function(rect) {
+                        alert('color: ' + rect.color);
                         console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
                         $('#circle').css({
                             top: rect.y,
                             left: $(video).width() - rect.x,
                             width: rect.width,
                             height: rect.height,
-                            borderWidth: 2
+                            borderWidth: 2,
+                            backgroundColor: rect.color
                         });
                     });
                 }

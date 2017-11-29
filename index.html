@@ -45,12 +45,37 @@
 
             var colors = new tracking.ColorTracker(['magenta', 'yellow']);
 
+            let magentaTop = -1;
+            let yellowTop = -1;
+
             colors.on('track', function(event) {
                 if (event.data.length === 0) {
                     // No colors were detected in this frame.
                 } else {
                     event.data.forEach(function(rect) {
                         alert('color: ' + rect.color);
+
+                        if (rect.color == 'magenta') {
+                            if (magentaTop == -1) {
+                                
+                            } else {
+                                if (rect.y < magentaTop) {
+                                    alert('moveu magenta');
+                                }
+                            }
+                            magentaTop = rect.y;
+                        } else if (rect.color == 'yellow') {
+                            if (yellowTop == -1) {
+                                
+                            } else {
+                                if (rect.y < yellowTop) {
+                                    alert('moveu yellow');
+                                }
+                            }
+                            yellowTop = rect.y; 
+                        }
+                        
+
                         console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
                         $('#circle').css({
                             top: rect.y,

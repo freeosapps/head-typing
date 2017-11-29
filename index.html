@@ -66,9 +66,7 @@
                                 if (magentaTop - rect.y > 10) {
                                     $('#log').text('←');
                                     magentaMs = new Date().getMilliseconds();
-                                    if (Math.abs(magentaMs - yellowMs) < 1000) {
-                                       $('#log').text('↓');
-                                    }
+                                    $('#time').text(magentaMs + ' / ' + yellowMs);
                                 }
                             }
                             magentaTop = rect.y;
@@ -79,16 +77,15 @@
                                 if (yellowTop - rect.y > 10) {
                                     $('#log').text('→');
                                     yellowMs = new Date().getMilliseconds();
-                                    if (Math.abs(magentaMs - yellowMs) < 1000) {
-                                        $('#log').text('↓');
-                                    }
                                 }
                             }
                             yellowTop = rect.y; 
                         }
                     });
 
-
+                    if (Math.abs(magentaMs - yellowMs) < 1000) {
+                        $('#log').text('↓');
+                    }
                 }
             });
 
@@ -98,6 +95,7 @@
     </head>
     <body>
         <div id="log"></div>
+        <div id="time"></div>
         <video id="video" preload autoplay loop muted></video>
         <div id="circle"></div>        
     </body>

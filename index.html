@@ -13,9 +13,11 @@
             #video {
                 width: 100vw;
                 height: 100vh;
+                /*
                 transform: rotateY(180deg);
-                -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-                -moz-transform:rotateY(180deg); /* Firefox */
+                -webkit-transform:rotateY(180deg);
+                -moz-transform:rotateY(180deg);
+                */
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -52,6 +54,18 @@
             let magentaMs = -1; 
             let yellowMs = -1;
 
+            let magenta = $('<div>');
+            magenta.css({
+                backgroundColor: 'magenta',
+                position: 'relative'
+            });
+
+            let yellow = $('<div>');
+            yellow.css({
+                backgroundColor: 'yellow',
+                position: 'relative'
+            });
+
             colors.on('track', function(event) {
                 if (event.data.length === 0) {
                     // No colors were detected in this frame.
@@ -59,6 +73,22 @@
                     let sensibility = $('#sensibility').val();
 
                     event.data.forEach(function(rect) {
+                        if (rect.color == 'yellow') {
+                            yellow.css({
+                                top: rect.y,
+                                left: rect.x,
+                                width: rect.width,
+                                height: rect.height                                
+                            });
+                        } else if (rect.color == 'magenta') {
+                            magenta.css({
+                                top: rect.y,
+                                left: rect.x,
+                                width: rect.width,
+                                height: rect.height                                
+                            });
+                        }
+                        
 
                         if (rect.color == 'magenta') {
                             if (magentaTop == -1) {
@@ -95,10 +125,9 @@
         </script>
     </head>
     <body>
+        <input id="sensibility" type="range" min="1" max="100" value="50">
         <div id="log"></div>
         <div id="time"></div>
         <video id="video" preload autoplay loop muted></video>
-        <div id="circle"></div>
-        <input id="sensibility" type="range" min="1" max="100" value="50">
     </body>
 </html>

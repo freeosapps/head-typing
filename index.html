@@ -56,13 +56,15 @@
                 if (event.data.length === 0) {
                     // No colors were detected in this frame.
                 } else {
+                    let sensibility = $('#sensibility').val();
+
                     event.data.forEach(function(rect) {
 
                         if (rect.color == 'magenta') {
                             if (magentaTop == -1) {
                                 
                             } else {
-                                if (magentaTop - rect.y > 100) {
+                                if (magentaTop - rect.y > sensibility) {
                                     $('#log').text('←');
                                     magentaMs = new Date().valueOf();                                    
                                 }
@@ -72,7 +74,7 @@
                             if (yellowTop == -1) {
                                 
                             } else {
-                                if (yellowTop - rect.y > 100) {
+                                if (yellowTop - rect.y > sensibility) {
                                     $('#log').text('→');
                                     yellowMs = new Date().valueOf();
                                 }
@@ -96,6 +98,7 @@
         <div id="log"></div>
         <div id="time"></div>
         <video id="video" preload autoplay loop muted></video>
-        <div id="circle"></div>        
+        <div id="circle"></div>
+        <input id="sensibility" type="range" min="1" max="100" value="50">
     </body>
 </html>

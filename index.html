@@ -11,15 +11,7 @@
                 border-style: dotted;
                 background-color: yellow;
             }
-            #video {
-                width: 100vw;
-                height: 100vh;
-                /*
-                transform: rotateY(180deg);
-                -webkit-transform:rotateY(180deg);
-                -moz-transform:rotateY(180deg);
-                */
-            }
+
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
@@ -34,7 +26,7 @@
         $(() => {
 
             // Grab elements, create settings, etc.
-            var video = $('#video')[0];
+            let video = $('#video')[0];
 
 
 
@@ -117,7 +109,7 @@
                     });
 
                     $('#time').text(magentaMs + ' / ' + yellowMs);
-                    if (Math.abs(magentaMs - yellowMs) < 1000) {
+                    if (magentaMs != -1 && yellowMs != -1 && Math.abs(magentaMs - yellowMs) < 1000) {
                         $('#log').text('↓');
                     }
                 }

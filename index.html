@@ -12,19 +12,13 @@
                 background-color: yellow;
             }
             #video {
-                /*
                 width: 100vw;
                 height: 100vh;
-                
+                /*
                 transform: rotateY(180deg);
                 -webkit-transform:rotateY(180deg);
                 -moz-transform:rotateY(180deg);
-                
-                z-index: -1;
                 */
-            }
-            .hidden {
-                display: hidden;
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -84,14 +78,14 @@
                     event.data.forEach(function(rect) {
                         if (rect.color == 'yellow') {
                             yellow.css({
-                                top: rect.y - $(video).heigth(),
+                                top: rect.y,
                                 left: rect.x,
                                 width: rect.width,
                                 height: rect.height                                
                             });
                         } else if (rect.color == 'magenta') {
                             magenta.css({
-                                top: rect.y - $(video).heigth(),
+                                top: rect.y,
                                 left: rect.x,
                                 width: rect.width,
                                 height: rect.height                                
@@ -137,6 +131,6 @@
         <input id="sensibility" type="range" min="1" max="100" value="10">
         <div id="log"></div>
         <div id="time"></div>
-        <video id="video" preload autoplay loop muted></video>        
+        <video id="video" preload autoplay loop muted></video>
     </body>
 </html>

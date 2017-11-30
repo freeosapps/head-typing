@@ -59,12 +59,14 @@
                 backgroundColor: 'magenta',
                 position: 'relative'
             });
+            $(document.body).append(magenta);
 
             let yellow = $('<div>');
             yellow.css({
                 backgroundColor: 'yellow',
                 position: 'relative'
             });
+            $(document.body).append(yellow);
 
             colors.on('track', function(event) {
                 if (event.data.length === 0) {

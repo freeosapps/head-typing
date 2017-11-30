@@ -16,7 +16,6 @@
                 transform: rotateY(180deg);
                 -webkit-transform:rotateY(180deg); /* Safari and Chrome */
                 -moz-transform:rotateY(180deg); /* Firefox */
-                z-index: -1;
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -65,8 +64,7 @@
                             } else {
                                 if (magentaTop - rect.y > 10) {
                                     $('#log').text('←');
-                                    magentaMs = new Date().getMilliseconds();
-                                    $('#time').text(magentaMs + ' / ' + yellowMs);
+                                    magentaMs = new Date().valueOf();                                    
                                 }
                             }
                             magentaTop = rect.y;
@@ -76,13 +74,14 @@
                             } else {
                                 if (yellowTop - rect.y > 10) {
                                     $('#log').text('→');
-                                    yellowMs = new Date().getMilliseconds();
+                                    yellowMs = new Date().valueOf();
                                 }
                             }
                             yellowTop = rect.y; 
                         }
                     });
 
+                    $('#time').text(magentaMs + ' / ' + yellowMs);
                     if (Math.abs(magentaMs - yellowMs) < 1000) {
                         $('#log').text('↓');
                     }

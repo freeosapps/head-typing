@@ -12,6 +12,11 @@
                 background-color: yellow;
             }
             #video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
                 z-index: -1;
             }
         </style>
@@ -51,14 +56,18 @@
 
             let magenta = $('<div>');
             magenta.css({
-                backgroundColor: 'magenta',
+                borderColor: 'magenta',
+                borderWidth: 2,
+                borderStyle: 'solid',
                 position: 'absolute'
             });
             $(document.body).append(magenta);
 
             let yellow = $('<div>');
             yellow.css({
-                backgroundColor: 'yellow',
+                borderColor: 'yellow',
+                borderWidth: 2,
+                borderStyle: 'solid',
                 position: 'absolute'
             });
             $(document.body).append(yellow);

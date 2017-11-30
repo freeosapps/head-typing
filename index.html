@@ -19,6 +19,7 @@
                 -webkit-transform:rotateY(180deg);
                 -moz-transform:rotateY(180deg);
                 */
+                z-index: -1;
             }
             .hidden {
                 display: hidden;
@@ -81,14 +82,14 @@
                     event.data.forEach(function(rect) {
                         if (rect.color == 'yellow') {
                             yellow.css({
-                                top: rect.y,
+                                top: rect.y - $(video).heigth(),
                                 left: rect.x,
                                 width: rect.width,
                                 height: rect.height                                
                             });
                         } else if (rect.color == 'magenta') {
                             magenta.css({
-                                top: rect.y,
+                                top: rect.y - $(video).heigth(),
                                 left: rect.x,
                                 width: rect.width,
                                 height: rect.height                                
@@ -134,7 +135,6 @@
         <input id="sensibility" type="range" min="1" max="100" value="10">
         <div id="log"></div>
         <div id="time"></div>
-        <video id="video" preload autoplay loop muted></video>
-        <label><input type="checkbox" onclick="$('#video').toggleClass('hidden')"> Exibir vídeo</label>
+        <video id="video" preload autoplay loop muted></video>        
     </body>
 </html>

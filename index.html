@@ -11,7 +11,9 @@
                 border-style: dotted;
                 background-color: yellow;
             }
-
+            #video {
+                z-index: -1;
+            }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
@@ -50,14 +52,14 @@
             let magenta = $('<div>');
             magenta.css({
                 backgroundColor: 'magenta',
-                position: 'relative'
+                position: 'absolute'
             });
             $(document.body).append(magenta);
 
             let yellow = $('<div>');
             yellow.css({
                 backgroundColor: 'yellow',
-                position: 'relative'
+                position: 'absolute'
             });
             $(document.body).append(yellow);
 

@@ -20,6 +20,9 @@
                 -moz-transform:rotateY(180deg);
                 */
             }
+            .hidden {
+                display: hidden;
+            }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
@@ -132,6 +135,6 @@
         <div id="log"></div>
         <div id="time"></div>
         <video id="video" preload autoplay loop muted></video>
-        <input type="checkbox" onclick="$('#video').toggle()">Exibir vídeo
+        <label><input type="checkbox" onclick="$('#video').toggleClass('hidden')"> Exibir vídeo</label>
     </body>
 </html>

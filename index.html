@@ -1,4 +1,5 @@
 <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <head>
         <style>
             #circle {
@@ -33,7 +34,7 @@
         $(() => {
 
             // Grab elements, create settings, etc.
-            var video = document.getElementById('video');
+            var video = $('#video')[0];
 
 
 
@@ -127,7 +128,7 @@
         </script>
     </head>
     <body>
-        <input id="sensibility" type="range" min="1" max="100" value="50">
+        <input id="sensibility" type="range" min="1" max="100" value="10">
         <div id="log"></div>
         <div id="time"></div>
         <video id="video" preload autoplay loop muted></video>

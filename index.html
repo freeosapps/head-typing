@@ -116,7 +116,7 @@
                                 //$('#log').show();
                                 //$('#log').hide(1000);
                                 //$('#slider').slick('slickPause');
-                                alert('Slide: ' + $('#slider').slick('slickCurrentSlide'));
+                                alert('Slide: ' + $('#slider').children()[$('#slider').slick('slickCurrentSlide')].text());
                                 //document.write($('#slider').children()[$('#slider').slick('slickCurrentSlide')].text());
                             }
                         }

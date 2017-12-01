@@ -124,7 +124,7 @@
 try {
                                     if (yellowTop != -1) {
                                         if (yellowTop - rect.y > sensibility) {
-                                            $('#slider').slick('slickPause');
+                                            $('#slider').slick('removeSlide', null, null, true);   
                                             
                                             let character = characters[$('#slider').slick('slickCurrentSlide')];
                                             let text = $('#text').text() + character;
@@ -134,12 +134,7 @@ try {
                                             if (words == null) {
                                                 words = [];
                                             }
-                                            let nextCharacters = new Set();
-
-                                            /*for (let i = 0; i < totalCharacters; i++) {
-                                                $('#slider').slick('slickRemove', i, false);
-                                            }*/        
-                                            $('#slider').slick('removeSlide', null, null, true);                              
+                                            let nextCharacters = new Set();                                                                     
 
                                             for (let i = 0; i < words.length; i++) {                                                
                                                 let nextCharacter = words[i].charAt(text.length + 1);
@@ -158,7 +153,6 @@ try {
                                                 $('#slider').slick('slickAdd', conteinerCharacter[0]);
                                             }
 
-                                            $('#slider').slick('slickPlay');
                                         }
                                     }
                                 } catch (e) {

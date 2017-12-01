@@ -129,8 +129,9 @@
                                             let regex = new RegExp('\n' + text + '.*', 'g');
                                             let words = wordlist.match(regex);                                           
                                             let nextCharacters = new Set();
-                                            for (let i = 0; i < words.length; i++) {
-                                                alert('nextCharacter: ' + words[i].charAt(text.length));
+                                            alert('words: ' + words);
+                                            alert('text.length: ' + text.length);
+                                            for (let i = 0; i < words.length; i++) {                                                
                                                 nextCharacters.add(words[i].charAt(text.length));
                                             }
                                             

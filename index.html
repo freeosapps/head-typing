@@ -129,14 +129,12 @@
                                             let regex = new RegExp('\n' + text + '.*', 'g');
                                             let words = wordlist.match(regex);                                           
                                             let nextCharacters = new Set();
-                                            alert('words: ' + words);
-                                            alert('text.length: ' + text.length);
-                                            alert('words[0]: ' + words[0]);
-                                            alert('words[0].charAt(0): ' + words[0].charAt(0));
-                                            alert('words[0].charAt(1): ' + words[0].charAt(1));
-                                            alert('words[0].charAt(2): ' + words[0].charAt(2));
+
                                             for (let i = 0; i < words.length; i++) {                                                
-                                                nextCharacters.add(words[i].charAt(text.length));
+                                                let nextCharacter = words[i].charAt(text.length + 1);
+                                                if (nextCharacter) {
+                                                    nextCharacters.add(nextCharacter);
+                                                }                                             
                                             }
                                             
                                             nextCharacters.forEach((character) => {

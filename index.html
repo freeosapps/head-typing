@@ -129,7 +129,7 @@ try {
                                             let character = characters[$('#slider').slick('slickCurrentSlide')];
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
-                                            let regex = new RegExp('\n' + text + '.*', 'g');
+                                            let regex = new RegExp('\n' + text + '.*', 'gi');
                                             let words = wordlist.match(regex);
                                             if (words == null) {
                                                 words = [];

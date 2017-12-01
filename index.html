@@ -138,7 +138,7 @@ try {
 
                                             for (let i = 0; i < totalCharacters; i++) {
                                                 $('#slider').slick('slickRemove');
-                                            }
+                                            }                                       
 
                                             for (let i = 0; i < words.length; i++) {                                                
                                                 let nextCharacter = words[i].charAt(text.length + 1);
@@ -146,14 +146,16 @@ try {
                                                     nextCharacters.add(nextCharacter.toUpperCase());
                                                 }                                             
                                             }
-                                            
-                                            totalCharacters = nextCharacters.size;
 
-                                            nextCharacters.forEach((character) => {
+                                            characters = [...nextCharacters];
+                                            
+                                            totalCharacters = characters.length;
+
+                                            for (let i = 0; i < characters.length; i++) {                                               
                                                 let conteinerCharacter = $('<div>');
-                                                conteinerCharacter.text(character);
+                                                conteinerCharacter.text(characters[i]);
                                                 $('#slider').slick('slickAdd', conteinerCharacter[0]);
-                                            });
+                                            }
 
                                             $('#slider').slick('slickPlay');
                                         }

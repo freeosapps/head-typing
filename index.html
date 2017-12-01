@@ -26,7 +26,8 @@
                 margin: 0;
                 padding: 0;
                 width: 100vw;
-                height: 100vh;                
+                height: 100vh;
+                background-color: white;                
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -104,8 +105,9 @@
     </head>
     <body>        
         <video id="video" preload autoplay loop muted></video>
-        <div id="overlay"></div>
-        <input id="sensibility" type="range" min="1" max="100" value="5">
-        <div id="log">OK</div>
+        <div id="overlay">
+            <input id="sensibility" type="range" min="1" max="100" value="5">
+            <div id="log">OK</div>
+        </div>
     </body>
 </html>

@@ -148,7 +148,7 @@
                                             nextCharacters.forEach((character) => {
                                                 let conteinerCharacter = $('<div>');
                                                 conteinerCharacter.text(character);
-                                                $('#slider').slick('slickAdd', conteinerCharacter);
+                                                $('#slider').slick('slickAdd', conteinerCharacter[0]);
                                             });
 
                                             $('#slider').slick('slickPlay');

@@ -121,10 +121,11 @@
                                         borderWidth: 2                              
                                     });
 
-try {
                                     if (yellowTop != -1) {
                                         if (yellowTop - rect.y > sensibility) {
                                             $('#slider').slick('slickPause');
+                                            $('#slider').unslick();
+                                            $('#slider').empty();
                                             
                                             let character = characters[$('#slider').slick('slickCurrentSlide')];
                                             let text = $('#text').text() + character;
@@ -132,10 +133,6 @@ try {
                                             let regex = new RegExp('\n' + text + '.*', 'g');
                                             let words = wordlist.match(regex);                                           
                                             let nextCharacters = new Set();
-
-                                            for (let i = 0; i < totalCharacters; i++) {
-                                                $('#slider').slick('slickRemove', i, false);
-                                            }
 
                                             for (let i = 0; i < words.length; i++) {                                                
                                                 let nextCharacter = words[i].charAt(text.length + 1);
@@ -149,17 +146,22 @@ try {
                                             nextCharacters.forEach((character) => {
                                                 let conteinerCharacter = $('<div>');
                                                 conteinerCharacter.text(character);
-                                                $('#slider').slick('slickAdd', conteinerCharacter[0]);
+                                                $('#slider').append(conteinerCharacter);
                                             });
 
+                                            $("#slider").slick({
+                                                infinite: true,
+                                                arrows: false,
+                                                autoplaySpeed: 500,
+                                                centerMode: true,                
+                                                slidesToShow: 5,
+                                                mobileFirst: true
+                                            });
                                             $('#slider').slick('slickPlay');
                                         }
                                     }
-                                } catch (e) {
-                                    alert('error', e);
-                                }
-                                    yellowTop = rect.y;
 
+                                    yellowTop = rect.y;
                                 });
 
                             }

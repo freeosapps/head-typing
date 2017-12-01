@@ -72,7 +72,9 @@
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
                         
-                        let characters = ['A', 'O', 'I', 'R', 'E', 'C', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
+                        let characters = ['A', 'Á', 'Â', 'Ã', 'O', 'Ó', 'Ô', 'Õ', 'I', 'Í', 'R', 'E', 'É', 'Ê', 'C', 'Ç', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'Ú', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
+
+                        let totalCharacters = characters.length;
 
                         for (let i = 0; i < characters.length; i++) {
                             let conteinerCharacter = $('<div>');
@@ -122,13 +124,17 @@
                                     if (yellowTop != -1) {
                                         if (yellowTop - rect.y > sensibility) {
                                             $('#slider').slick('slickPause');
-                                            $('#slider').empty();
+                                            
                                             let character = characters[$('#slider').slick('slickCurrentSlide')];
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
                                             let regex = new RegExp('\n' + text + '.*', 'g');
                                             let words = wordlist.match(regex);                                           
                                             let nextCharacters = new Set();
+
+                                            for (let i = 0; i < totalCharacters; i++) {
+                                                $('#slider').slick('slickRemove');
+                                            }
 
                                             for (let i = 0; i < words.length; i++) {                                                
                                                 let nextCharacter = words[i].charAt(text.length + 1);
@@ -140,7 +146,7 @@
                                             nextCharacters.forEach((character) => {
                                                 let conteinerCharacter = $('<div>');
                                                 conteinerCharacter.text(character);
-                                                $('#slider').append(conteinerCharacter);
+                                                $('#slider').slick('slickAdd', conteinerCharacter);
                                             });
 
                                             $("#slider").slick({

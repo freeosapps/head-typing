@@ -115,8 +115,9 @@
                             if (yellowTop - rect.y > sensibility) {
                                 //$('#log').show();
                                 //$('#log').hide(1000);
-                                //$('#slider').slick('slickPause');
-                                alert('Slide: ' + $('[data-number="' + $('#slider').slick('slickCurrentSlide') + '"]').text());
+                                $('#slider').slick('slickPause');
+                                alert('Slide: ' + $('[class="slick-current"][data-number="' + $('#slider').slick('slickCurrentSlide') + '"]').text());
+                                $('#slider').slick('slickPlay');
                                 //document.write($('#slider').children()[$('#slider').slick('slickCurrentSlide')].text());
                             }
                         }

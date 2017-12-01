@@ -29,8 +29,22 @@
                 height: 50%;
                 background-color: white;
             }
+            .slick-current {
+                font-size: 40pt;                
+            }
+            #slider * {
+                height: 40pt;
+                line-height: 40pt;
+                font-family: arial;
+                text-align: center;
+            }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/locale/pt-br.js"></script>
         
@@ -55,9 +69,19 @@
                 }).then(function(stream) {
                     video.src = window.URL.createObjectURL(stream);
                     video.play();
+
+                    
                 });
             }
-
+            $("#slider").slick({
+                infinite: true,
+                arrows: false,
+                autoplaySpeed: 1000,
+                centerMode: true,                
+                slidesToShow: 5,
+                mobileFirst: true
+            });
+            $('#slider').slick('slickPlay');
             var colors = new tracking.ColorTracker(['magenta']);
 
             let magentaTop = -1;
@@ -89,8 +113,10 @@
 
                         if (magentaTop != -1) {
                             if (magentaTop - rect.y > sensibility) {
-                                $('#log').show();
-                                $('#log').hide(1000);
+                                //$('#log').show();
+                                //$('#log').hide(1000);
+                                //$('#slider').slick('slickPause');
+                                document.write($('#slider').children()[$('#slider').slick('slickCurrentSlide')].text());
                             }
                         }
                         magentaTop = rect.y;
@@ -106,6 +132,34 @@
     <body>        
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
+            <div id="slider">
+                <div>A</div>
+                <div>O</div>
+                <div>I</div>
+                <div>R</div>
+                <div>E</div>
+                <div>C</div>
+                <div>N</div>
+                <div>T</div>
+                <div>L</div>
+                <div>S</div>
+                <div>D</div>
+                <div>M</div>
+                <div>U</div>
+                <div>B</div>
+                <div>G</div>
+                <div>P</div>
+                <div>F</div>
+                <div>H</div>
+                <div>V</div>
+                <div>Z</div>
+                <div>X</div>
+                <div>Q</div>
+                <div>J</div>
+                <div>K</div>
+                <div>Y</div>
+                <div>W</div>                
+            </div>
             <input id="sensibility" type="range" min="1" max="100" value="5">
             <div id="log">OK</div>
         </div>

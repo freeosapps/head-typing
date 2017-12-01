@@ -170047,4 +170047,3 @@ zíngara
 úmbria
 KitKat
 atras
-shortcut=atrás

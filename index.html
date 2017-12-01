@@ -121,7 +121,9 @@
 
                         if (yellowTop != -1) {
                             if (yellowTop - rect.y > sensibility) {
-                                $('#text').text($('#text').text() + characters[('#slider').slick('slickCurrentSlide')]);
+                                let character = characters[('#slider').slick('slickCurrentSlide')];
+                                alert('Character: ' + character);
+                                $('#text').text($('#text').text() + character);
                             }
                         }
                         yellowTop = rect.y;

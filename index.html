@@ -136,9 +136,10 @@ try {
                                             }
                                             let nextCharacters = new Set();
 
-                                            for (let i = 0; i < totalCharacters; i++) {
+                                            /*for (let i = 0; i < totalCharacters; i++) {
                                                 $('#slider').slick('slickRemove', i, false);
-                                            }                                       
+                                            }*/        
+                                            $('#slider').slick('removeSlide', null, null, true);                              
 
                                             for (let i = 0; i < words.length; i++) {                                                
                                                 let nextCharacter = words[i].charAt(text.length + 1);

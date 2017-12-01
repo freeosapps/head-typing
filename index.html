@@ -137,7 +137,7 @@ try {
                                             let nextCharacters = new Set();
 
                                             for (let i = 0; i < totalCharacters; i++) {
-                                                $('#slider').slick('slickRemove');
+                                                $('#slider').slick('slickRemove', i, false);
                                             }                                       
 
                                             for (let i = 0; i < words.length; i++) {                                                

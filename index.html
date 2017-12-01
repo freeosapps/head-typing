@@ -127,12 +127,12 @@
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
                                             let regex = new RegExp('\n' + text + '.*', 'g');
-                                            let words = wordlist.match(regex);
-                                            alert('words: ' + words);
+                                            let words = wordlist.match(regex);                                           
                                             let nextCharacters = new Set();
                                             for (let i = 0; i < words.length; i++) {
                                                 nextCharacters.add(words[i].charAt(text.length));
                                             }
+                                            alert('nextCharacters: ' + nextCharacters);
                                             nextCharacters.forEach((character) => {
                                                 let conteinerCharacter = $('<div>');
                                                 conteinerCharacter.text(character);

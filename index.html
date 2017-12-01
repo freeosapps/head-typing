@@ -56,6 +56,14 @@
         <script>
         $(() => {
 
+            let characters = ['A', 'O', 'I', 'R', 'E', 'C', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
+
+            for (let i = 0; i < characters.length; i++) {
+                let conteinerCharacter = $('<div>');
+                conteinerCharacter.text(characters[i]);
+                $('#slider').append(conteinerCharacter);
+            }
+
             let video = $('#video')[0];
 
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -113,12 +121,7 @@
 
                         if (yellowTop != -1) {
                             if (yellowTop - rect.y > sensibility) {
-                                //$('#log').show();
-                                //$('#log').hide(1000);
-                                $('#slider').slick('slickPause');
-                                alert('Slide: ' + $('[class="slick-current"][data-number="' + $('#slider').slick('slickCurrentSlide') + '"]').text());
-                                $('#slider').slick('slickPlay');
-                                //document.write($('#slider').children()[$('#slider').slick('slickCurrentSlide')].text());
+                                $('#text').append(characters[('#slider').slick('slickCurrentSlide')]);
                             }
                         }
                         yellowTop = rect.y;
@@ -134,34 +137,8 @@
     <body>        
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
-            <div id="slider">
-                <div data-number="0">A</div>
-                <div data-number="1">O</div>
-                <div data-number="2">I</div>
-                <div data-number="3">R</div>
-                <div data-number="4">E</div>
-                <div data-number="5">C</div>
-                <div data-number="6">N</div>
-                <div data-number="7">T</div>
-                <div data-number="8">L</div>
-                <div data-number="9">S</div>
-                <div data-number="10">D</div>
-                <div data-number="11">M</div>
-                <div data-number="12">U</div>
-                <div data-number="13">B</div>
-                <div data-number="14">G</div>
-                <div data-number="15">P</div>
-                <div data-number="16">F</div>
-                <div data-number="17">H</div>
-                <div data-number="18">V</div>
-                <div data-number="19">Z</div>
-                <div data-number="20">X</div>
-                <div data-number="21">Q</div>
-                <div data-number="22">J</div>
-                <div data-number="23">K</div>
-                <div data-number="24">Y</div>
-                <div data-number="25">W</div>                
-            </div>
+            <div id="slider"></div>
+            <div id="text"></div>
             <input id="sensibility" type="range" min="1" max="100" value="5">
             <div id="log">OK</div>
         </div>

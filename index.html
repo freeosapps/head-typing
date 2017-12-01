@@ -56,14 +56,6 @@
         <script>
         $(() => {
 
-            let characters = ['A', 'O', 'I', 'R', 'E', 'C', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
-
-            for (let i = 0; i < characters.length; i++) {
-                let conteinerCharacter = $('<div>');
-                conteinerCharacter.text(characters[i]);
-                $('#slider').append(conteinerCharacter);
-            }
-
             let video = $('#video')[0];
 
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -75,63 +67,98 @@
                         }
                     }
                 }).then(function(stream) {
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
+                    $.ajax({url: '/poc-captura-video/pt_BR_wordlist.txt'})
+                    .done((wordlist) => {
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                        
+                        let characters = ['A', 'O', 'I', 'R', 'E', 'C', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
 
-                    
-                });
-            }
-            $("#slider").slick({
-                infinite: true,
-                arrows: false,
-                autoplaySpeed: 500,
-                centerMode: true,                
-                slidesToShow: 5,
-                mobileFirst: true
-            });
-            $('#slider').slick('slickPlay');
-            var colors = new tracking.ColorTracker(['yellow']);
+                        for (let i = 0; i < characters.length; i++) {
+                            let conteinerCharacter = $('<div>');
+                            conteinerCharacter.text(characters[i]);
+                            $('#slider').append(conteinerCharacter);
+                        }
 
-            let yellowTop = -1;
+                        $("#slider").slick({
+                            infinite: true,
+                            arrows: false,
+                            autoplaySpeed: 500,
+                            centerMode: true,                
+                            slidesToShow: 5,
+                            mobileFirst: true
+                        });
+                        $('#slider').slick('slickPlay');
 
-            let yellow = $('<div>');
-            yellow.css({
-                borderColor: 'yellow',                
-                borderStyle: 'solid',
-                position: 'absolute',
-                borderWidth: 0
-            });
-            $(document.body).append(yellow);
+                        var colors = new tracking.ColorTracker(['yellow']);
 
-            colors.on('track', function(event) {
-                if (event.data.length === 0) {
-                    // No colors were detected in this frame.
-                } else {
-                    let sensibility = $('#sensibility').val();
+                        let yellowTop = -1;
 
-                    event.data.forEach(function(rect) {
-
+                        let yellow = $('<div>');
                         yellow.css({
-                            top: rect.y,
-                            left: rect.x,
-                            width: rect.width,
-                            height: rect.height,
-                            borderWidth: 2                              
+                            borderColor: 'yellow',                
+                            borderStyle: 'solid',
+                            position: 'absolute',
+                            borderWidth: 0
+                        });
+                        $(document.body).append(yellow);
+
+                        colors.on('track', function(event) {
+                            if (event.data.length === 0) {
+                                // No colors were detected in this frame.
+                            } else {
+                                let sensibility = $('#sensibility').val();
+
+                                event.data.forEach(function(rect) {
+
+                                    yellow.css({
+                                        top: rect.y,
+                                        left: rect.x,
+                                        width: rect.width,
+                                        height: rect.height,
+                                        borderWidth: 2                              
+                                    });
+
+                                    if (yellowTop != -1) {
+                                        if (yellowTop - rect.y > sensibility) {
+                                            $('#slider').slick('slickPause');
+                                            $('#slider').empty();
+                                            let character = characters[$('#slider').slick('slickCurrentSlide')];
+                                            let text = $('#text').text() + character;
+                                            $('#text').text(text);
+                                            let regex = new RegExp('\n' + text + '.*', 'g');
+                                            let words = wordlist.match(regex);
+                                            let nextCharacters = new Set();
+                                            for (let i = 0; i < words.length; i++) {
+                                                nextCharacters.add(words[i].charAt(text.length));
+                                            }
+                                            nextCharacters.forEach((character) => {
+                                                let conteinerCharacter = $('<div>');
+                                                conteinerCharacter.text(character);
+                                                $('#slider').append(conteinerCharacter);
+                                            });
+
+                                            $("#slider").slick({
+                                                infinite: true,
+                                                arrows: false,
+                                                autoplaySpeed: 500,
+                                                centerMode: true,                
+                                                slidesToShow: 5,
+                                                mobileFirst: true
+                                            });
+                                            $('#slider').slick('slickPlay');
+                                        }
+                                    }
+                                    yellowTop = rect.y;
+
+                                });
+                            }
                         });
 
-                        if (yellowTop != -1) {
-                            if (yellowTop - rect.y > sensibility) {
-                                let character = characters[$('#slider').slick('slickCurrentSlide')];
-                                $('#text').text($('#text').text() + character);
-                            }
-                        }
-                        yellowTop = rect.y;
-
-                    });
-                }
-            });
-
-            tracking.track('#video', colors);
+                        tracking.track('#video', colors);
+                    });                    
+                });
+            }           
         });           
         </script>
     </head>

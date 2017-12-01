@@ -130,7 +130,10 @@ try {
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
                                             let regex = new RegExp('\n' + text + '.*', 'g');
-                                            let words = wordlist.match(regex);                                           
+                                            let words = wordlist.match(regex);
+                                            if (words == null) {
+                                                words = []
+                                            }
                                             let nextCharacters = new Set();
 
                                             for (let i = 0; i < totalCharacters; i++) {

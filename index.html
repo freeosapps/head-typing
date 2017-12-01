@@ -130,9 +130,10 @@
                                             let words = wordlist.match(regex);                                           
                                             let nextCharacters = new Set();
                                             for (let i = 0; i < words.length; i++) {
+                                                alert('nextCharacter: ' + words[i].charAt(text.length));
                                                 nextCharacters.add(words[i].charAt(text.length));
                                             }
-                                            alert('nextCharacters: ' + nextCharacters);
+                                            
                                             nextCharacters.forEach((character) => {
                                                 let conteinerCharacter = $('<div>');
                                                 conteinerCharacter.text(character);

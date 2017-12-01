@@ -12,9 +12,12 @@
                 filter: blur(10px);
                 filter: saturate(10);
             }
-            #sensibility, #log, #time {
+            #sensibility, #log {
                 color: white;
                 font-family: arial;
+            }
+            #log {
+                display: none;
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -29,14 +32,9 @@
         <script>
         $(() => {
 
-            // Grab elements, create settings, etc.
             let video = $('#video')[0];
 
-
-
-            // Get access to the camera!
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                // Not adding `{ audio: true }` since we only want video now
                 navigator.mediaDevices.getUserMedia({
                     video: {
                         mandatory: {
@@ -50,31 +48,18 @@
                 });
             }
 
-            var colors = new tracking.ColorTracker(['magenta', 'yellow']);
+            var colors = new tracking.ColorTracker(['magenta']);
 
             let magentaTop = -1;
-            let yellowTop = -1;
-
-            let magentaMs = -1; 
-            let yellowMs = -1;
 
             let magenta = $('<div>');
             magenta.css({
-                borderColor: 'magenta',
-                borderWidth: 2,
+                borderColor: 'magenta',                
                 borderStyle: 'solid',
-                position: 'absolute'
+                position: 'absolute',
+                borderWidth: 0
             });
             $(document.body).append(magenta);
-
-            let yellow = $('<div>');
-            yellow.css({
-                borderColor: 'yellow',
-                borderWidth: 2,
-                borderStyle: 'solid',
-                position: 'absolute'
-            });
-            $(document.body).append(yellow);
 
             colors.on('track', function(event) {
                 if (event.data.length === 0) {
@@ -83,50 +68,24 @@
                     let sensibility = $('#sensibility').val();
 
                     event.data.forEach(function(rect) {
-                        if (rect.color == 'yellow') {
-                            yellow.css({
-                                top: rect.y,
-                                left: rect.x,
-                                width: rect.width,
-                                height: rect.height                                
-                            });
-                        } else if (rect.color == 'magenta') {
-                            magenta.css({
-                                top: rect.y,
-                                left: rect.x,
-                                width: rect.width,
-                                height: rect.height                                
-                            });
-                        }
-                        
 
-                        if (rect.color == 'magenta') {
-                            if (magentaTop == -1) {
-                                
-                            } else {
-                                if (magentaTop - rect.y > sensibility) {
-                                    $('#log').text('←');
-                                    magentaMs = new Date().valueOf();                                    
-                                }
+                        magenta.css({
+                            top: rect.y,
+                            left: rect.x,
+                            width: rect.width,
+                            height: rect.height,
+                            borderWidth: 2                              
+                        });
+
+                        if (magentaTop != -1) {
+                            if (magentaTop - rect.y > sensibility) {
+                                $('#log').show();
+                                $('#log').hide(1000);
                             }
-                            magentaTop = rect.y;
-                        } else if (rect.color == 'yellow') {
-                            if (yellowTop == -1) {
-                                
-                            } else {
-                                if (yellowTop - rect.y > sensibility) {
-                                    $('#log').text('→');
-                                    yellowMs = new Date().valueOf();
-                                }
-                            }
-                            yellowTop = rect.y; 
                         }
+                        magentaTop = rect.y;
+
                     });
-
-                    $('#time').text(magentaMs + ' / ' + yellowMs);
-                    if (magentaMs != -1 && yellowMs != -1 && Math.abs(magentaMs - yellowMs) < 1000) {
-                        $('#log').text('↓');
-                    }
                 }
             });
 
@@ -136,8 +95,7 @@
     </head>
     <body>
         <input id="sensibility" type="range" min="1" max="100" value="10">
-        <div id="log"></div>
-        <div id="time"></div>
+        <div id="log">OK</div>
         <video id="video" preload autoplay loop muted></video>
     </body>
 </html>

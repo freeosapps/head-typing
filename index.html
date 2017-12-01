@@ -10,7 +10,7 @@
                 padding: 0;
                 z-index: -1;
                 filter: blur(10px);
-                filter: saturate(5);
+                filter: saturate(10);
             }
             #sensibility, #log {
                 color: white;
@@ -94,7 +94,7 @@
         </script>
     </head>
     <body>
-        <input id="sensibility" type="range" min="1" max="100" value="10">
+        <input id="sensibility" type="range" min="1" max="100" value="5">
         <div id="log">OK</div>
         <video id="video" preload autoplay loop muted></video>
     </body>

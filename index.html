@@ -116,7 +116,7 @@
                                 //$('#log').show();
                                 //$('#log').hide(1000);
                                 //$('#slider').slick('slickPause');
-                                alert('Slide: ' + $('#slider').slick('slickCurrentSlide'));
+                                alert('Slide: ' + $('[data-number="' + $('#slider').slick('slickCurrentSlide') + '"]').text());
                                 //document.write($('#slider').children()[$('#slider').slick('slickCurrentSlide')].text());
                             }
                         }
@@ -134,32 +134,32 @@
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
             <div id="slider">
-                <div>A</div>
-                <div>O</div>
-                <div>I</div>
-                <div>R</div>
-                <div>E</div>
-                <div>C</div>
-                <div>N</div>
-                <div>T</div>
-                <div>L</div>
-                <div>S</div>
-                <div>D</div>
-                <div>M</div>
-                <div>U</div>
-                <div>B</div>
-                <div>G</div>
-                <div>P</div>
-                <div>F</div>
-                <div>H</div>
-                <div>V</div>
-                <div>Z</div>
-                <div>X</div>
-                <div>Q</div>
-                <div>J</div>
-                <div>K</div>
-                <div>Y</div>
-                <div>W</div>                
+                <div data-number="0">A</div>
+                <div data-number="1">O</div>
+                <div data-number="2">I</div>
+                <div data-number="3">R</div>
+                <div data-number="4">E</div>
+                <div data-number="5">C</div>
+                <div data-number="6">N</div>
+                <div data-number="7">T</div>
+                <div data-number="8">L</div>
+                <div data-number="9">S</div>
+                <div data-number="10">D</div>
+                <div data-number="11">M</div>
+                <div data-number="12">U</div>
+                <div data-number="13">B</div>
+                <div data-number="14">G</div>
+                <div data-number="15">P</div>
+                <div data-number="16">F</div>
+                <div data-number="17">H</div>
+                <div data-number="18">V</div>
+                <div data-number="19">Z</div>
+                <div data-number="20">X</div>
+                <div data-number="21">Q</div>
+                <div data-number="22">J</div>
+                <div data-number="23">K</div>
+                <div data-number="24">Y</div>
+                <div data-number="25">W</div>                
             </div>
             <input id="sensibility" type="range" min="1" max="100" value="5">
             <div id="log">OK</div>

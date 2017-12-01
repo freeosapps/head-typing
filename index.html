@@ -33,8 +33,8 @@
                 font-size: 40pt;                
             }
             #slider * {
-                height: 40pt;
-                line-height: 40pt;
+                height: 50pt;
+                line-height: 50pt;
                 font-family: arial;
                 text-align: center;
             }
@@ -133,7 +133,7 @@
                                             let nextCharacters = new Set();
 
                                             for (let i = 0; i < totalCharacters; i++) {
-                                                $('#slider').slick('slickRemove');
+                                                $('#slider').slick('slickRemove', i);
                                             }
 
                                             for (let i = 0; i < words.length; i++) {                                                
@@ -143,20 +143,14 @@
                                                 }                                             
                                             }
                                             
+                                            totalCharacters = nextCharacters.size;
+
                                             nextCharacters.forEach((character) => {
                                                 let conteinerCharacter = $('<div>');
                                                 conteinerCharacter.text(character);
                                                 $('#slider').slick('slickAdd', conteinerCharacter);
                                             });
 
-                                            $("#slider").slick({
-                                                infinite: true,
-                                                arrows: false,
-                                                autoplaySpeed: 500,
-                                                centerMode: true,                
-                                                slidesToShow: 5,
-                                                mobileFirst: true
-                                            });
                                             $('#slider').slick('slickPlay');
                                         }
                                     }

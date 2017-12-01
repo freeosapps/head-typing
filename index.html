@@ -121,6 +121,7 @@
                                         borderWidth: 2                              
                                     });
 
+try {
                                     if (yellowTop != -1) {
                                         if (yellowTop - rect.y > sensibility) {
                                             $('#slider').slick('slickPause');
@@ -154,9 +155,13 @@
                                             $('#slider').slick('slickPlay');
                                         }
                                     }
+                                } catch (e) {
+                                    alert('error', e);
+                                }
                                     yellowTop = rect.y;
 
                                 });
+
                             }
                         });
 

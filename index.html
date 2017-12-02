@@ -142,7 +142,6 @@
                            
                         spin();
 
-
                         var colors = new tracking.ColorTracker(['yellow']);
 
                         let yellowTop = -1;
@@ -176,21 +175,28 @@
                                         if (yellowTop - rect.y > sensibility) {                                          
                                             callbackStopSpin = (firstChild) => {                                                                                   
                                                 let character = firstChild.text();
-                                                $('#slider').empty();
-                                                let text = $('#text').text() + character;
-                                                $('#text').text(text);
-      
+                                                let text = '';
+                                                
+                                                if (character == '→') {
+                                                    text = $('#text').text() + ' ';
+                                                    $('#text').text(text);
+                                                } else if (character == '←') {
+                                                    text = $('#text').text() + ' ';
+                                                    $('#text').text(text.slice(0, -1));
+                                                } else {                                                    
+                                                    text = $('#text').text() + character;
+                                                    $('#text').text(text);
+                                                }     
+
                                                 let nextTextParts = text.split(' ');
                                                 let nextText = nextTextParts[nextTextParts.length - 1];
-
                                                 characters = nextCharacters(nextText, wordlist);
-                                                
+
                                                 while (characters.length == 1) {                                                                                                         
                                                     let text = $('#text').text() + characters[0];
                                                     $('#text').text(text);
                                                     let nextTextParts = text.split(' ');
                                                     let nextText = nextTextParts[nextTextParts.length - 1];
-
                                                     characters = nextCharacters(nextText, wordlist);
                                                 }      
                                             
@@ -199,6 +205,8 @@
                                                     $('#text').text(text);
                                                     characters = nextCharacters('', wordlist);
                                                 }
+
+                                                $('#slider').empty();
 
                                                 for (let i = 0; i < characters.length; i++) {                                               
                                                     let conteinerCharacter = $('<li>');

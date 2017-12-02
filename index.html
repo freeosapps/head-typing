@@ -188,6 +188,12 @@
                                                     characters = nextCharacters(text, wordlist);
                                                 }      
                                             
+                                                if (characters.length == 0) {
+                                                    let text = $('#text').text() + ' ';
+                                                    $('#text').text(text);
+                                                    characters = nextCharacters('', wordlist);
+                                                }
+
                                                 for (let i = 0; i < characters.length; i++) {                                               
                                                     let conteinerCharacter = $('<li>');
                                                     conteinerCharacter.text(characters[i]);

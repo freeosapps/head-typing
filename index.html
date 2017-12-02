@@ -80,24 +80,22 @@
         <script>
         $(() => {
 
-            function nextCharacters(text) {
-                alert('text: ' + text);                                            
+            function nextCharacters(text, wordlist) {
                 let regex = new RegExp('\n' + text + '.*', 'gi');
                 let words = wordlist.match(regex);
-                alert('words: ' + words.join(','));
                 if (words == null) {
                     words = [];
                 }
-                let nextCharacters = new Set();                                                                     
+                let characters = new Set();                                                                     
 
                 for (let i = 0; i < words.length; i++) {                                                
-                    let nextCharacter = words[i].charAt(text.length + 1);
-                    if (nextCharacter) {
-                        nextCharacters.add(nextCharacter.toUpperCase());
+                    let character = words[i].charAt(text.length + 1);
+                    if (character) {
+                        characters.add(character.toUpperCase());
                     }                                             
                 }
 
-                return [...nextCharacters];
+                return [...characters];
             }
 
             let video = $('#video')[0];
@@ -116,7 +114,7 @@
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
                         alert('ok');   
-                        let characters = nextCharacters('');
+                        let characters = nextCharacters('', wordlist);
 
                         for (let i = 0; i < characters.length; i++) {
                             let conteinerCharacter = $('<li>');
@@ -182,12 +180,12 @@
                                                 let text = $('#text').text() + character;
                                                 $('#text').text(text);
       
-                                                characters = nextCharacters(text);
+                                                characters = nextCharacters(text, wordlist);
                                                 
                                                 while (characters.length == 1) {                                                                                                         
                                                     let text = $('#text').text() + characters[0];
                                                     $('#text').text(text);
-                                                    characters = nextCharacters(text);
+                                                    characters = nextCharacters(text, wordlist);
                                                 }      
                                             
                                                 for (let i = 0; i < characters.length; i++) {                                               

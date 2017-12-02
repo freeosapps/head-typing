@@ -110,8 +110,8 @@
                         let callbackStopSpin = () => {};
 
                         function spin() {
-                            if (!stopSpin) {
-                                let firstChild = $('#slider li:first-child');
+                            let firstChild = $('#slider li:first-child');
+                            if (!stopSpin) {                                
                                 firstChild.fadeOut(2000, () => {
                                     firstChild.remove();
                                     $('#slider').append(firstChild);
@@ -119,7 +119,7 @@
                                     spin();                                               
                                 }); 
                             } else {
-                                callbackStopSpin();
+                                callbackStopSpin(firstChild);
                             }                                    
                         }
                            
@@ -157,8 +157,8 @@
 
                                     if (yellowTop != -1) {
                                         if (yellowTop - rect.y > sensibility) {                                          
-                                            callbackStopSpin = () => {                                                                                   
-                                                let character = $('#slider li:first-child').text();
+                                            callbackStopSpin = (firstChild) => {                                                                                   
+                                                let character = firstChild.text();
                                                 $('#slider').empty();
                                                 let text = $('#text').text() + character;
                                                 $('#text').text(text);

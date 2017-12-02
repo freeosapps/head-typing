@@ -121,18 +121,6 @@
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
                         
-
-
-                        $("#slider").slick({
-                            infinite: true,
-                            arrows: false,
-                            autoplaySpeed: 500,
-                            centerMode: true,                
-                            slidesToShow: 5,
-                            mobileFirst: true
-                        });
-                        $('#slider').slick('slickPlay');
-
                         var colors = new tracking.ColorTracker(['yellow']);
 
                         let yellowTop = -1;
@@ -168,6 +156,7 @@ try {
                                             $('#slider').empty();  
                                             
                                             let character = $('#slider li:first-child').text();
+                                            alert('character: ' + character);
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
                                             let regex = new RegExp('\n' + text + '.*', 'gi');

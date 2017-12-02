@@ -94,14 +94,12 @@
                         function spin() {
                             let firstChild = $('#slider li:first-child');
                             firstChild.fadeOut(2000, () => {
-                                let firstCharacter = characters.pop();
                                 firstChild.remove();
-                                characters.push(firstCharacter);
                                 $('#slider').append(firstChild);
                                 firstChild.show();
                                 if (!stopSpin) {
                                     spin();
-                                }                                
+                                }                         
                             });                            
                         }
                            
@@ -169,7 +167,7 @@ try {
                                         if (yellowTop - rect.y > sensibility) {
                                             $('#slider').empty();  
                                             
-                                            let character = characters[0];
+                                            let character = $('#slider li:first-child').text();
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
                                             let regex = new RegExp('\n' + text + '.*', 'gi');

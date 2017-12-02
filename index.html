@@ -80,6 +80,24 @@
         <script>
         $(() => {
 
+            function nextCharacters(text) {                                               
+                let regex = new RegExp('\n' + text + '.*', 'gi');
+                let words = wordlist.match(regex);
+                if (words == null) {
+                    words = [];
+                }
+                let nextCharacters = new Set();                                                                     
+
+                for (let i = 0; i < words.length; i++) {                                                
+                    let nextCharacter = words[i].charAt(text.length + 1);
+                    if (nextCharacter) {
+                        nextCharacters.add(nextCharacter.toUpperCase());
+                    }                                             
+                }
+
+                return [...nextCharacters];
+            }
+
             let video = $('#video')[0];
 
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -96,8 +114,7 @@
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
                         
-                        let characters = ['A', 'Á', 'Â', 'Ã', 'O', 'Ó', 'Ô', 'Õ', 'I', 'Í', 'R', 'E', 'É', 'Ê', 'C', 'Ç', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'Ú', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
+                        let characters = nextCharacters('');
 
                         for (let i = 0; i < characters.length; i++) {
                             let conteinerCharacter = $('<li>');
@@ -162,28 +179,21 @@
                                                 $('#slider').empty();
                                                 let text = $('#text').text() + character;
                                                 $('#text').text(text);
-                                                let regex = new RegExp('\n' + text + '.*', 'gi');
-                                                let words = wordlist.match(regex);
-                                                if (words == null) {
-                                                    words = [];
-                                                }
-                                                let nextCharacters = new Set();                                                                     
-
-                                                for (let i = 0; i < words.length; i++) {                                                
-                                                    let nextCharacter = words[i].charAt(text.length + 1);
-                                                    if (nextCharacter) {
-                                                        nextCharacters.add(nextCharacter.toUpperCase());
-                                                    }                                             
-                                                }
-
-                                                characters = [...nextCharacters];
+      
+                                                characters = nextCharacters(text);
                                                 
+                                                while (characters.length == 1) {                                                                                                         
+                                                    let text = $('#text').text() + characters[0];
+                                                    $('#text').text(text);
+                                                    characters = nextCharacters(text);
+                                                }      
+                                            
                                                 for (let i = 0; i < characters.length; i++) {                                               
                                                     let conteinerCharacter = $('<li>');
                                                     conteinerCharacter.text(characters[i]);
                                                     $('#slider').append(conteinerCharacter);
                                                 }
-
+                                                
                                                 stopSpin = false;
                                                 spin();
                                             };

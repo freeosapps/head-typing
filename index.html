@@ -113,7 +113,7 @@
                     .done((wordlist) => {
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
-                        alert('ok');   
+
                         let characters = nextCharacters('', wordlist);
 
                         for (let i = 0; i < characters.length; i++) {

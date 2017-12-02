@@ -152,11 +152,9 @@
 
 try {
                                     if (yellowTop != -1) {
-                                        if (yellowTop - rect.y > sensibility) {
-                                            $('#slider').empty();  
-                                            
+                                        if (yellowTop - rect.y > sensibility) {                                                                                    
                                             let character = $('#slider li:first-child').text();
-                                            alert('character: ' + character);
+                                            $('#slider').empty();
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
                                             let regex = new RegExp('\n' + text + '.*', 'gi');

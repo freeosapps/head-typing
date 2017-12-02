@@ -107,16 +107,20 @@
 
                         let stopSpin = false;
 
+                        let callbackStopSpin = () => {};
+
                         function spin() {
-                            let firstChild = $('#slider li:first-child');
-                            firstChild.fadeOut(2000, () => {
-                                firstChild.remove();
-                                $('#slider').append(firstChild);
-                                firstChild.show();
-                                if (!stopSpin) {
-                                    spin();
-                                }                         
-                            });                            
+                            if (!stopSpin) {
+                                let firstChild = $('#slider li:first-child');
+                                firstChild.fadeOut(2000, () => {
+                                    firstChild.remove();
+                                    $('#slider').append(firstChild);
+                                    firstChild.show();                               
+                                    spin();                                               
+                                }); 
+                            } else {
+                                callbackStopSpin();
+                            }                                    
                         }
                            
                         spin();
@@ -152,33 +156,37 @@
                                     });
 
                                     if (yellowTop != -1) {
-                                        if (yellowTop - rect.y > sensibility) {                                                                                    
-                                            let character = $('#slider li:first-child').text();
-                                            $('#slider').empty();
-                                            let text = $('#text').text() + character;
-                                            $('#text').text(text);
-                                            let regex = new RegExp('\n' + text + '.*', 'gi');
-                                            let words = wordlist.match(regex);
-                                            if (words == null) {
-                                                words = [];
-                                            }
-                                            let nextCharacters = new Set();                                                                     
+                                        if (yellowTop - rect.y > sensibility) {                                          
+                                            callbackStopSpin = () => {                                                                                    
+                                                let character = $('#slider li:first-child').text();
+                                                $('#slider').empty();
+                                                let text = $('#text').text() + character;
+                                                $('#text').text(text);
+                                                let regex = new RegExp('\n' + text + '.*', 'gi');
+                                                let words = wordlist.match(regex);
+                                                if (words == null) {
+                                                    words = [];
+                                                }
+                                                let nextCharacters = new Set();                                                                     
 
-                                            for (let i = 0; i < words.length; i++) {                                                
-                                                let nextCharacter = words[i].charAt(text.length + 1);
-                                                if (nextCharacter) {
-                                                    nextCharacters.add(nextCharacter.toUpperCase());
-                                                }                                             
-                                            }
+                                                for (let i = 0; i < words.length; i++) {                                                
+                                                    let nextCharacter = words[i].charAt(text.length + 1);
+                                                    if (nextCharacter) {
+                                                        nextCharacters.add(nextCharacter.toUpperCase());
+                                                    }                                             
+                                                }
 
-                                            characters = [...nextCharacters];
-                                            
-                                            for (let i = 0; i < characters.length; i++) {                                               
-                                                let conteinerCharacter = $('<li>');
-                                                conteinerCharacter.text(characters[i]);
-                                                $('#slider').append(conteinerCharacter);
-                                            }
+                                                characters = [...nextCharacters];
+                                                
+                                                for (let i = 0; i < characters.length; i++) {                                               
+                                                    let conteinerCharacter = $('<li>');
+                                                    conteinerCharacter.text(characters[i]);
+                                                    $('#slider').append(conteinerCharacter);
+                                                }
 
+                                                spin();
+                                            };
+                                            stopSpin = true;
                                         }
                                     }
                                     yellowTop = rect.y;

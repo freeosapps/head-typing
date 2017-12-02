@@ -180,12 +180,18 @@
                                                 let text = $('#text').text() + character;
                                                 $('#text').text(text);
       
-                                                characters = nextCharacters(text, wordlist);
+                                                let nextTextParts = text.split(' ');
+                                                let nextText = nextTextParts[nextTextParts.length - 1];
+
+                                                characters = nextCharacters(nextText, wordlist);
                                                 
                                                 while (characters.length == 1) {                                                                                                         
                                                     let text = $('#text').text() + characters[0];
                                                     $('#text').text(text);
-                                                    characters = nextCharacters(text, wordlist);
+                                                    let nextTextParts = text.split(' ');
+                                                    let nextText = nextTextParts[nextTextParts.length - 1];
+
+                                                    characters = nextCharacters(nextText, wordlist);
                                                 }      
                                             
                                                 if (characters.length == 0) {

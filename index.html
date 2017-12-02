@@ -32,11 +32,34 @@
             .slick-current {
                 font-size: 40pt;                
             }
+            #slider {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                height: 50pt;
+                overflow: hidden;
+            }
             #slider * {
                 height: 50pt;
                 line-height: 50pt;
                 font-family: arial;
                 text-align: center;
+                display: inline-block;
+                width: 50pt;
+                box-sizing: border-box;
+                vertical-align: middle;
+                /*font-weight: bold;*/
+                font-size: 16pt;
+                border-style: solid;
+                border-color: lightgray;
+                border-width: 1px;
+            }
+            #slider *:first-child {
+                border-style: solid;
+                border-color: orange;
+                border-width: 2px;
+                font-family: arial;                
+                font-size: 40pt;
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -57,6 +80,34 @@
         $(() => {
 
             let video = $('#video')[0];
+            let characters = ['A', 'Á', 'Â', 'Ã', 'O', 'Ó', 'Ô', 'Õ', 'I', 'Í', 'R', 'E', 'É', 'Ê', 'C', 'Ç', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'Ú', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
+
+
+                        for (let i = 0; i < characters.length; i++) {
+                            let conteinerCharacter = $('<li>');
+                            conteinerCharacter.text(characters[i]);
+                            $('#slider').append(conteinerCharacter);
+                        }
+
+                        let stopSpin = false;
+
+                        function spin() {
+                            let firstChild = $('#slider li:first-child');
+                            firstChild.fadeOut(2000, () => {
+                                let firstCharacter = characters.pop();
+                                firstChild.remove();
+                                characters.push(firstCharacter);
+                                $('#slider').append(firstChild);
+                                firstChild.show();
+                                if (!stopSpin) {
+                                    spin();
+                                }                                
+                            });                            
+                        }
+                           
+                        spin();
+
+
 
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({
@@ -72,15 +123,7 @@
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
                         
-                        let characters = ['A', 'Á', 'Â', 'Ã', 'O', 'Ó', 'Ô', 'Õ', 'I', 'Í', 'R', 'E', 'É', 'Ê', 'C', 'Ç', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'Ú', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
 
-                        let totalCharacters = characters.length;
-
-                        for (let i = 0; i < characters.length; i++) {
-                            let conteinerCharacter = $('<div>');
-                            conteinerCharacter.text(characters[i]);
-                            $('#slider').append(conteinerCharacter);
-                        }
 
                         $("#slider").slick({
                             infinite: true,
@@ -124,9 +167,9 @@
 try {
                                     if (yellowTop != -1) {
                                         if (yellowTop - rect.y > sensibility) {
-                                            $('#slider').slick('removeSlide', null, null, true);   
+                                            $('#slider').empty();  
                                             
-                                            let character = characters[$('#slider').slick('slickCurrentSlide')];
+                                            let character = characters[0];
                                             let text = $('#text').text() + character;
                                             $('#text').text(text);
                                             let regex = new RegExp('\n' + text + '.*', 'gi');
@@ -145,12 +188,10 @@ try {
 
                                             characters = [...nextCharacters];
                                             
-                                            totalCharacters = characters.length;
-
                                             for (let i = 0; i < characters.length; i++) {                                               
-                                                let conteinerCharacter = $('<div>');
+                                                let conteinerCharacter = $('<li>');
                                                 conteinerCharacter.text(characters[i]);
-                                                $('#slider').slick('slickAdd', conteinerCharacter[0]);
+                                                $('#slider').append(conteinerCharacter);
                                             }
 
                                         }
@@ -176,7 +217,7 @@ try {
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
             <input id="sensibility" type="range" min="1" max="10" value="5">
-            <div id="slider"></div>
+            <ul id="slider"></ul>
             <div id="text"></div>
             <div id="log">OK</div>
         </div>

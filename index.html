@@ -83,6 +83,7 @@
             function nextCharacters(text) {                                               
                 let regex = new RegExp('\n' + text + '.*', 'gi');
                 let words = wordlist.match(regex);
+                alert('words: ' + words.join(','));
                 if (words == null) {
                     words = [];
                 }

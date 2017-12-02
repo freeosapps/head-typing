@@ -80,7 +80,8 @@
         <script>
         $(() => {
 
-            function nextCharacters(text) {                                               
+            function nextCharacters(text) {
+                alert('text: ' + text);                                            
                 let regex = new RegExp('\n' + text + '.*', 'gi');
                 let words = wordlist.match(regex);
                 alert('words: ' + words.join(','));

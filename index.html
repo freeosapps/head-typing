@@ -48,11 +48,12 @@
                 width: 50pt;
                 box-sizing: border-box;
                 vertical-align: middle;
-                /*font-weight: bold;*/
                 font-size: 16pt;
-                border-style: solid;
+                border-top-style: solid;
+                border-bottom-style: solid;
                 border-color: lightgray;
-                border-width: 1px;
+                border-top-width: 1px;
+                border-bottom-width: 1px;
             }
             #slider *:first-child {
                 border-style: solid;
@@ -80,7 +81,22 @@
         $(() => {
 
             let video = $('#video')[0];
-            let characters = ['A', 'Á', 'Â', 'Ã', 'O', 'Ó', 'Ô', 'Õ', 'I', 'Í', 'R', 'E', 'É', 'Ê', 'C', 'Ç', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'Ú', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W'];
+
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({
+                    video: {
+                        mandatory: {
+                            minWidth: 640,
+                            minHeight: 480
+                        }
+                    }
+                }).then(function(stream) {
+                    $.ajax({url: '/poc-captura-video/pt_BR_wordlist.txt'})
+                    .done((wordlist) => {
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                        
+                        let characters = ['A', 'Á', 'Â', 'Ã', 'O', 'Ó', 'Ô', 'Õ', 'I', 'Í', 'R', 'E', 'É', 'Ê', 'C', 'Ç', 'N', 'T', 'L', 'S', 'D', 'M', 'U', 'Ú', 'B', 'G', 'P', 'F', 'H', 'V', 'Z', 'X', 'Q', 'J', 'K', 'Y', 'W', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 
                         for (let i = 0; i < characters.length; i++) {
@@ -106,21 +122,6 @@
                         spin();
 
 
-
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({
-                    video: {
-                        mandatory: {
-                            minWidth: 640,
-                            minHeight: 480
-                        }
-                    }
-                }).then(function(stream) {
-                    $.ajax({url: '/poc-captura-video/pt_BR_wordlist.txt'})
-                    .done((wordlist) => {
-                        video.src = window.URL.createObjectURL(stream);
-                        video.play();
-                        
                         var colors = new tracking.ColorTracker(['yellow']);
 
                         let yellowTop = -1;
@@ -150,7 +151,6 @@
                                         borderWidth: 2                              
                                     });
 
-try {
                                     if (yellowTop != -1) {
                                         if (yellowTop - rect.y > sensibility) {                                                                                    
                                             let character = $('#slider li:first-child').text();
@@ -181,11 +181,7 @@ try {
 
                                         }
                                     }
-                                } catch (e) {
-                                    alert('error' + e);
-                                }
                                     yellowTop = rect.y;
-
                                 });
 
                             }

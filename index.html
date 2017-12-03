@@ -133,15 +133,14 @@
                         function spin() {
                             let firstChild = $('#slider li:first-child');
                             let secondChild = $('#slider li:nth-child(2)');
-                            alert('secondChild:' + secondChild.text());
-                            if (!stopSpin) {                                
-                                firstChild.fadeOut(2000, () => {
-                                    secondChild.css({
-                                        borderColor: 'orange',
-                                        borderStyle: 'solid',
-                                        borderWidth: 2,
-                                        backgroundColor: 'orange'
-                                    });                                  
+                            if (!stopSpin) {                    
+                                secondChild.css({
+                                    borderColor: 'orange',
+                                    borderStyle: 'solid',
+                                    borderWidth: 2,
+                                    backgroundColor: 'orange'
+                                });            
+                                firstChild.fadeOut(2000, () => {                                
                                     firstChild.remove();
                                     $('#slider').append(firstChild);
                                     firstChild.show();                               

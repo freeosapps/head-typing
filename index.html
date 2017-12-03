@@ -12,12 +12,9 @@
                 filter: blur(10px);
                 filter: saturate(10);
             }
-            #sensibility, #log {
+            #sensibility {
                 color: black;
                 font-family: arial;
-            }
-            #log {
-                display: none;
             }
             #overlay {
                 position: absolute;
@@ -133,6 +130,7 @@
                             let firstChild = $('#slider li:first-child');
                             if (!stopSpin) {                                
                                 firstChild.fadeOut(2000, () => {
+                                    firstChild.siblings()[0].css({backgroundColor: orange});
                                     firstChild.remove();
                                     $('#slider').append(firstChild);
                                     firstChild.show();                               
@@ -242,7 +240,6 @@
             <input id="sensibility" type="range" min="1" max="10" value="5">
             <ul id="slider"></ul>
             <div id="text"></div>
-            <div id="log">OK</div>
         </div>
     </body>
 </html>

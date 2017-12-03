@@ -97,7 +97,7 @@
 
                 let charactersArray = [...characters];
 
-                return [charactersArray[charactersArray.length]].concat(['→', '←']).concat(charactersArray.splice(0, -1));
+                return [charactersArray[charactersArray.length - 1]].concat(['→', '←']).concat(charactersArray.splice(0, -1));
             }
 
             let video = $('#video')[0];

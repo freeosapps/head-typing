@@ -133,6 +133,7 @@
                         function spin() {
                             let firstChild = $('#slider li:first-child');
                             let secondChild = $('#slider li:nth-child(2)');
+                            alert('secondChild:' + secondChild);
                             if (!stopSpin) {                                
                                 firstChild.fadeOut(2000, () => {
                                     secondChild.css({

@@ -113,6 +113,9 @@
                     .done((wordlist) => {
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
+                        
+                        $('#text').width($(video).width());
+                        $('#text').height($(video).height());
 
                         let characters = nextCharacters('', wordlist);
 

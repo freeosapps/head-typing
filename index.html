@@ -113,6 +113,8 @@
                     .done((wordlist) => {
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
+
+                        alert('w/h: ' + $(video).width() + '/' + $(video).height());
                         
                         $('#text').width($(video).width());
                         $('#text').height($(video).height());

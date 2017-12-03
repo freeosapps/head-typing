@@ -15,6 +15,7 @@
             #sensibility {
                 color: black;
                 font-family: arial;
+                margin: 5px 0 5px 0;
             }
             #overlay {
                 position: absolute;
@@ -128,9 +129,10 @@
 
                         function spin() {
                             let firstChild = $('#slider li:first-child');
+                            let secondChild = $('#slide li:nth-child(2)');
                             if (!stopSpin) {                                
                                 firstChild.fadeOut(2000, () => {
-                                    firstChild.siblings()[0].css({backgroundColor: orange});
+                                    secondChild.css({backgroundColor: 'orange'});
                                     firstChild.remove();
                                     $('#slider').append(firstChild);
                                     firstChild.show();                               

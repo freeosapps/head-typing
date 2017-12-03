@@ -96,8 +96,7 @@
                 }
 
                 let charactersArray = [...characters];
-                let lastCharacter = [charactersArray[charactersArray.length - 1]];
-                charactersArray.splice(0, -1);
+                let lastCharacter = charactersArray.pop();                
                 return [lastCharacter].concat(['→', '←']).concat(charactersArray);
             }
 

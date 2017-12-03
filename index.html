@@ -114,7 +114,7 @@
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
 
-                        alert('w/h: ' + $(video).width() + '/' + $(video).height());
+                        alert('w/h: ' + video.videoHeight + '/' + video.videoWidth);
                         
                         $('#text').width($(video).width());
                         $('#text').height($(video).height());

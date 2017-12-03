@@ -95,7 +95,7 @@
                     }                                             
                 }
 
-                return ['→', '←'].concat([...characters]);
+                return ([...characters])[characters.size].concat(['→', '←'].concat([...characters].splice(0, -1)));
             }
 
             let video = $('#video')[0];

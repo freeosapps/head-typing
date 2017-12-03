@@ -88,10 +88,8 @@
                         characters.add(character.toUpperCase());
                     }                                             
                 }
-
-                let charactersArray = [...characters];
-                let lastCharacter = charactersArray.pop();                
-                return [lastCharacter].concat(['→', '←']).concat(charactersArray).concat(['🗣']);
+  
+                return ['🗣'].concat(['→', '←']).concat([...characters]);
             }
 
             let video = $('#video')[0];

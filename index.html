@@ -112,6 +112,14 @@
                 return ['.', '→', '←'].concat([...characters]);
             }
 
+            function updateNextCharacters(characters) {
+                for (let i = 0; i < characters.length; i++) {
+                    let conteinerCharacter = $('<li>');
+                    conteinerCharacter.text(characters[i]);
+                    $('#slider').append(conteinerCharacter);
+                }
+            }
+
             let video = $('#video')[0];
 
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -129,12 +137,7 @@
                         video.play();
 
                         let characters = nextCharacters('', wordlist);
-
-                        for (let i = 0; i < characters.length; i++) {
-                            let conteinerCharacter = $('<li>');
-                            conteinerCharacter.text(characters[i]);
-                            $('#slider').append(conteinerCharacter);
-                        }
+                        updateNextCharacters(characters);
 
                         let stopSpin = false;
 
@@ -235,11 +238,7 @@
 
                                                 $('#slider').fadeOut(250, () => {
                                                     $('#slider').empty();
-                                                    for (let i = 0; i < characters.length; i++) {                                               
-                                                        let conteinerCharacter = $('<li>');
-                                                        conteinerCharacter.text(characters[i]);
-                                                        $('#slider').append(conteinerCharacter);
-                                                    }
+                                                    updateNextCharacters(characters);
                                                     $('#slider').fadeIn(250, () => {
                                                         stopSpin = false;
                                                         spin();

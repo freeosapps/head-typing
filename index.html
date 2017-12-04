@@ -234,6 +234,8 @@
                                                     characters = nextCharacters('', wordlist);
                                                 }                                                                                              
 
+                                                backspaceNotSelectedBefore = (character != '←');
+
                                                 $('#slider').fadeOut(250, () => {
                                                     $('#slider').empty();
                                                     for (let i = 0; i < characters.length; i++) {                                               
@@ -245,9 +247,7 @@
                                                         stopSpin = false;
                                                         spin();
                                                     });                                                    
-                                                });
-
-                                                backspaceNotSelectedBefore = (character != '←');  
+                                                });                                               
                                             };
 
                                             stopSpin = true;

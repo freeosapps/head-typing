@@ -135,6 +135,13 @@
                             });
                         }, false);
 
+                        video.addEventListener('abort', (event) => {
+                            alert('foi abort');
+                        }, false);
+
+                        video.addEventListener('pause', (event) => {
+                            alert('foi pause');
+                        }, false);
 
                         video.src = window.URL.createObjectURL(stream);
                         video.play();

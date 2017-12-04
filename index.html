@@ -105,7 +105,7 @@
                     }                                             
                 }
   
-                return ['🗣'].concat(['→', '←']).concat([...characters]);
+                return ['.'].concat(['→', '←']).concat([...characters]);
             }
 
             let video = $('#video')[0];
@@ -196,7 +196,7 @@
                                                     text = $('#text').text() + ' ';
                                                 } else if (character == '←') {
                                                     text = $('#text').text().slice(0, -1);
-                                                } else if (character == '🗣') {
+                                                } else if (character == '.') {
                                                     let message = new SpeechSynthesisUtterance($('#text').text());
                                                     message.lang = 'pt-BR';
                                                     window.speechSynthesis.speak(message);
@@ -259,7 +259,14 @@
     <body>        
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
-            <input id="sensibility" type="range" min="1" max="10" value="5">
+            <label>
+                Sensibilidade
+                <input id="sensibility" type="range" min="1" max="10" value="5">
+            </label>
+            <label>
+                Velocidade
+                <input id="speed" type="range" min="1" max="10" value="5">
+            </label>
             <ul id="slider"></ul>
             <div id="text"></div>
         </div>

@@ -86,11 +86,13 @@
         
         <script>
         $(() => {
+            let message = new SpeechSynthesisUtterance('Olá! Como vai você?');
+            message.lang = 'pt-BR';
+            window.speechSynthesis.speak(message);
 
             setInterval(() => {
                 $('#text').toggleClass('cursor-active');
-            }, 500);
-            
+            }, 500);            
 
             function nextCharacters(text, wordlist) {
                 let regex = new RegExp('\n' + text + '.*', 'gi');
@@ -261,9 +263,10 @@
     <body>        
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
+                🗣
             <input id="sensibility" type="range" min="1" max="10" value="5">
             <ul id="slider"></ul>
-            <div id="text">🗣</div>
+            <div id="text"></div>
         </div>
     </body>
 </html>

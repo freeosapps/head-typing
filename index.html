@@ -109,7 +109,7 @@
                     }                                             
                 }
   
-                return ['.'].concat(['→', '←']).concat([...characters]);
+                return ['.', '→', '←'].concat([...characters]);
             }
 
             let video = $('#video')[0];
@@ -218,10 +218,10 @@
 
                                                 // "fala", "apagar", "espaço" e um caractere qualquer
                                                 while (characters.length == 4) {                                                                                                         
-                                                    let text = $('#text').text() + characters[0];
+                                                    let text = $('#text').text() + characters[3];
                                                     $('#text').text(text);
                                                     let nextTextParts = text.split(' ');
-                                                    let nextText = nextTextParts[nextTextParts.length - 4];
+                                                    let nextText = nextTextParts[nextTextParts.length - 1];
                                                     characters = nextCharacters(nextText, wordlist);
                                                 }
                                             

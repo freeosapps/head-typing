@@ -196,15 +196,19 @@
                                                 
                                                 if (character == '→') {
                                                     text = $('#text').text() + ' ';
+                                                    backspaceNotSelectedBefore = false;
                                                 } else if (character == '←') {
                                                     text = $('#text').text().slice(0, -1);
+                                                    backspaceNotSelectedBefore = true;
                                                 } else if (character == '.') {
                                                     let message = new SpeechSynthesisUtterance($('#text').text());
                                                     message.lang = 'pt-BR';
                                                     window.speechSynthesis.speak(message);
-                                                    text = '';                                                    
+                                                    text = '';
+                                                    backspaceNotSelectedBefore = false;
                                                 } else {                                                    
                                                     text = $('#text').text() + character;
+                                                    backspaceNotSelectedBefore = false;
                                                 }
 
                                                 $('#text').text(text);
@@ -227,9 +231,7 @@
                                                     let text = $('#text').text() + ' ';
                                                     $('#text').text(text);
                                                     characters = nextCharacters('', wordlist);
-                                                }                                                                                              
-
-                                                backspaceNotSelectedBefore = (character != '←');
+                                                }                                                                                                                                              
 
                                                 $('#slider').fadeOut(250, () => {
                                                     $('#slider').empty();

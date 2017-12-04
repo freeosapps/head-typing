@@ -175,6 +175,8 @@
                         });
                         $(document.body).append(yellow);
 
+                        let backspaceNotSelectedBefore = true;
+
                         colors.on('track', function(event) {
                             if (event.data.length === 0) {
                                 // No colors were detected in this frame.
@@ -217,7 +219,7 @@
                                                 characters = nextCharacters(nextText, wordlist);
 
                                                 // "fala", "apagar", "espaço" e um caractere qualquer
-                                                while (characters.length == 4) {                                                                                                         
+                                                while (characters.length == 4 && backspaceNotSelectedBefore) {                                                                                                         
                                                     let text = $('#text').text() + characters[characters.length - 1];
                                                     $('#text').text(text);
                                                     let nextTextParts = text.split(' ');
@@ -226,11 +228,11 @@
                                                 }
                                             
                                                 // "fala", "apagar" e "espaço"
-                                                if (characters.length == 3) {
+                                                if (characters.length == 3 && backspaceNotSelectedBefore) {
                                                     let text = $('#text').text() + ' ';
                                                     $('#text').text(text);
                                                     characters = nextCharacters('', wordlist);
-                                                }
+                                                }                                                                                              
 
                                                 $('#slider').fadeOut(250, () => {
                                                     $('#slider').empty();
@@ -244,10 +246,14 @@
                                                         spin();
                                                     });                                                    
                                                 });
+
+                                                backspaceNotSelectedBefore = (character != '←');  
                                             };
+
                                             stopSpin = true;
                                         }
                                     }
+
                                     yellowTop = rect.y;
                                 });
 

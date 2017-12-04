@@ -162,16 +162,7 @@
 
                         var colors = new tracking.ColorTracker(['yellow']);
 
-                        let yellowTop = -1;
-
-                        let yellow = $('<div>');
-                        yellow.css({
-                            borderColor: 'yellow',                
-                            borderStyle: 'solid',
-                            position: 'absolute',
-                            borderWidth: 0
-                        });
-                        $(document.body).append(yellow);
+                        let markerTop = -1;
 
                         let backspaceNotSelectedBefore = true;
 
@@ -182,17 +173,14 @@
                                 let sensibility = 11 - $('#sensibility').val();
 
                                 event.data.forEach(function(rect) {
-
-                                    yellow.css({
-                                        top: rect.y,
-                                        left: rect.x,
-                                        width: rect.width,
-                                        height: rect.height,
-                                        borderWidth: 2                              
-                                    });
-
-                                    if (yellowTop != -1) {
-                                        if (yellowTop - rect.y > sensibility) {                                          
+                                    if (markerTop != -1) {                                        
+                                        let movement = markerTop - rect.y;
+                                        $('#progress').prop('max', sensibility);
+                                        $('#progress').val(movement);
+                                        setTimeout(() => {
+                                            $('#progress').val('0');
+                                        }, 1000);
+                                        if (movement > sensibility) {
                                             callbackStopSpin = (firstChild) => {                                                                                   
                                                 let character = firstChild.text();
                                                 let text = '';
@@ -250,7 +238,7 @@
                                         }
                                     }
 
-                                    yellowTop = rect.y;
+                                    markerTop = rect.y;
                                 });
 
                             }
@@ -273,6 +261,10 @@
             <label>
                 Velocidade: 
                 <input id="speed" type="range" min="1" max="5" value="5">
+            </label>
+            <label>
+                Movimento:
+                <progress max="10" value="0"></progress>
             </label>
             <ul id="slider"></ul>
             <div id="text"></div>

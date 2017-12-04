@@ -148,7 +148,7 @@
                         function spin() {
                             let firstChild = $('#slider li:first-child');
                             if (!stopSpin) {
-                                let speed = $('#speed').val();
+                                let speed = 6 - $('#speed').val();
                                 firstChild.fadeOut(speed * 1000, () => {                                
                                     firstChild.remove();
                                     $('#slider').append(firstChild);
@@ -179,7 +179,7 @@
                             if (event.data.length === 0) {
                                 // No colors were detected in this frame.
                             } else {
-                                let sensibility = $('#sensibility').val();
+                                let sensibility = 11 - $('#sensibility').val();
 
                                 event.data.forEach(function(rect) {
 
@@ -266,11 +266,11 @@
         <div id="overlay">
             <label>
                 Sensibilidade: 
-                <input id="sensibility" type="range" min="1" max="10" value="5">
+                <input id="sensibility" type="range" min="1" max="10" value="6">
             </label>
             <label>
                 Velocidade: 
-                <input id="speed" type="range" min="1" max="5" value="1">
+                <input id="speed" type="range" min="1" max="5" value="4">
             </label>
             <ul id="slider"></ul>
             <div id="text"></div>

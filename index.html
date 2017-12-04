@@ -220,14 +220,7 @@
                                                     let nextTextParts = text.split(' ');
                                                     let nextText = nextTextParts[nextTextParts.length - 1];
                                                     characters = nextCharacters(nextText, wordlist);
-                                                }
-                                            
-                                                // "fala", "apagar" e "espaço"
-                                                if (characters.length == 3 && backspaceNotSelectedBefore) {
-                                                    let text = $('#text').text() + ' ';
-                                                    $('#text').text(text);
-                                                    characters = nextCharacters('', wordlist);
-                                                }                                                                                                                                              
+                                                }                                                                                                                                                                                   
 
                                                 $('#slider').fadeOut(250, () => {
                                                     $('#slider').empty();

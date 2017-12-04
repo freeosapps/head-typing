@@ -122,8 +122,8 @@
                     $.ajax({url: '/poc-captura-video/pt_BR_wordlist.txt'})
                     .done((wordlist) => {
                         video.addEventListener('loadeddata', (event) => {
-                            $('#text').width(video.videoWidth);
-                            $('#text').height(video.videoHeight);
+                            $('#overlay').width(video.videoWidth);
+                            $('#overlay').height(video.videoHeight);
                         }, false);
 
                         video.src = window.URL.createObjectURL(stream);

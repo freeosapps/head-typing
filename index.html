@@ -125,24 +125,6 @@
                 }).then(function(stream) {
                     $.ajax({url: '/poc-captura-video/pt_BR_wordlist.txt'})
                     .done((wordlist) => {
-                        video.addEventListener('loadeddata', (event) => {
-                            $('#overlay').width(video.videoWidth);
-                            $('#overlay').height(video.videoHeight);
-
-                            $(window).on('orientationchange', () => {
-                                $('#overlay').width(video.videoWidth);
-                                $('#overlay').height(video.videoHeight);
-                            });
-                        }, false);
-
-                        video.addEventListener('abort', (event) => {
-                            alert('foi abort');
-                        }, false);
-
-                        video.addEventListener('pause', (event) => {
-                            alert('foi pause');
-                        }, false);
-
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
 

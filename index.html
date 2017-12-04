@@ -201,7 +201,7 @@
                                                 } else if (character == '🗣') {
                                                     let message = new SpeechSynthesisUtterance(text);
                                                     message.lang = 'pt-BR';
-                                                    window.webkitSpeechSynthesis.speak(message);
+                                                    window.speechSynthesis.speak(message);
                                                     text = '';                                                    
                                                 } else {                                                    
                                                     text = $('#text').text() + character;
@@ -263,7 +263,7 @@
         <div id="overlay">
             <input id="sensibility" type="range" min="1" max="10" value="5">
             <ul id="slider"></ul>
-            <div id="text"></div>
+            <div id="text">🗣</div>
         </div>
     </body>
 </html>

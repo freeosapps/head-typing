@@ -135,9 +135,6 @@
                 }).then(function(stream) {
                     $.ajax({url: '/poc-captura-video/pt_BR_wordlist.txt'})
                     .done((wordlist) => {
-                        $(video).on('loadeddata', () => {
-                            alert('foi');
-                        });
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
 

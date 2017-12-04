@@ -180,10 +180,10 @@
                                 event.data.forEach(function(rect) {
                                     if (markerTop != -1) {                                        
                                         let movement = markerTop - rect.y;
-                                        $('#progress').prop('max', sensibility);
-                                        $('#progress').val(movement);
+                                        $('#movement').prop('max', sensibility);
+                                        $('#movement').val(movement);
                                         setTimeout(() => {
-                                            $('#progress').val('0');
+                                            $('#movement').val('0');
                                         }, 1000);
                                         if (movement > sensibility) {
                                             callbackStopSpin = (firstChild) => {                                                                                   
@@ -269,7 +269,7 @@
             </label>
             <label>
                 Movimento:
-                <progress max="10" value="0"></progress>
+                <progress id="movement" max="10" value="0"></progress>
             </label>
             <ul id="slider"></ul>
             <div id="text"></div>

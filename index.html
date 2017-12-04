@@ -128,7 +128,13 @@
                         video.addEventListener('loadeddata', (event) => {
                             $('#overlay').width(video.videoWidth);
                             $('#overlay').height(video.videoHeight);
+
+                            $(window).on('orientationchange', () => {
+                                $('#overlay').width(video.videoWidth);
+                                $('#overlay').height(video.videoHeight);
+                            });
                         }, false);
+
 
                         video.src = window.URL.createObjectURL(stream);
                         video.play();

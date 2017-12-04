@@ -17,6 +17,10 @@
                 color: black;
                 font-family: arial;
                 margin: 10px 0 10px 0;
+                vertical-align: middle;
+            }
+            #speed {
+                vertical-align: middle;
             }
             #overlay {
                 position: absolute;
@@ -143,8 +147,9 @@
 
                         function spin() {
                             let firstChild = $('#slider li:first-child');
-                            if (!stopSpin) {       
-                                firstChild.fadeOut(2000, () => {                                
+                            if (!stopSpin) {
+                                let speed = $('#speed').val();
+                                firstChild.fadeOut(speed * 1000, () => {                                
                                     firstChild.remove();
                                     $('#slider').append(firstChild);
                                     firstChild.show();                               
@@ -260,12 +265,12 @@
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
             <label>
-                Sensibilidade
+                Sensibilidade: 
                 <input id="sensibility" type="range" min="1" max="10" value="5">
             </label>
             <label>
-                Velocidade
-                <input id="speed" type="range" min="1" max="10" value="5">
+                Velocidade: 
+                <input id="speed" type="range" min="1" max="5" value="1">
             </label>
             <ul id="slider"></ul>
             <div id="text"></div>

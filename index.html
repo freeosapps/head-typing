@@ -201,7 +201,7 @@
                                                 } else if (character == '🗣') {
                                                     let message = new SpeechSynthesisUtterance(text);
                                                     message.lang = 'pt-BR';
-                                                    window.speechSynthesis.speak(message);
+                                                    window.webkitSpeechSynthesis.speak(message);
                                                     text = '';                                                    
                                                 } else {                                                    
                                                     text = $('#text').text() + character;

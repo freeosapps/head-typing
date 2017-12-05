@@ -17,15 +17,21 @@
             }
             label {
                 display: inline-block;
-                font-family: arial;               
+                font-family: arial;
+                font-size: 14pt;
                 margin: 10px;
                 white-space: nowrap;
-                border-width: 1px;
-                border-style: dotted;
-                color: gray;
+                color: gray;                
             }
             label * {
                 vertical-align: middle;
+            }
+            label span {
+                border-width: 1px;
+                border-style: dotted;
+            }
+            label progress, label input {
+                height: 25pt;
             }
             #overlay {
                 position: absolute;
@@ -259,15 +265,15 @@
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
             <label>
-                Sensibilidade: 
+                <span>Sensibilidade:</span>
                 <input id="sensibility" type="range" min="1" max="10" value="9">
             </label>
             <label>
-                Velocidade: 
+                <span>Velocidade:</span>
                 <input id="speed" type="range" min="1" max="5" value="5">
             </label>
             <label>
-                Movimento:
+                <span>Movimento:</span>
                 <progress id="movement" max="10" value="0"></progress>
             </label>
             <ul id="slider"></ul>

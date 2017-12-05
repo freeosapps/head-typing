@@ -28,7 +28,8 @@
             }
             label span {
                 border-width: 1px;
-                border-style: dotted;
+                border-style: solid;
+                border-color: gainsboro;
                 padding: 5px;
                 background-color: lightyellow;
                 border-radius: 5px;
@@ -52,7 +53,7 @@
                 padding: 0;
                 height: 50pt;
                 overflow: hidden;
-                box-shadow: 0px 0px 5px lightslategray;
+                box-shadow: 0px 0px 5px;
                 background-color: white;
             }
             #slider * {
@@ -99,6 +100,12 @@
             .cursor-active {
                 border-right-width: 2px;
                 border-right-style: solid;
+            }
+            #controls {
+                box-shadow: 0 0 5px;
+                margin: 5px;
+                background-color: beige;
+                border-radius: 5px;
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -328,18 +335,20 @@
     <body>        
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
-            <label>
-                <span>Sensibilidade:</span>
-                <input id="sensibility" type="range" min="1" max="10" value="9">
-            </label>
-            <label>
-                <span>Velocidade:</span>
-                <input id="speed" type="range" min="1" max="5" value="5">
-            </label>
-            <label>
-                <span>Movimento:</span>
-                <progress id="movement" max="10" value="0"></progress>
-            </label>
+            <div id="controls">
+                <label>
+                    <span>Sensibilidade:</span>
+                    <input id="sensibility" type="range" min="1" max="10" value="9">
+                </label>
+                <label>
+                    <span>Velocidade:</span>
+                    <input id="speed" type="range" min="1" max="5" value="5">
+                </label>
+                <label>
+                    <span>Movimento:</span>
+                    <progress id="movement" max="10" value="0"></progress>
+                </label>
+            </div>
             <ul id="slider"></ul>
             <div id="text" class="text"></div>
         </div>

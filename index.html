@@ -251,7 +251,7 @@
                                                     backspaceNotSelectedBefore = true;
                                                 }
 
-                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > 40) {
+                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
                                                     let penultimateLine = $('<div>');
                                                     penultimateLine.addClass('text');
                                                     penultimateLine.text($('#text').text());
@@ -273,7 +273,7 @@
                                                 // "fala", "apagar", "espaço" e um caractere qualquer
                                                 while (characters.length == 4 && backspaceNotSelectedBefore) {
                                                     let text = $('#text').text() + characters[characters.length - 1];
-                                                    if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > 40) {
+                                                    if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
                                                         let penultimateLine = $('<div>');
                                                         penultimateLine.addClass('text');
                                                         penultimateLine.text($('#text').text());
@@ -335,9 +335,7 @@
                 <progress id="movement" max="10" value="0"></progress>
             </label>
             <ul id="slider"></ul>
-            <div style="width:50px">
-                <div id="text" class="text"></div>
-            </div>
+            <div id="text" class="text"></div>
         </div>
     </body>
 </html>

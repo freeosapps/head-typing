@@ -196,6 +196,8 @@
 
                         let backspaceNotSelectedBefore = true;
 
+                        let brokenLines = [];
+
                         colors.on('track', function(event) {
                             if (event.data.length === 0) {
                                 // No colors were detected in this frame.
@@ -219,8 +221,13 @@
                                                     text = $('#text').text() + ' ';
                                                     backspaceNotSelectedBefore = true;
                                                 } else if (character == '←') {
+                                                    if (!text) {
+                                                        let penultimateLine = brokenLines.pop();
+                                                        penultimateLine.remove();
+                                                        $('#text').text(penultimateLine.text());
+                                                    }
                                                     text = $('#text').text().slice(0, -1);
-                                                    backspaceNotSelectedBefore = false;
+                                                    backspaceNotSelectedBefore = false;                                                    
                                                 } else if (character == '.') {
                                                     let message = new SpeechSynthesisUtterance($('#text').text());
                                                     message.lang = 'pt-BR';
@@ -232,13 +239,14 @@
                                                     backspaceNotSelectedBefore = true;
                                                 }
 
-                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > 20) {
+                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > 40) {
                                                     let penultimateLine = $('<div>');
                                                     penultimateLine.addClass('text');
                                                     penultimateLine.addClass('broken-line');
                                                     penultimateLine.text($('#text').text());
                                                     $('#text').text(character);
                                                     penultimateLine.insertBefore('#text');
+                                                    brokenLines.push(penultimateLine);
                                                 } else {
                                                     $('#text').text(text);
                                                 }                                                

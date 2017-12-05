@@ -76,7 +76,7 @@
                 background-color: orange;
                 font-size: 40pt;
             }
-            #text {
+            .text {
                 margin: 10px 0 0 0;
                 resize: none;
                 display: inline-block;
@@ -229,14 +229,15 @@
                                                     backspaceNotSelectedBefore = true;
                                                 }
 
-                                                alert(mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')));
-
                                                 if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > 20) {
-                                                    alert('maior que vinte');
-                                                    $('#text').append($('<br>'));
-                                                }
-
-                                                $('#text').text(text);
+                                                    let penultimateLine = $('<div>');
+                                                    penultimateLine.addClass('text');
+                                                    penultimateLine.text($('#text').text());
+                                                    $('#text').text(character);
+                                                    $('#text').prepend(penultimateLine);
+                                                } else {
+                                                    $('#text').text(text);
+                                                }                                                
 
                                                 let nextTextParts = text.split(' ');
                                                 let nextText = nextTextParts[nextTextParts.length - 1];
@@ -294,7 +295,7 @@
                 <progress id="movement" max="10" value="0"></progress>
             </label>
             <ul id="slider"></ul>
-            <div id="text"></div>
+            <div id="text" class="text"></div>
         </div>
     </body>
 </html>

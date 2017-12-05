@@ -110,6 +110,13 @@
         
         <script>
         $(() => {
+            function mesureText(text, fontFamily, fontSize) {
+                var c = document.createElement("canvas");
+                var ctx = c.getContext("2d");
+                ctx.font = fontSize + ' ' + fontFamily;
+                return ctx.measureText(text).width;
+            }
+
             setInterval(() => {
                 $('#text').toggleClass('cursor-active');
             }, 500);            
@@ -220,6 +227,10 @@
                                                 } else {                                                    
                                                     text = $('#text').text() + character;
                                                     backspaceNotSelectedBefore = true;
+                                                }
+
+                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
+                                                    $('#text').text('<br>');
                                                 }
 
                                                 $('#text').text(text);

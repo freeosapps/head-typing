@@ -232,8 +232,8 @@
                                                 alert('$(window).width() =' + $(window).width());
                                                 alert('text width =' + mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')));
 
-                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
-                                                    $('#text').text('<br>');
+                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > 20) {
+                                                    $('#text').append($('<br>'));
                                                 }
 
                                                 $('#text').text(text);

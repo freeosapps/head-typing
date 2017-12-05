@@ -89,6 +89,9 @@
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
+            .broken-line {
+                display: block;
+            }
             .cursor-active {
                 border-width: 2px;
                 border-right-style: solid;
@@ -232,6 +235,7 @@
                                                 if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > 20) {
                                                     let penultimateLine = $('<div>');
                                                     penultimateLine.addClass('text');
+                                                    penultimateLine.addClass('broken-line');
                                                     penultimateLine.text($('#text').text());
                                                     $('#text').text(character);
                                                     penultimateLine.insertBefore('#text');

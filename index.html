@@ -236,10 +236,10 @@
                                                     characters = nextCharacters(nextText, wordlist);
                                                 }                                                                                                                                                                                   
 
-                                                $('#slider').fadeOut(250, () => {
+                                                $('#slider').hide(0, () => {
                                                     $('#slider').empty();
                                                     updateNextCharacters(characters);
-                                                    $('#slider').fadeIn(250, () => {
+                                                    $('#slider').show(0, () => {
                                                         stopSpin = false;
                                                         spin();
                                                     });                                                    

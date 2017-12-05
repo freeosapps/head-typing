@@ -77,7 +77,7 @@
                 font-size: 40pt;
             }
             .text {
-                margin: 10px 0 0 0;
+                margin: 5px 0 0 0;
                 resize: none;
                 display: inline-block;
                 white-space: pre;
@@ -200,6 +200,15 @@
 
                         let phrase = '';
 
+                        function fullText() {
+                            let text = '';
+                            for (let i = 0; i < brokenLines.length; i++) {
+                                text += brokenLines[i].text();
+                            }
+                            text += $('#text').text();
+                            return text;
+                        }
+
                         colors.on('track', function(event) {
                             if (event.data.length === 0) {
                                 // No colors were detected in this frame.
@@ -231,8 +240,8 @@
                                                     text = $('#text').text().slice(0, -1);
                                                     backspaceNotSelectedBefore = false;                                                    
                                                 } else if (character == '.') {
-                                                    // TODO: Concatenar frase
-                                                    let message = new SpeechSynthesisUtterance(phrase);
+                                                    let phrases = fullText().split('.');                                                   
+                                                    let message = new SpeechSynthesisUtterance(phrases[phrases.length - 1]);
                                                     message.lang = 'pt-BR';
                                                     window.speechSynthesis.speak(message);
                                                     text = $('#text').text() + character;
@@ -257,7 +266,7 @@
                                                     $('#text').text(text);
                                                 }                                                
 
-                                                let nextTextParts = text.split(' ');
+                                                let nextTextParts = fullText().split(' ');
                                                 let nextText = nextTextParts[nextTextParts.length - 1];
                                                 characters = nextCharacters(nextText, wordlist);
 
@@ -276,8 +285,8 @@
                                                         penultimateLine.insertBefore('#text');
                                                         brokenLines.push(penultimateLine);
                                                     } else {
-                                                        $('#text').text(text);
-                                                        let nextTextParts = text.split(' ');
+                                                        $('#text').text(text);                                                        
+                                                        let nextTextParts = fullText().split(' ');
                                                         let nextText = nextTextParts[nextTextParts.length - 1];
                                                         characters = nextCharacters(nextText, wordlist);
                                                     }

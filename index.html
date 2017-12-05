@@ -221,7 +221,7 @@
                                                     text = $('#text').text() + ' ';
                                                     backspaceNotSelectedBefore = true;
                                                 } else if (character == '←') {
-                                                    if (!text) {
+                                                    if (!$('#text').text() && brokenLines.length > 0) {
                                                         let penultimateLine = brokenLines.pop();
                                                         penultimateLine.remove();
                                                         $('#text').text(penultimateLine.text());

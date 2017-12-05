@@ -181,7 +181,7 @@
                             let firstChild = $('#slider li:first-child');
                             if (!stopSpin) {
                                 let speed = 6 - $('#speed').val();
-                                firstChild.fadeOut(speed * 1000, () => {                                
+                                firstChild.animate({width: 'toggle'}, speed * 1000, 'swing', () => {                                
                                     firstChild.remove();
                                     $('#slider').append(firstChild);
                                     firstChild.show();                               

@@ -27,11 +27,7 @@
                 vertical-align: middle;
             }
             label span {
-                border-width: 1px;
-                border-style: solid;
-                border-color: gainsboro;
                 padding: 5px;
-                background-color: lightyellow;
                 border-radius: 5px;
             }
             label progress, label input {
@@ -280,7 +276,7 @@
                                                 }                                                
 
                                                 let nextTextParts = fullText().split(' ');
-                                                let nextText = nextTextParts[nextTextParts.length - 1];
+                                                let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
                                                 characters = nextCharacters(nextText, wordlist);
 
                                                 // "fala", "apagar", "espaço" e um caractere qualquer
@@ -300,7 +296,7 @@
                                                     } else {
                                                         $('#text').text(text);                                                        
                                                         let nextTextParts = fullText().split(' ');
-                                                        let nextText = nextTextParts[nextTextParts.length - 1];
+                                                        let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
                                                         characters = nextCharacters(nextText, wordlist);
                                                     }
                                                 }                                                                                                                                                                                   

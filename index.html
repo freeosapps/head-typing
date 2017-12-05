@@ -234,7 +234,7 @@
                                                     penultimateLine.addClass('text');
                                                     penultimateLine.text($('#text').text());
                                                     $('#text').text(character);
-                                                    $('#text').prepend(penultimateLine);
+                                                    penultimateLine.insertBefore('#text');
                                                 } else {
                                                     $('#text').text(text);
                                                 }                                                

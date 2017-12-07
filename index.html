@@ -104,6 +104,9 @@
                 border-radius: 5px;
             }
         </style>
+
+        <link id="wordlist" rel="import" href="/head-typing/pt_BR_wordlist.txt">
+
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
@@ -169,97 +172,120 @@
                             minHeight: 480
                         }
                     }
-                }).then(function(stream) {
-                    $.ajax({url: '/poc-captura-video/pt_BR_wordlist.txt'})
-                    .done((wordlist) => {
-                        video.src = window.URL.createObjectURL(stream);
-                        video.play();
+                }).then((stream) => {                   
+                    let wordlistDocument = $('#wordlist')[0].import;
+                    let wordlist = $(wordlistDocument).find('body').text();
 
-                        let characters = nextCharacters('', wordlist);
-                        updateNextCharacters(characters);
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
 
-                        let stopSpin = false;
+                    let characters = nextCharacters('', wordlist);
+                    updateNextCharacters(characters);
 
-                        let callbackStopSpin = () => {};
+                    let stopSpin = false;
 
-                        function spin() {
-                            let firstChild = $('#slider li:first-child');
-                            if (!stopSpin) {
-                                let speed = 6 - $('#speed').val();
-                                firstChild.animate({width: 'toggle'}, speed * 1000, 'swing', () => {                                
-                                    firstChild.remove();
-                                    $('#slider').append(firstChild);
-                                    firstChild.show();                               
-                                    spin();                                               
-                                }); 
-                            } else {
-                                callbackStopSpin(firstChild);
-                            }                                    
+                    let callbackStopSpin = () => {};
+
+                    function spin() {
+                        let firstChild = $('#slider li:first-child');
+                        if (!stopSpin) {
+                            let speed = 6 - $('#speed').val();
+                            firstChild.animate({width: 'toggle'}, speed * 1000, 'swing', () => {                                
+                                firstChild.remove();
+                                $('#slider').append(firstChild);
+                                firstChild.show();                               
+                                spin();                                               
+                            }); 
+                        } else {
+                            callbackStopSpin(firstChild);
+                        }                                    
+                    }
+                        
+                    spin();
+
+                    var colors = new tracking.ColorTracker(['yellow']);
+
+                    let markerTop = -1;
+
+                    let backspaceNotSelectedBefore = true;
+
+                    let brokenLines = [];
+
+                    let phrase = '';
+
+                    function fullText() {
+                        let text = '';
+                        for (let i = 0; i < brokenLines.length; i++) {
+                            text += brokenLines[i].text();
                         }
-                           
-                        spin();
+                        text += $('#text').text();
+                        return text;
+                    }
 
-                        var colors = new tracking.ColorTracker(['yellow']);
+                    colors.on('track', (event) => {
+                        if (event.data.length === 0) {
+                            // No colors were detected in this frame.
+                        } else {
+                            let sensibility = 11 - $('#sensibility').val();
 
-                        let markerTop = -1;
-
-                        let backspaceNotSelectedBefore = true;
-
-                        let brokenLines = [];
-
-                        let phrase = '';
-
-                        function fullText() {
-                            let text = '';
-                            for (let i = 0; i < brokenLines.length; i++) {
-                                text += brokenLines[i].text();
-                            }
-                            text += $('#text').text();
-                            return text;
-                        }
-
-                        colors.on('track', function(event) {
-                            if (event.data.length === 0) {
-                                // No colors were detected in this frame.
-                            } else {
-                                let sensibility = 11 - $('#sensibility').val();
-
-                                event.data.forEach(function(rect) {
-                                    if (markerTop != -1) {                                        
-                                        let movement = markerTop - rect.y;
-                                        $('#movement').prop('max', sensibility);
-                                        $('#movement').val(movement);
-                                        setTimeout(() => {
-                                            $('#movement').val('0');
-                                        }, 1000);
-                                        if (movement > sensibility) {
-                                            callbackStopSpin = (firstChild) => {                                                                                   
-                                                let character = firstChild.text();
-                                                let text = '';
-                                                
-                                                if (character == '→') {
-                                                    text = $('#text').text() + ' ';
-                                                    backspaceNotSelectedBefore = true;
-                                                } else if (character == '←') {
-                                                    if (!$('#text').text() && brokenLines.length > 0) {
-                                                        let penultimateLine = brokenLines.pop();
-                                                        penultimateLine.remove();
-                                                        $('#text').text(penultimateLine.text());
-                                                    }
-                                                    text = $('#text').text().slice(0, -1);
-                                                    backspaceNotSelectedBefore = false;                                                    
-                                                } else if (character == '.') {
-                                                    let phrases = fullText().split('.');                                                   
-                                                    let message = new SpeechSynthesisUtterance(phrases[phrases.length - 1]);
-                                                    message.lang = 'pt-BR';
-                                                    window.speechSynthesis.speak(message);
-                                                    text = $('#text').text() + character;
-                                                    backspaceNotSelectedBefore = true;
-                                                } else {                                                    
-                                                    text = $('#text').text() + character;
-                                                    backspaceNotSelectedBefore = true;
+                            event.data.forEach((rect) => {
+                                if (markerTop != -1) {                                        
+                                    let movement = markerTop - rect.y;
+                                    $('#movement').prop('max', sensibility);
+                                    $('#movement').val(movement);
+                                    setTimeout(() => {
+                                        $('#movement').val('0');
+                                    }, 1000);
+                                    if (movement > sensibility) {
+                                        callbackStopSpin = (firstChild) => {                                                                                   
+                                            let character = firstChild.text();
+                                            let text = '';
+                                            
+                                            if (character == '→') {
+                                                text = $('#text').text() + ' ';
+                                                backspaceNotSelectedBefore = true;
+                                            } else if (character == '←') {
+                                                if (!$('#text').text() && brokenLines.length > 0) {
+                                                    let penultimateLine = brokenLines.pop();
+                                                    penultimateLine.remove();
+                                                    $('#text').text(penultimateLine.text());
                                                 }
+                                                text = $('#text').text().slice(0, -1);
+                                                backspaceNotSelectedBefore = false;                                                    
+                                            } else if (character == '.') {
+                                                let phrases = fullText().split('.');                                                   
+                                                let message = new SpeechSynthesisUtterance(phrases[phrases.length - 1]);
+                                                message.lang = 'pt-BR';
+                                                window.speechSynthesis.speak(message);
+                                                text = $('#text').text() + character;
+                                                backspaceNotSelectedBefore = true;
+                                            } else {                                                    
+                                                text = $('#text').text() + character;
+                                                backspaceNotSelectedBefore = true;
+                                            }
 
+                                            if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
+                                                let penultimateLine = $('<div>');
+                                                penultimateLine.addClass('text');
+                                                penultimateLine.text($('#text').text());
+                                                if (character == '→') {
+                                                    $('#text').text(' ');
+                                                } else {
+                                                    $('#text').text(character);
+                                                }                                                    
+                                                penultimateLine.insertBefore('#text');
+                                                brokenLines.push(penultimateLine);
+                                            } else {
+                                                $('#text').text(text);
+                                            }                                                
+
+                                            let nextTextParts = fullText().split(' ');
+                                            let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
+                                            characters = nextCharacters(nextText, wordlist);
+
+                                            // "fala", "apagar", "espaço" e um caractere qualquer
+                                            while (characters.length == 4 && backspaceNotSelectedBefore) {
+                                                let text = $('#text').text() + characters[0];
                                                 if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
                                                     let penultimateLine = $('<div>');
                                                     penultimateLine.addClass('text');
@@ -268,67 +294,45 @@
                                                         $('#text').text(' ');
                                                     } else {
                                                         $('#text').text(character);
-                                                    }                                                    
+                                                    }      
                                                     penultimateLine.insertBefore('#text');
                                                     brokenLines.push(penultimateLine);
                                                 } else {
-                                                    $('#text').text(text);
-                                                }                                                
+                                                    $('#text').text(text);                                                        
+                                                    let nextTextParts = fullText().split(' ');
+                                                    let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
+                                                    characters = nextCharacters(nextText, wordlist);
+                                                }
+                                            }                                                                                                                                                                                   
 
-                                                let nextTextParts = fullText().split(' ');
-                                                let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
-                                                characters = nextCharacters(nextText, wordlist);
+                                            $('#slider').hide(0, () => {
+                                                $('#slider').empty();
+                                                updateNextCharacters(characters);
+                                                $('#slider').show(0, () => {
+                                                    stopSpin = false;
+                                                    spin();
+                                                });                                                    
+                                            });                                               
+                                        };
 
-                                                // "fala", "apagar", "espaço" e um caractere qualquer
-                                                while (characters.length == 4 && backspaceNotSelectedBefore) {
-                                                    let text = $('#text').text() + characters[0];
-                                                    if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
-                                                        let penultimateLine = $('<div>');
-                                                        penultimateLine.addClass('text');
-                                                        penultimateLine.text($('#text').text());
-                                                        if (character == '→') {
-                                                            $('#text').text(' ');
-                                                        } else {
-                                                            $('#text').text(character);
-                                                        }      
-                                                        penultimateLine.insertBefore('#text');
-                                                        brokenLines.push(penultimateLine);
-                                                    } else {
-                                                        $('#text').text(text);                                                        
-                                                        let nextTextParts = fullText().split(' ');
-                                                        let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
-                                                        characters = nextCharacters(nextText, wordlist);
-                                                    }
-                                                }                                                                                                                                                                                   
-
-                                                $('#slider').hide(0, () => {
-                                                    $('#slider').empty();
-                                                    updateNextCharacters(characters);
-                                                    $('#slider').show(0, () => {
-                                                        stopSpin = false;
-                                                        spin();
-                                                    });                                                    
-                                                });                                               
-                                            };
-
-                                            stopSpin = true;
-                                        }
+                                        stopSpin = true;
                                     }
+                                }
 
-                                    markerTop = rect.y;
-                                });
+                                markerTop = rect.y;
+                            });
 
-                            }
-                        });
+                        }
+                    });
 
-                        tracking.track('#video', colors);
-                    });                    
+                    tracking.track('#video', colors);
+                                    
                 });
             }           
         });           
-        </script>
+        </script>        
     </head>
-    <body>        
+    <body>
         <video id="video" preload autoplay loop muted></video>
         <div id="overlay">
             <div id="controls">

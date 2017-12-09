@@ -10044,8 +10044,7 @@ molho
 moluscos
 mongol
 morrem
-musica
-shortcut=música
+música
 mágicas
 mães
 médios
@@ -14788,8 +14787,7 @@ motivações
 motoristas
 moço
 municipalidades
-musicas
-shortcut=músicas
+músicas
 muçulmanas
 mítica
 nado
@@ -65769,8 +65767,7 @@ fender
 fendido
 fenestras
 fenomenais
-ferias
-shortcut=férias
+férias
 feroês
 ferrenhamente
 fiambre
@@ -76200,8 +76197,7 @@ cacauicultura
 cachorrinhos
 cadarço
 cadelas
-cafe
-shortcut=café
+café
 caiado
 caiação
 caimão
@@ -89160,8 +89156,7 @@ cacaueiros
 cachecóis
 cacondense
 cadaverina
-cade
-shortcut=cadê
+cadê
 cadenciada
 caderninho
 cadinhos

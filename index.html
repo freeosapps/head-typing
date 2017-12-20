@@ -135,7 +135,7 @@
             }, 500);            
 
             function nextCharacters(text, wordlist) {
-                let regex = new RegExp('\n' + text + '.*', 'gi');
+                let regex = new RegExp(text + '.*\n', 'gi');
                 let words = wordlist.match(regex);
                 if (words == null) {
                     words = [];

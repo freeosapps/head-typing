@@ -162,7 +162,9 @@
                 }
             }
 
-            let video = $('#video')[0];
+            //let video = $('#video')[0];
+            let video = $('<video>')[0];
+                alert('teste');
 
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({

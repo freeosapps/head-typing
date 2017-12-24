@@ -164,7 +164,7 @@
 
             //let video = $('#video')[0];
             let video = $('<video>')[0];
-                alert('teste');
+                alert('teste2');
 
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({
@@ -327,7 +327,7 @@
                         }
                     });
 
-                    tracking.track('#video', colors);
+                    tracking.track(video, colors);
                                     
                 });
             }           

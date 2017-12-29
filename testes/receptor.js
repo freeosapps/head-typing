@@ -29,7 +29,6 @@ describe('Receptor', () => {
         };
         jQuery.fx.off = true;
         clock = sinon.useFakeTimers();
-        $(document.body).append(localizacaoDasLetras);
     });
     afterEach(() => {
         ArvoreDePalavras = backupArvoreDePalavras;

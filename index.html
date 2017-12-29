@@ -123,241 +123,41 @@
         
         <script>
         $(() => {
-            function mesureText(text, fontFamily, fontSize) {
-                var c = document.createElement("canvas");
-                var ctx = c.getContext("2d");
-                ctx.font = fontSize + ' ' + fontFamily;
-                return ctx.measureText(text).width;
-            }
-
-            setInterval(() => {
-                $('#text').toggleClass('cursor-active');
-            }, 500);            
-
-            function nextCharacters(text, wordlist) {
-                let regex = new RegExp(text + '.*\n', 'gi');
-                let words = wordlist.match(regex);
-                if (words == null) {
-                    words = [];
-                }
-                let characters = new Set();                                                                     
-
-                for (let i = 0; i < words.length; i++) {                                                
-                    let character = words[i].charAt(text.length + 1);
-                    if (character) {
-                        characters.add(character.toUpperCase());
-                    }                                             
-                }
-                
-                let charactersArray = [...characters];
-                let lastCharacter = charactersArray.pop();
-                return [lastCharacter, '.', '→', '←'].concat(charactersArray);
-            }
-
-            function updateNextCharacters(characters) {
-                for (let i = 0; i < characters.length; i++) {
-                    let conteinerCharacter = $('<li>');
-                    conteinerCharacter.text(characters[i]);
-                    $('#slider').append(conteinerCharacter);
-                }
-            }
-
-            //let video = $('#video')[0];
-            alert('teste8');
             let video = $('<video>')[0];
-                $(video).attr('preload', 'preload');
-                $(video).attr('autoplay', 'autoplay');
-                $(video).attr('loop', 'loop');
-                $(video).attr('muted', 'muted');
-            $(document.body).append(video);
+            let localizacaoDasLetras = $('<div>');
+            let localizacaoDaAnotacao = $('<div>');
+            
+            $(document.body)            
+            .append(localizacaoDasLetras)
+            .append(localizacaoDaAnotacao)
+            .append(video);
 
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({
-                    video: {
-                        mandatory: {
-                            minWidth: 640,
-                            minHeight: 480
-                        }
+            if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            }
+
+            navigator.mediaDevices.getUserMedia({
+                video: {
+                    mandatory: {
+                        minWidth: 640,
+                        minHeight: 480
                     }
-                }).then((stream) => {                   
-                    let wordlistDocument = $('#wordlist')[0].import;
-                    let wordlist = $(wordlistDocument).find('body').text();
+                }
+            }).then((stream) => {                   
+                video.src = window.URL.createObjectURL(stream);
+                video.play();               
 
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
+                let receptor = new Receptor();
+                receptor.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
+                receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
 
-                    let characters = nextCharacters('', wordlist);
-                    updateNextCharacters(characters);
-
-                    let stopSpin = false;
-
-                    let callbackStopSpin = () => {};
-
-                    function spin() {
-                        let firstChild = $('#slider li:first-child');
-                        if (!stopSpin) {
-                            let speed = 6 - $('#speed').val();
-                            firstChild.animate({width: 'toggle'}, speed * 1000, 'swing', () => {                                
-                                firstChild.remove();
-                                $('#slider').append(firstChild);
-                                firstChild.show();                               
-                                spin();                                               
-                            }); 
-                        } else {
-                            callbackStopSpin(firstChild);
-                        }                                    
-                    }
-                        
-                    spin();
-
-                    var colors = new tracking.ColorTracker(['yellow']);
-
-                    let markerTop = -1;
-
-                    let backspaceNotSelectedBefore = true;
-
-                    let brokenLines = [];
-
-                    let phrase = '';
-
-                    function fullText() {
-                        let text = '';
-                        for (let i = 0; i < brokenLines.length; i++) {
-                            text += brokenLines[i].text();
-                        }
-                        text += $('#text').text();
-                        return text;
-                    }
-
-                    colors.on('track', (event) => {
-                        if (event.data.length === 0) {
-                            // No colors were detected in this frame.
-                        } else {
-                            let sensibility = 11 - $('#sensibility').val();
-
-                            event.data.forEach((rect) => {
-                                if (markerTop != -1) {                                        
-                                    let movement = markerTop - rect.y;
-                                    $('#movement').prop('max', sensibility);
-                                    $('#movement').val(movement);
-                                    setTimeout(() => {
-                                        $('#movement').val('0');
-                                    }, 1000);
-                                    if (movement > sensibility) {
-                                        callbackStopSpin = (firstChild) => {                                                                                   
-                                            let character = firstChild.text();
-                                            let text = '';
-                                            
-                                            if (character == '→') {
-                                                text = $('#text').text() + ' ';
-                                                backspaceNotSelectedBefore = true;
-                                            } else if (character == '←') {
-                                                if (!$('#text').text() && brokenLines.length > 0) {
-                                                    let penultimateLine = brokenLines.pop();
-                                                    penultimateLine.remove();
-                                                    $('#text').text(penultimateLine.text());
-                                                }
-                                                text = $('#text').text().slice(0, -1);
-                                                backspaceNotSelectedBefore = false;                                                    
-                                            } else if (character == '.') {
-                                                let phrases = fullText().split('.');                                                   
-                                                let message = new SpeechSynthesisUtterance(phrases[phrases.length - 1]);
-                                                message.lang = 'pt-BR';
-                                                window.speechSynthesis.speak(message);
-                                                text = $('#text').text() + character;
-                                                backspaceNotSelectedBefore = true;
-                                            } else {                                                    
-                                                text = $('#text').text() + character;
-                                                backspaceNotSelectedBefore = true;
-                                            }
-
-                                            if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
-                                                let penultimateLine = $('<div>');
-                                                penultimateLine.addClass('text');
-                                                penultimateLine.text($('#text').text());
-                                                if (character == '→') {
-                                                    $('#text').text(' ');
-                                                } else {
-                                                    $('#text').text(character);
-                                                }                                                    
-                                                penultimateLine.insertBefore('#text');
-                                                brokenLines.push(penultimateLine);
-                                            } else {
-                                                $('#text').text(text);
-                                            }                                                
-
-                                            let nextTextParts = fullText().split(' ');
-                                            let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
-                                            characters = nextCharacters(nextText, wordlist);
-
-                                            // "fala", "apagar", "espaço" e um caractere qualquer
-                                            while (characters.length == 4 && backspaceNotSelectedBefore) {
-                                                let text = $('#text').text() + characters[0];
-                                                if (mesureText(text, $('#text').css('fontFamily'), $('#text').css('fontSize')) > $(window).width()) {
-                                                    let penultimateLine = $('<div>');
-                                                    penultimateLine.addClass('text');
-                                                    penultimateLine.text($('#text').text());
-                                                    if (character == '→') {
-                                                        $('#text').text(' ');
-                                                    } else {
-                                                        $('#text').text(character);
-                                                    }      
-                                                    penultimateLine.insertBefore('#text');
-                                                    brokenLines.push(penultimateLine);
-                                                } else {
-                                                    $('#text').text(text);                                                        
-                                                    let nextTextParts = fullText().split(' ');
-                                                    let nextText = nextTextParts[nextTextParts.length - 1].replace('.', '');
-                                                    characters = nextCharacters(nextText, wordlist);
-                                                }
-                                            }                                                                                                                                                                                   
-
-                                            $('#slider').hide(0, () => {
-                                                $('#slider').empty();
-                                                updateNextCharacters(characters);
-                                                $('#slider').show(0, () => {
-                                                    stopSpin = false;
-                                                    spin();
-                                                });                                                    
-                                            });                                               
-                                        };
-
-                                        stopSpin = true;
-                                    }
-                                }
-
-                                markerTop = rect.y;
-                            });
-
-                        }
-                    });
-
-                    tracking.track(video, colors);
-                                    
+                let gesto = new Gesto();
+                gesto.detecteEMeAvise(video, () => {
+                    receptor.anoteEstaLetra();
                 });
-            }           
-        });           
+            });            
+        });
         </script>        
     </head>
     <body>
-        
-        <div id="overlay">
-            <div id="controls">
-                <label>
-                    <span>Sensibilidade:</span>
-                    <input id="sensibility" type="range" min="1" max="10" value="9">
-                </label>
-                <label>
-                    <span>Velocidade:</span>
-                    <input id="speed" type="range" min="1" max="5" value="5">
-                </label>
-                <label>
-                    <span>Movimento:</span>
-                    <progress id="movement" max="10" value="0"></progress>
-                </label>
-            </div>
-            <ul id="slider"></ul>
-            <div id="text" class="text"></div>
-        </div>
     </body>
 </html>

@@ -3,7 +3,9 @@ class ArvoreDePalavras {
         let letras = new Set();
         $($('#wordlist')[0].import).find('body').text().match(new RegExp(prefixo + '.*\n', 'gi'))
         .forEach(palavra => {
-           letras.add(palavra.charAt(prefixo.length).toUpperCase());
+            if (palavra.trim()) {
+                letras.add(palavra.charAt(prefixo.length).toUpperCase());
+            }
         });
         return [...letras];
     }

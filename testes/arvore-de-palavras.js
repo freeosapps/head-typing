@@ -76,4 +76,19 @@ describe('ArvoreDePalavras', () => {
             expect(arvoreDePalavras.quaisAsProximasLetras('CO')[0]).toBe('M');
         });
     });
+    describe('com 3 palavras e com espaço', () => {
+        let arvoreDePalavras = null;
+        beforeEach(() => {
+            $('#wordlist-d').prop('id', 'wordlist');
+            arvoreDePalavras = new ArvoreDePalavras();
+        });
+
+        afterEach(() => {
+            $('#wordlist').prop('id', 'wordlist-d');
+        });
+
+        it('não considera espaço', () => {
+            expect(arvoreDePalavras.quaisAsProximasLetras('')[2]).toBe('D');
+        });
+    });
 });

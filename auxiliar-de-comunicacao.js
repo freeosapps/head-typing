@@ -1,8 +1,9 @@
-class Receptor {
+class AuxiliarDeComunicacao {
     constructor() {
         this.arvoreDePalavras = new ArvoreDePalavras();
         this.cronometro = new Cronometro();
-        this.letras = '';
+        this.anotacao = '';
+        this.anotando = false;
         this.conteinerProximasLetras = $('<div>');
         this.conteinerProximasLetras.css({
             'backgroundColor': 'white',
@@ -24,7 +25,8 @@ class Receptor {
         this.proximasLetras = this._quaisAsProximasLetras('');
         this._mostrarAsProximasLetras();
         this.avanceUmaLetra = () => {       
-            this._moverLetraInicialParaOFinal();
+            this._moverLetraInicialParaOFinal();            
+            this.anotando = false;
         };        
     }
     _mostrarAsProximasLetras() {
@@ -79,18 +81,21 @@ class Receptor {
         return ['.', '→', '←'].concat(this.arvoreDePalavras.quaisAsProximasLetras(prefixo));
     }
     anoteEstaLetra() {
-        if (this.proximasLetras[0] == '←') {
-            this.letras = this.letras.substring(0, this.letras.length - 1);
-        } else if (this.proximasLetras[0] == '→') {
-            this.letras += ' ';
-        } else {
-            this.letras += this.proximasLetras[0];
-        }
-        this.conteinerAnotacao.empty();
-        this.conteinerAnotacao.append(this.letras);
-        let partes = this.letras.split(' ');
-        this.proximasLetras = this._quaisAsProximasLetras(partes[partes.length - 1]);
-        this._mostrarAsProximasLetras();
+        if (!this.anotando) {
+            this.anotando = true;
+            if (this.proximasLetras[0] == '←') {
+                this.anotacao = this.anotacao.substring(0, this.anotacao.length - 1);
+            } else if (this.proximasLetras[0] == '→') {
+                this.anotacao += ' ';
+            } else {
+                this.anotacao += this.proximasLetras[0];
+            }
+            this.conteinerAnotacao.empty();
+            this.conteinerAnotacao.append(this.anotacao);
+            let partes = this.anotacao.split(' ');
+            this.proximasLetras = this._quaisAsProximasLetras(partes[partes.length - 1]);
+            this._mostrarAsProximasLetras();
+        }        
     }
     mostreMeAsProximasLetras(aqui) {
         aqui.append(this.conteinerProximasLetras);

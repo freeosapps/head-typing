@@ -48,13 +48,13 @@
                 video.src = window.URL.createObjectURL(stream);
                 video.play();               
 
-                let receptor = new Receptor();
-                receptor.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
-                receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+                let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+                auxiliarDeComunicacao.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
+                auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
 
                 let gesto = new Gesto();
                 gesto.detecteEMeAvise(video, () => {
-                    receptor.anoteEstaLetra();
+                    auxiliarDeComunicacao.anoteEstaLetra();
                 });
             });            
         });

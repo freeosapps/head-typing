@@ -1,4 +1,4 @@
-describe('Receptor', () => {
+describe('AuxiliarDeComunicacao', () => {
     let backupArvoreDePalavras = null;
     let backupCronometro = null;
     let stubQuaisAsProximasLetras = null;
@@ -7,7 +7,7 @@ describe('Receptor', () => {
     let localizacaoDaAnotacao = null;
     let clock = null;
     beforeEach(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
         backupArvoreDePalavras = ArvoreDePalavras;
         backupCronometro = Cronometro;
         stubQuaisAsProximasLetras = sinon.stub();
@@ -44,8 +44,8 @@ describe('Receptor', () => {
             .callsFake((avancarUmaLetra, tempo) => {
                 // Não informa ao passar o tempo para que fique parado na letra inicial
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
                                     
             expect(localizacaoDasLetras).toContainText('.→←AB');
         });
@@ -65,8 +65,8 @@ describe('Receptor', () => {
                 expect(localizacaoDasLetras).toContainText('A.→←');
                 done();
             });
-            let receptor = new Receptor();                        
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();                        
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
         it('mostra outra letra', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['B']);
@@ -84,8 +84,8 @@ describe('Receptor', () => {
                 expect(localizacaoDasLetras).toContainText('B.→←');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);            
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);            
         });
         it('mostra outras duas letras', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['C', 'D']);
@@ -103,8 +103,8 @@ describe('Receptor', () => {
                 expect(localizacaoDasLetras).toContainText('CD.→←');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);            
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);            
         });
         it('mostra três letras', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['D', 'E', 'F']);
@@ -125,8 +125,8 @@ describe('Receptor', () => {
                 expect(localizacaoDasLetras).toContainText('EF.→←D');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
         it('mostra outras três letras', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['D', 'E', 'F']);
@@ -150,8 +150,8 @@ describe('Receptor', () => {
                 expect(localizacaoDasLetras).toContainText('F.→←DE');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
     });
     describe('com anotações de letras e sem espaço', () => {
@@ -170,12 +170,12 @@ describe('Receptor', () => {
             })
             .onCall(3).callsFake((avancarUmaLetra, tempo) => {
                 // G
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 expect(localizacaoDasLetras).toContainText('.→←A');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
         it('mostra duas letras', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['G', 'H', 'I']);
@@ -193,7 +193,7 @@ describe('Receptor', () => {
             })
             .onCall(3).callsFake((avancarUmaLetra, tempo) => {
                 // G
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(4).callsFake((avancarUmaLetra, tempo) => {
@@ -204,12 +204,12 @@ describe('Receptor', () => {
             })
             .onCall(6).callsFake((avancarUmaLetra, tempo) => {
                 // A
-                receptor.anoteEstaLetra();                
+                auxiliarDeComunicacao.anoteEstaLetra();                
                 expect(localizacaoDasLetras).toContainText('.→←LM');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
         it('mostra a anotação de uma letra', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['C', 'D', 'E']);
@@ -227,7 +227,7 @@ describe('Receptor', () => {
             })
             .onCall(3).callsFake((avancarUmaLetra, tempo) => {
                 // C
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(4).callsFake((avancarUmaLetra, tempo) => {              
@@ -241,13 +241,13 @@ describe('Receptor', () => {
             })
             .onCall(7).callsFake((avancarUmaLetra, tempo) => {
                 // E
-                receptor.anoteEstaLetra();
-                receptor.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
+                auxiliarDeComunicacao.anoteEstaLetra();
+                auxiliarDeComunicacao.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
                 expect(localizacaoDaAnotacao).toContainText('CE');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
         it('mostra a primeira anotação de letra', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['C', 'D', 'E']);
@@ -264,13 +264,13 @@ describe('Receptor', () => {
             })
             .onCall(3).callsFake((avancarUmaLetra, tempo) => {
                 // C
-                receptor.anoteEstaLetra();                
+                auxiliarDeComunicacao.anoteEstaLetra();                
                 expect(localizacaoDaAnotacao).toContainText('C');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);            
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);            
         });
     });
     describe('com anotações de letras e com espaço', () => {
@@ -291,7 +291,7 @@ describe('Receptor', () => {
             })
             .onCall(3).callsFake((avancarUmaLetra, tempo) => {
                 // D
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(4).callsFake((avancarUmaLetra, tempo) => {
@@ -302,12 +302,12 @@ describe('Receptor', () => {
             })
             .onCall(6).callsFake((avancarUmaLetra, tempo) => {
                 // E
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(7).callsFake((avancarUmaLetra, tempo) => {
                 // →
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(8).callsFake((avancarUmaLetra, tempo) => {      
@@ -324,12 +324,12 @@ describe('Receptor', () => {
             })
             .onCall(12).callsFake((avancarUmaLetra, tempo) => {
                 // F
-                receptor.anoteEstaLetra();                
+                auxiliarDeComunicacao.anoteEstaLetra();                
                 expect(localizacaoDasLetras).toContainText('.→←AE');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
     });
     describe('com anotações de letras e com espaço e com backspace', () => {
@@ -354,7 +354,7 @@ describe('Receptor', () => {
             })
             .onCall(4).callsFake((avancarUmaLetra, tempo) => {
                 // D
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(5).callsFake((avancarUmaLetra, tempo) => {
@@ -365,17 +365,17 @@ describe('Receptor', () => {
             })
             .onCall(7).callsFake((avancarUmaLetra, tempo) => {
                 // C
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(8).callsFake((avancarUmaLetra, tempo) => {
                 // →
-                receptor.anoteEstaLetra();     
+                auxiliarDeComunicacao.anoteEstaLetra();     
                 avancarUmaLetra();
             })
             .onCall(9).callsFake((avancarUmaLetra, tempo) => {
                 // →
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(10).callsFake((avancarUmaLetra, tempo) => {      
@@ -392,7 +392,7 @@ describe('Receptor', () => {
             })
             .onCall(14).callsFake((avancarUmaLetra, tempo) => {
                 // E
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(15).callsFake((avancarUmaLetra, tempo) => {      
@@ -403,7 +403,7 @@ describe('Receptor', () => {
             })
             .onCall(17).callsFake((avancarUmaLetra, tempo) => {
                 // S
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(18).callsFake((avancarUmaLetra, tempo) => {      
@@ -411,12 +411,12 @@ describe('Receptor', () => {
             })
             .onCall(19).callsFake((avancarUmaLetra, tempo) => {
                 // ←
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 expect(localizacaoDasLetras).toContainText('.→←SMTN');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
         it('mostra outras duas', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['C', 'D', 'E']);
@@ -436,12 +436,12 @@ describe('Receptor', () => {
             })
             .onCall(4).callsFake((avancarUmaLetra, tempo) => {
                 // D
-                receptor.anoteEstaLetra();                
+                auxiliarDeComunicacao.anoteEstaLetra();                
                 avancarUmaLetra();
             })
             .onCall(5).callsFake((avancarUmaLetra, tempo) => {
                 // →
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(6).callsFake((avancarUmaLetra, tempo) => {                
@@ -449,7 +449,7 @@ describe('Receptor', () => {
             })
             .onCall(7).callsFake((avancarUmaLetra, tempo) => {
                 // ←
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(8).callsFake((avancarUmaLetra, tempo) => {  
@@ -457,12 +457,12 @@ describe('Receptor', () => {
             })
             .onCall(9).callsFake((avancarUmaLetra, tempo) => {
                 // ←
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 expect(localizacaoDasLetras).toContainText('.→←CDE');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
         it('mostra a anotação de uma letra', (done) => {
             stubQuaisAsProximasLetras.withArgs('').returns(['C', 'D', 'E']);
@@ -482,12 +482,12 @@ describe('Receptor', () => {
             })
             .onCall(4).callsFake((avancarUmaLetra, tempo) => {
                 // D
-                receptor.anoteEstaLetra();                
+                auxiliarDeComunicacao.anoteEstaLetra();                
                 avancarUmaLetra();
             })
             .onCall(5).callsFake((avancarUmaLetra, tempo) => {
                 // →
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(6).callsFake((avancarUmaLetra, tempo) => {                
@@ -495,13 +495,13 @@ describe('Receptor', () => {
             })
             .onCall(7).callsFake((avancarUmaLetra, tempo) => {
                 // ←
-                receptor.anoteEstaLetra();
-                receptor.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
+                auxiliarDeComunicacao.anoteEstaLetra();
+                auxiliarDeComunicacao.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
                 expect(localizacaoDaAnotacao).toContainText('D');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
         });
     });
     describe('com anotações de letras e com backspace', () => {
@@ -521,7 +521,7 @@ describe('Receptor', () => {
             })
             .onCall(3).callsFake((avancarUmaLetra, tempo) => {
                 // C
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(4).callsFake((avancarUmaLetra, tempo) => {                                
@@ -529,7 +529,7 @@ describe('Receptor', () => {
             })
             .onCall(5).callsFake((avancarUmaLetra, tempo) => {
                 // ←
-                receptor.anoteEstaLetra();
+                auxiliarDeComunicacao.anoteEstaLetra();
                 avancarUmaLetra();
             })
             .onCall(6).callsFake((avancarUmaLetra, tempo) => {                
@@ -543,13 +543,13 @@ describe('Receptor', () => {
             })
             .onCall(9).callsFake((avancarUmaLetra, tempo) => {
                 // D
-                receptor.anoteEstaLetra();                
+                auxiliarDeComunicacao.anoteEstaLetra();                
                 expect(localizacaoDaAnotacao).not.toContainText('C');
                 done();
             });
-            let receptor = new Receptor();
-            receptor.mostreMeAsProximasLetras(localizacaoDasLetras);
-            receptor.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
+            let auxiliarDeComunicacao = new AuxiliarDeComunicacao();
+            auxiliarDeComunicacao.mostreMeAsProximasLetras(localizacaoDasLetras);
+            auxiliarDeComunicacao.mostreMeOQueFoiAnotado(localizacaoDaAnotacao);
         });
     });
 });

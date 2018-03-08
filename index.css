@@ -34,6 +34,7 @@
     border-color: white;
     line-height: 9vh;
     color: dimgray;
+    user-select: none;
 }
 
 .simbolo_apontado {

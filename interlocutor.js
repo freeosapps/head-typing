@@ -9,17 +9,12 @@ class Interlocutor {
     }
     prepararParaMostrar(onde) {
         let areaPlaca = $('<div>');                   
-        let areaAnotacao = $('<div>');
-        let botaoGesticular = $('<button>')
-        .addClass('gesto')
-        .text('Gesticular')
-        .bind('click', () => {
-            this.gesticular();
-        });
+        let areaAnotacao = $('<div>')
+        .addClass('anotacao');
+
         $(onde)
         .append(areaPlaca)                    
-        .append(areaAnotacao)
-        .append(botaoGesticular);
+        .append(areaAnotacao);
         
         this.placa.prepararParaMostrar(areaPlaca);
         this.placa.acompanharOsSimbolos(this);                    

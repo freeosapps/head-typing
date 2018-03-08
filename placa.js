@@ -80,10 +80,8 @@ class Placa {
                 let indiceProximoQuadro = indice + 1;
                 if (indiceProximoQuadro < quadros.length) {
                     $(quadros[indiceProximoQuadro]).addClass('quadro_apontado');                    
-                    $('html, body').animate({scrollTop: $(quadros[indiceProximoQuadro]).offset().top + $(quadros[indiceProximoQuadro]).height()});
                 } else {
                     $(quadros[0]).addClass('quadro_apontado');
-                    $('html, body').animate({scrollTop: $(quadros[0]).offset().top - 10});
                 }
                 return false;
             }

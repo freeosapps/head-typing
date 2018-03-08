@@ -3,9 +3,12 @@
     display: table;
     width: 100%;
     border-collapse: collapse;
+    background-color: beige;
 }
 .quadro_apontado {
-    background-color: #ffda96;
+    background-color: #ffe0a6;
+    transition-duration: .25s;
+    transition-property: background-color;
 }
 .quadro_percorrido {
     background-color: white;
@@ -14,7 +17,7 @@
     display: table-row;
 }
 .linha_apontada {
-   background-color: #ffda96;
+   background-color: #ffe0a6;
 }
 .linha_percorrida {
     background-color: white;
@@ -26,16 +29,16 @@
     text-align: center;
     display: table-cell;
     width: 20%;
-    border-width: 1px;
+    border-width: 4px;
     border-style: solid;
-    border-color: lightgray;
+    border-color: white;
     height: 10vh;
     line-height: 10vh;
     color: dimgray;
 }
 
 .simbolo_apontado {
-    background-color: #ffda96;
+    background-color: #ffe0a6;
 }
 
 .simbolo_pequeno {

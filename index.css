@@ -3,7 +3,7 @@
     display: table;
     width: 100%;
     border-collapse: collapse;
-    background-color: #fdfded;
+    background-color: #f7f7ea;
 }
 .quadro_apontado {
     background-color: #ffe0a6;
@@ -11,7 +11,7 @@
     transition-property: background-color;
 }
 .quadro_percorrido {
-    background-color: #fdfded;
+    background-color: #f7f7ea;
 }
 .linha {
     display: table-row;
@@ -20,7 +20,7 @@
     background-color: #ffe0a6;
 }
 .linha_percorrida {
-    background-color: #fdfded;
+    background-color: #f7f7ea;
 }
 .simbolo {
     font-family: sans-serif;
@@ -29,7 +29,7 @@
     text-align: center;
     display: table-cell;
     width: 20%;
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
     border-color: white;
     height: 10vh;

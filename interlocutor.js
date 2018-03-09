@@ -6,13 +6,17 @@ class Interlocutor {
         this.apontarLinha = false;
         this.apontarSimbolo = false;
         this.simboloAtual = undefined;
+        this.apontador = null;
     }
     prepararParaMostrar(onde) {
+        this.apontador = $('<div>')
+        .addClass('apontador'); 
         let areaPlaca = $('<div>');                   
         let areaAnotacao = $('<div>')
         .addClass('anotacao');
 
         $(onde)
+        .append(this.apontador)
         .append(areaPlaca)                    
         .append(areaAnotacao);
         
@@ -42,12 +46,25 @@ class Interlocutor {
     }
     passarOTempo() {
         if (!this.apontarSimbolo && !this.apontarLinha) {
-            this.placa.apontarOProximoQuadro();
+            this.placa.verOProximoQuadro(this, $('.apontador'));
         } else if (this.apontarLinha) {
             this.placa.apontarAProximaLinha();
         } else {
             this.placa.apontarOProximoSimbolo();
         }                    
+    }
+    mostrarOProximoQuadro(proximaArea) {
+        this.areaAtual = proximaArea;
+        this.apontador.animate({
+            top: proximaArea.offset().top,
+            left: proximaArea.offset().left,
+            width: proximaArea.width(),
+            height: proximaArea.height()
+        });
+    }
+    mostrarAProximaLinha(linhaAnterior, proximaLinha) {
+        linhaAnterior.removeClass('linha_apontada');
+        proximaLinha.addClass('linha_apontada');
     }
     mostrarUmSimbolo(simbolo) {
         this.simboloAtual = simbolo;

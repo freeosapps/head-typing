@@ -4,8 +4,7 @@ class Placa {
     }
     prepararParaMostrar(onde) {
         let primeiroQuadro = $('<div>')
-        .addClass('quadro')
-        .addClass('quadro_apontado');
+        .addClass('quadro');
 
         let adicionarSimbolosALinha = (simbolos, linha, classes) => {
             simbolos.forEach((simbolo) => {
@@ -68,24 +67,23 @@ class Placa {
         .append(segundoQuadro)
         .append(terceiroQuadro);
     }
-    apontarOProximoQuadro() {
-        $('.quadro_percorrido').removeClass('quadro_percorrido');
-        $('.linha_percorrida').removeClass('linha_percorrida');
-        $('.linha_apontada').removeClass('linha_apontada');
-        $('.simbolo_apontado').removeClass('simbolo_apontado');
+    verOProximoQuadro(quem, areaAtual) {
         let quadros = $('.quadro');
-        quadros.each((indice, quadro) => {
-            if ($(quadro).hasClass('quadro_apontado')) {
-                $(quadro).removeClass('quadro_apontado');
-                let indiceProximoQuadro = indice + 1;
-                if (indiceProximoQuadro < quadros.length) {
-                    $(quadros[indiceProximoQuadro]).addClass('quadro_apontado');                    
-                } else {
-                    $(quadros[0]).addClass('quadro_apontado');
-                }
-                return false;
-            }
-        });
+        let proximoQuadro = null;
+        if (areaAtual) {
+            quadros.each((indice, quadro) => {
+               if ($(quadro).offset().top > $(areaAtual).offset().top) {
+                   proximoQuadro = $(quadro);
+                   return false;
+               }
+            });
+        }
+        if (proximoQuadro == null) {
+            proximoQuadro = $(quadros[0]);
+        }
+        quem.mostrarOProximoQuadro(proximoQuadro);
+    }
+    verAProximaLinha(quem, areaAtual) {
     }
     apontarAProximaLinha() {
         $('.quadro_apontado').addClass('quadro_percorrido');

@@ -56,6 +56,16 @@
     margin: 10px 10px 80px 10px;
 }
 
+.apontador {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 224, 166, .3);
+    border-width: 1px;
+    border-style: dotted;
+    border-color: orange;
+}
+
 @media (max-height: 480px) {
     .simbolo {
         font-size: 10pt;

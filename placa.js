@@ -70,63 +70,66 @@ class Placa {
     verOProximoQuadro(quem, areaAtual) {
         let quadros = $('.quadro');
         let proximoQuadro = null;
-        if (areaAtual) {
-            quadros.each((indice, quadro) => {
-               if ($(quadro).offset().top > $(areaAtual).offset().top) {
-                   proximoQuadro = $(quadro);
-                   return false;
-               }
-            });
-        }
+        quadros.each((indice, quadro) => {
+           if ($(quadro).offset().top > $(areaAtual).offset().top) {
+               proximoQuadro = $(quadro);
+               return false;
+           }
+        });
         if (proximoQuadro == null) {
             proximoQuadro = $(quadros[0]);
         }
         quem.mostrarOProximoQuadro(proximoQuadro);
     }
     verAProximaLinha(quem, areaAtual) {
-    }
-    apontarAProximaLinha() {
-        $('.quadro_apontado').addClass('quadro_percorrido');
-        let linhas = $(`.quadro_apontado`).find('.linha');
-        if (!$('.linha_apontada').length) {
-            $(linhas[0]).addClass('linha_apontada');
-        } else {
-            linhas.each((indice, linha) => {
-                if ($(linha).hasClass('linha_apontada')) {
-                    $(linha).removeClass('linha_apontada');
-                    let indiceProximaLinha = indice + 1;
-                    if (indiceProximaLinha < linhas.length) {
-                        $(linhas[indiceProximaLinha]).addClass('linha_apontada');
-                    } else {
-                        $(linhas[0]).addClass('linha_apontada');
-                    }
-                    return false;
-                }
-            });
+        let quadros = $('.quadro');
+        let quadroAtual = null;
+        quadros.each((indice, quadro) => {
+           if ($(quadro).offset().top <= $(areaAtual).offset().top &&
+               $(quadro).offset().left <= $(areaAtual).offset().left &&
+               $(quadro).offset().left + $(quadro).width() >= $(areaAtual).offset().left + $(areaAtual).width() &&
+               $(quadro).offset().top + $(quadro).height() >= $(areaAtual).offset().top + $(areaAtual).height()) {
+               quadroAtual = $(quadro); 
+               return false;
+           }
+        });
+        let linhas = quadroAtual.find('.linha');
+        let proximaLinha = null;
+        linhas.each((indice, linha) => {
+            if ($(linha).offset().top > $(areaAtual).offset().top) {
+                proximaLinha = $(linha);
+                return false;
+            }
+        });
+        if (proximaLinha == null) {
+            proximaLinha = $(linhas[0]);
         }
+        quem.mostrarAProximaLinha(proximaLinha);
     }
-    apontarOProximoSimbolo() {
-        $('.linha_apontada').addClass('linha_percorrida');
-        let simbolos = $(`.linha_apontada`).find('.simbolo');
-        if (!$('.simbolo_apontado').length) {                       
-            $(simbolos[0]).addClass('simbolo_apontado');
-            this.mostrarPara.mostrarUmSimbolo($(simbolos[0]).text());
-        } else {
-            simbolos.each((indice, simbolo) => {
-                if ($(simbolo).hasClass('simbolo_apontado')) {
-                    $(simbolo).removeClass('simbolo_apontado');
-                    let indiceProximoSimbolo = indice + 1;                               
-                    if (indiceProximoSimbolo < simbolos.length) {                                    
-                        $(simbolos[indiceProximoSimbolo]).addClass('simbolo_apontado');
-                        this.mostrarPara.mostrarUmSimbolo($(simbolos[indiceProximoSimbolo]).text());
-                    } else {                                    
-                        $(simbolos[0]).addClass('simbolo_apontado');
-                        this.mostrarPara.mostrarUmSimbolo($(simbolos[0]).text());
-                    }
-                    return false;
-                }
-            });
+    verOProximoSimbolo(quem, areaAtual) {
+        let linhas = $('.linha');
+        let linhaAtual = null;
+        linhas.each((indice, linha) => {
+           if ($(linha).offset().top <= $(areaAtual).offset().top &&
+               $(linha).offset().left <= $(areaAtual).offset().left &&
+               $(linha).offset().left + $(linha).width() >= $(areaAtual).offset().left + $(areaAtual).width() &&
+               $(linha).offset().top + $(linha).height() >= $(areaAtual).offset().top + $(areaAtual).height()) {
+               linhaAtual = $(linha); 
+               return false;
+           }
+        });
+        let simbolos = linhaAtual.find('.simbolo');
+        let proximoSimbolo = null;
+        simbolos.each((indice, simbolo) => {
+            if ($(simbolo).offset().left > $(areaAtual).offset().left) {
+                proximoSimbolo = $(simbolo);
+                return false;
+            }
+        });
+        if (proximoSimbolo == null) {
+            proximoSimbolo = $(simbolos[0]);
         }
+        quem.mostrarOProximoSimbolo(proximoSimbolo);
     }
     acompanharOsSimbolos(quem) {
         this.mostrarPara = quem;

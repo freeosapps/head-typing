@@ -48,23 +48,34 @@ class Interlocutor {
         if (!this.apontarSimbolo && !this.apontarLinha) {
             this.placa.verOProximoQuadro(this, $('.apontador'));
         } else if (this.apontarLinha) {
-            this.placa.apontarAProximaLinha();
+            this.placa.verAProximaLinha(this, $('.apontador'));
         } else {
-            this.placa.apontarOProximoSimbolo();
+            this.placa.verOProximoSimbolo(this, $('.apontador'));
         }                    
     }
-    mostrarOProximoQuadro(proximaArea) {
-        this.areaAtual = proximaArea;
+    mostrarOProximoQuadro(proximoQuadro) {
         this.apontador.animate({
-            top: proximaArea.offset().top,
-            left: proximaArea.offset().left,
-            width: proximaArea.width(),
-            height: proximaArea.height()
+            top: proximoQuadro.offset().top,
+            left: proximoQuadro.offset().left,
+            width: proximoQuadro.width(),
+            height: proximoQuadro.height()
         });
     }
-    mostrarAProximaLinha(linhaAnterior, proximaLinha) {
-        linhaAnterior.removeClass('linha_apontada');
-        proximaLinha.addClass('linha_apontada');
+    mostrarAProximaLinha(proximaLinha) {
+        this.apontador.animate({
+            top: proximaLinha.offset().top,
+            left: proximaLinha.offset().left,
+            width: proximaLinha.width(),
+            height: proximaLinha.height()
+        });
+    }
+    mostrarOProximoSimbolo(proximoSimbolo) {
+        this.apontador.animate({
+            top: proximoSimbolo.offset().top,
+            left: proximoSimbolo.offset().left,
+            width: proximoSimbolo.width(),
+            height: proximoSimbolo.height()
+        }); 
     }
     mostrarUmSimbolo(simbolo) {
         this.simboloAtual = simbolo;

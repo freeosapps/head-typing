@@ -129,9 +129,6 @@ class Placa {
         if (proximoSimbolo == null) {
             proximoSimbolo = $(simbolos[0]);
         }
-        quem.mostrarOProximoSimbolo(proximoSimbolo);
-    }
-    acompanharOsSimbolos(quem) {
-        this.mostrarPara = quem;
+        quem.mostrarOProximoSimbolo(proximoSimbolo, proximoSimbolo.text());
     }
 }

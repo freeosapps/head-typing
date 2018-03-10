@@ -64,6 +64,7 @@
     border-width: 1px;
     border-style: dotted;
     border-color: orange;
+    box-sizing: border-box;
 }
 
 @media (max-height: 480px) {

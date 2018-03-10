@@ -21,7 +21,6 @@ class Interlocutor {
         .append(areaAnotacao);
         
         this.placa.prepararParaMostrar(areaPlaca);
-        this.placa.acompanharOsSimbolos(this);                    
         this.anotacao.prepararParaMostrar(areaAnotacao);
         this.relogio.acompanharOTempo(1, this);                    
     }
@@ -69,15 +68,13 @@ class Interlocutor {
             height: proximaLinha.height()
         });
     }
-    mostrarOProximoSimbolo(proximoSimbolo) {
+    mostrarOProximoSimbolo(proximoSimbolo, simbolo) {
         this.apontador.animate({
             top: proximoSimbolo.offset().top,
             left: proximoSimbolo.offset().left,
             width: proximoSimbolo.width(),
             height: proximoSimbolo.height()
         }); 
-    }
-    mostrarUmSimbolo(simbolo) {
         this.simboloAtual = simbolo;
     }
 }

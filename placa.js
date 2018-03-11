@@ -1,6 +1,6 @@
 class Placa {
-    constructor() {
-        this.mostrarPara = undefined;
+    constructor(letrasMaiusculas) {
+        this._letrasMaiusculas = letrasMaiusculas;
     }
     prepararParaMostrar(onde) {
         let primeiroQuadro = $('<div>')
@@ -12,7 +12,11 @@ class Placa {
                 classes.forEach((classe) => {
                     areaSimbolo.addClass(classe);
                 });
-                areaSimbolo.append(simbolo);
+                if (this._letrasMaiusculas) {
+                    areaSimbolo.append(simbolo.toUpperCase());
+                } else {
+                    areaSimbolo.append(simbolo);
+                }
                 linha.append(areaSimbolo)
                 .addClass('linha');
             });
@@ -56,7 +60,13 @@ class Placa {
         adicionarSimbolosALinha(['á', 'ã', 'í', 'õ', 'ú', '<>'], primeiraLinhaTerceiroQuadro, ['simbolo', 'simbolo_pequeno']);
         
         let segundaLinhaTerceiroQuadro = $('<div>');
-        adicionarSimbolosALinha(['<', '<<', '<*', '^', '.', ','], segundaLinhaTerceiroQuadro, ['simbolo', 'simbolo_pequeno']);
+        let simboloMaiusculasOuMinusculas = undefined;
+        if (this._letrasMaiusculas) {
+            simboloMaiusculasOuMinusculas = '..';
+        } else {
+            simboloMaiusculasOuMinusculas = '::';
+        }
+        adicionarSimbolosALinha(['<', '<<', '<*', simboloMaiusculasOuMinusculas, '.', ','], segundaLinhaTerceiroQuadro, ['simbolo', 'simbolo_pequeno']);
         
         terceiroQuadro
         .append(primeiraLinhaTerceiroQuadro)

@@ -1,80 +1,84 @@
 class Interlocutor {                
-    constructor(placa, relogio, anotacao) {
-        this.placa = placa;
-        this.relogio = relogio;
-        this.anotacao = anotacao;
-        this.apontarLinha = false;
-        this.apontarSimbolo = false;
-        this.simboloAtual = undefined;
-        this.apontador = null;
+    constructor(placaMinusculas, placaMaiusculas, relogio, anotacao) {
+        this._placaMinusculas = placaMinusculas;
+        this._placaMaiusculas = placaMaiusculas;
+        this._placa = placaMinusculas;
+        this._relogio = relogio;
+        this._anotacao = anotacao;
+        this._apontarLinha = false;
+        this._apontarSimbolo = false;
+        this._simboloAtual = undefined;
+        this._apontador = $('<div>')
+        .addClass('apontador'); 
+        this._areaPlaca = $('<div>');                   
     }
     prepararParaMostrar(onde) {
-        this.apontador = $('<div>')
-        .addClass('apontador'); 
-        let areaPlaca = $('<div>');                   
         let areaAnotacao = $('<div>')
         .addClass('anotacao');
 
         $(onde)
-        .append(this.apontador)
-        .append(areaPlaca)                    
+        .append(this._apontador)
+        .append(this._areaPlaca)                    
         .append(areaAnotacao);
         
-        this.placa.prepararParaMostrar(areaPlaca);
-        this.anotacao.prepararParaMostrar(areaAnotacao);
-        this.relogio.acompanharOTempo(1, this);                    
+        this._placa.prepararParaMostrar(this._areaPlaca);
+        this._anotacao.prepararParaMostrar(areaAnotacao);
+        this._relogio.acompanharOTempo(1, this);                    
     }
     gesticular() {
-        if (!this.apontarSimbolo && !this.apontarLinha) {
-            this.apontarLinha = true;
-        } else if (this.apontarLinha) {
-            this.apontarLinha = false;
-            this.apontarSimbolo = true;
-        } else {
-            if (this.simboloAtual == '<') {
-                this.anotacao.apagarUmSimbolo();
-            } else if (this.simboloAtual == '<<') {
-                this.anotacao.apagarUmaPalavra();
-            } else if (this.simboloAtual == '<>') {
-                this.anotacao.anotarUmSimbolo(' ');
+        if (this._apontarSimbolo) {
+            if (this._simboloAtual == '<') {
+                this._anotacao.apagarUmSimbolo();
+            } else if (this._simboloAtual == '<<') {
+                this._anotacao.apagarUmaPalavra();
+            } else if (this._simboloAtual == '<>') {
+                this._anotacao.anotarUmSimbolo(' ');
+            } else if (this._simboloAtual == '::') {
+                this._placa = this._placaMaiusculas;
+                this._areaPlaca.empty();
+                this._placa.prepararParaMostrar(this._areaPlaca);
+            } else if (this._simboloAtual == '..') {
+                this._placa = this._placaMinusculas;
+                this._areaPlaca.empty();
+                this._placa.prepararParaMostrar(this._areaPlaca); 
+            } else if (this._simboloAtual == '<*') {
+
             } else {
-                this.anotacao.anotarUmSimbolo(this.simboloAtual);
+                this._anotacao.anotarUmSimbolo(this._simboloAtual);
             }                    
-            this.apontarSimbolo = false;
+            this._apontarSimbolo = false;
+        } else if (this._apontarLinha) {
+            this._apontarLinha = false;
+            this._apontarSimbolo = true;
+        } else {
+            this._apontarLinha = true;
         }
     }
     passarOTempo() {
-        if (!this.apontarSimbolo && !this.apontarLinha) {
-            this.placa.verOProximoQuadro(this, $('.apontador'));
-        } else if (this.apontarLinha) {
-            this.placa.verAProximaLinha(this, $('.apontador'));
+        if (this._apontarSimbolo) {
+            this._placa.verOProximoSimbolo(this, $('.apontador'));
+        } else if (this._apontarLinha) {
+            this._placa.verAProximaLinha(this, $('.apontador'));
         } else {
-            this.placa.verOProximoSimbolo(this, $('.apontador'));
+            this._placa.verOProximoQuadro(this, $('.apontador'));
         }                    
     }
-    mostrarOProximoQuadro(proximoQuadro) {
-        this.apontador.animate({
-            top: proximoQuadro.offset().top,
-            left: proximoQuadro.offset().left,
-            width: proximoQuadro.width(),
-            height: proximoQuadro.height()
+    _apontarAProximaArea(area) {
+        this._apontador.animate({
+            top: area.offset().top,
+            left: area.offset().left,
+            width: area.width(),
+            height: area.height()
         });
     }
-    mostrarAProximaLinha(proximaLinha) {
-        this.apontador.animate({
-            top: proximaLinha.offset().top,
-            left: proximaLinha.offset().left,
-            width: proximaLinha.width(),
-            height: proximaLinha.height()
-        });
+    mostrarOProximoQuadro(areaProximoQuadro) {
+        this._apontarAProximaArea(areaProximoQuadro);
     }
-    mostrarOProximoSimbolo(proximoSimbolo, simbolo) {
-        this.apontador.animate({
-            top: proximoSimbolo.offset().top,
-            left: proximoSimbolo.offset().left,
-            width: proximoSimbolo.width(),
-            height: proximoSimbolo.height()
-        }); 
-        this.simboloAtual = simbolo;
+    mostrarAProximaLinha(areaProximaLinha) {
+        this._apontarAProximaArea(areaProximaLinha);
+    }
+    mostrarOProximoSimbolo(areaProximoSimbolo, simbolo) {
+        this._apontarAProximaArea(areaProximoSimbolo);
+        this._simboloAtual = simbolo;
     }
 }

@@ -1,17 +1,17 @@
 class Anotacao {                
     constructor() {
-        this.areaAnotacao = undefined;
+        this._areaAnotacao = null;
     }
     prepararParaMostrar(onde) {
-        this.areaAnotacao = onde;
+        this._areaAnotacao = onde;
     }
     anotarUmSimbolo(simbolo) {
-        this.areaAnotacao.append(simbolo);
+        this._areaAnotacao.append(simbolo);
     }
     apagarUmSimbolo() {
-        this.areaAnotacao.text(this.areaAnotacao.text().substr(0, this.areaAnotacao.text().length - 1));
+        this._areaAnotacao.text(this._areaAnotacao.text().substr(0, this._areaAnotacao.text().length - 1));
     }
     apagarUmaPalavra() {
-        this.areaAnotacao.text(this.areaAnotacao.text().replace(/[^|\s].*$/, ''));
+        this._areaAnotacao.text(this._areaAnotacao.text().replace(/[^|\s][^\s]*$/, ''));
     }
 }

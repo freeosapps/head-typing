@@ -5,13 +5,13 @@ class Placa {
     }
     prepararParaMostrar(onde) {
 
-        let adicionarSimbolosALinha = (simbolos, linha, classes) => {
+        let adicionarSimbolosALinha = (simbolos, linha, classes, letrasMaiusculas) => {
             simbolos.forEach((simbolo) => {
                 let areaSimbolo = $('<span>');
                 classes.forEach((classe) => {
                     areaSimbolo.addClass(classe);
                 });
-                if (this._letrasMaiusculas) {
+                if (letrasMaiusculas) {
                     areaSimbolo.append(simbolo.toUpperCase());
                 } else {
                     areaSimbolo.append(simbolo);
@@ -26,10 +26,10 @@ class Placa {
             .addClass('quadro');
 
             let primeiraLinhaPrimeiroQuadro = $('<div>');                    
-            adicionarSimbolosALinha(['á', 'ã', 'à', 'é', 'ê'], primeiraLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno']);
+            adicionarSimbolosALinha(['á', 'ã', 'à', 'é', 'ê'], primeiraLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno'], this._letrasMaiusculas);
 
             let segundaLinhaPrimeiroQuadro = $('<div>');
-            adicionarSimbolosALinha(['í', 'ó', 'õ', 'ô', 'ú'], segundaLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno']);
+            adicionarSimbolosALinha(['í', 'ó', 'õ', 'ô', 'ú'], segundaLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno'], this._letrasMaiusculas);
 
             primeiroQuadro
             .append(primeiraLinhaPrimeiroQuadro)
@@ -40,15 +40,15 @@ class Placa {
 
             let simboloMaiusculasOuMinusculas = undefined;
             if (this._letrasMaiusculas) {
-                simboloMaiusculasOuMinusculas = '..';
+                simboloMaiusculasOuMinusculas = 'Minúsculas';
             } else {
-                simboloMaiusculasOuMinusculas = '::';
+                simboloMaiusculasOuMinusculas = 'Maiúsculas';
             }
             let primeiraLinhaSegundoQuadro = $('<div>');
-            adicionarSimbolosALinha(['<>', '<', '<<', '<*'], primeiraLinhaSegundoQuadro, ['simbolo']);
+            adicionarSimbolosALinha(['Espaço', 'Apagar letra', 'Apagar palavra', 'Falar'], primeiraLinhaSegundoQuadro, ['simbolo', 'simbolo_descrito'], false);
             
             let segundaLinhaSegundoQuadro = $('<div>');
-            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, '.', ',', '><'], segundaLinhaSegundoQuadro, ['simbolo']);
+            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, '.', ',', 'Acentuadas'], segundaLinhaSegundoQuadro, ['simbolo', 'simbolo_descrito'], false);
 
             segundoQuadro
             .append(primeiraLinhaSegundoQuadro)
@@ -62,10 +62,10 @@ class Placa {
             .addClass('quadro');
 
             let primeiraLinhaPrimeiroQuadro = $('<div>');                    
-            adicionarSimbolosALinha(['a', 'e', 'o', 's', 'r'], primeiraLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno']);
+            adicionarSimbolosALinha(['a', 'e', 'o', 's', 'r'], primeiraLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno'], this._letrasMaiusculas);
 
             let segundaLinhaPrimeiroQuadro = $('<div>');
-            adicionarSimbolosALinha(['i', 'n', 'd', 'm', 'u'], segundaLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno']);
+            adicionarSimbolosALinha(['i', 'n', 'd', 'm', 'u'], segundaLinhaPrimeiroQuadro, ['simbolo', 'simbolo_pequeno'], this._letrasMaiusculas);
 
             primeiroQuadro
             .append(primeiraLinhaPrimeiroQuadro)
@@ -75,16 +75,16 @@ class Placa {
             .addClass('quadro');
             
             let primeiraLinhaSegundoQuadro = $('<div>');
-            adicionarSimbolosALinha(['t', 'c', 'l', 'p'], primeiraLinhaSegundoQuadro, ['simbolo']);                   
+            adicionarSimbolosALinha(['t', 'c', 'l', 'p'], primeiraLinhaSegundoQuadro, ['simbolo'], this._letrasMaiusculas);
 
             let segundaLinhaSegundoQuadro = $('<div>');
-            adicionarSimbolosALinha(['v', 'g', 'h', 'q'], segundaLinhaSegundoQuadro, ['simbolo']);
+            adicionarSimbolosALinha(['v', 'g', 'h', 'q'], segundaLinhaSegundoQuadro, ['simbolo'], this._letrasMaiusculas);
             
             let terceiraLinhaSegundoQuadro = $('<div>');
-            adicionarSimbolosALinha(['b', 'f', 'z', 'j'], terceiraLinhaSegundoQuadro, ['simbolo']);
+            adicionarSimbolosALinha(['b', 'f', 'z', 'j'], terceiraLinhaSegundoQuadro, ['simbolo'], this._letrasMaiusculas);
 
             let quartaLinhaSegundoQuadro = $('<div>');
-            adicionarSimbolosALinha(['x', 'k', 'w', 'y'], quartaLinhaSegundoQuadro, ['simbolo']);
+            adicionarSimbolosALinha(['x', 'k', 'w', 'y'], quartaLinhaSegundoQuadro, ['simbolo'], this._letrasMaiusculas);
 
             segundoQuadro
             .append(primeiraLinhaSegundoQuadro)
@@ -97,15 +97,15 @@ class Placa {
 
             let simboloMaiusculasOuMinusculas = undefined;
             if (this._letrasMaiusculas) {
-                simboloMaiusculasOuMinusculas = '..';
+                simboloMaiusculasOuMinusculas = 'Minúsculas';
             } else {
-                simboloMaiusculasOuMinusculas = '::';
+                simboloMaiusculasOuMinusculas = 'Maiúsculas';
             }
             let primeiraLinhaTerceiroQuadro = $('<div>');
-            adicionarSimbolosALinha(['<>', '<', '<<', '<*'], primeiraLinhaTerceiroQuadro, ['simbolo']);
+            adicionarSimbolosALinha(['Espaço', 'Apagar letra', 'Apagar palavra', 'Falar'], primeiraLinhaTerceiroQuadro, ['simbolo', 'simbolo_descrito'], false);
             
             let segundaLinhaTerceiroQuadro = $('<div>');
-            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, '.', ',', '><'], segundaLinhaTerceiroQuadro, ['simbolo']);
+            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, '.', ',', 'Acentuadas'], segundaLinhaTerceiroQuadro, ['simbolo', 'simbolo_descrito'], false);
 
             terceiroQuadro
             .append(primeiraLinhaTerceiroQuadro)

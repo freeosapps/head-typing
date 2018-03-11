@@ -29,13 +29,13 @@ class Interlocutor {
     }
     gesticular() {
         if (this._apontarSimbolo) {
-            if (this._simboloAtual == '<') {
+            if (this._simboloAtual == 'Apagar letra') {
                 this._anotacao.apagarUmSimbolo();
-            } else if (this._simboloAtual == '<<') {
+            } else if (this._simboloAtual == 'Apagar palavra') {
                 this._anotacao.apagarUmaPalavra();
-            } else if (this._simboloAtual == '<>') {
+            } else if (this._simboloAtual == 'Espaço') {
                 this._anotacao.anotarUmSimbolo(' ');
-            } else if (this._simboloAtual == '::') {
+            } else if (this._simboloAtual == 'Maiúsculas') {
                 if (this._placa == this._placaNaoAcentuadasMinusculas) {
                     this._placa = this._placaNaoAcentuadasMaiusculas;
                 } else if (this._placa == this._placaAcentuadasMinusculas) {
@@ -45,7 +45,7 @@ class Interlocutor {
                 }
                 this._areaPlaca.empty();
                 this._placa.prepararParaMostrar(this._areaPlaca);
-            } else if (this._simboloAtual == '..') {
+            } else if (this._simboloAtual == 'Minúsculas') {
                 if (this._placa == this._placaAcentuadasMaiusculas) {
                     this._placa = this._placaAcentuadasMinusculas;
                 } else if (this._placa == this._placaNaoAcentuadasMaiusculas) {
@@ -55,9 +55,9 @@ class Interlocutor {
                 }
                 this._areaPlaca.empty();
                 this._placa.prepararParaMostrar(this._areaPlaca); 
-            } else if (this._simboloAtual == '<*') {
+            } else if (this._simboloAtual == 'Falar') {
 
-            } else if (this._simboloAtual == '><') {
+            } else if (this._simboloAtual == 'Acentuadas') {
                 if (this._placa == this._placaAcentuadasMaiusculas || this._placa == this._placaAcentuadasMinusculas) {
                     this._placa = this._placaNaoAcentuadasMinusculas;
                 } else if (this._placa == this._placaNaoAcentuadasMaiusculas || this._placa == this._placaNaoAcentuadasMinusculas) {

@@ -71,6 +71,10 @@ class Interlocutor {
                 this._placa = this._placaNaoAcentuadasMinusculas;
                 this._areaPlaca.empty();
                 this._placa.prepararParaMostrar(this._areaPlaca); 
+            } else if (this._simboloAtual == 'Ponto final') {
+                this._anotacao.anotarUmSimbolo('.');
+            } else if (this._simboloAtual == 'Vírgula') {
+                this._anotacao.anotarUmSimbolo(',');
             } else {
                 this._anotacao.anotarUmSimbolo(this._simboloAtual);
             }                    

@@ -48,7 +48,7 @@ class Placa {
             adicionarSimbolosALinha(['Espaço', 'Apagar letra', 'Apagar palavra', 'Falar'], primeiraLinhaSegundoQuadro, ['simbolo', 'simbolo_descrito'], false);
             
             let segundaLinhaSegundoQuadro = $('<div>');
-            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, 'Não acentuadas', '.', ','], segundaLinhaSegundoQuadro, ['simbolo', 'simbolo_descrito'], false);
+            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, 'Não acentuadas', 'Ponto final', 'Vírgula'], segundaLinhaSegundoQuadro, ['simbolo', 'simbolo_descrito'], false);
 
             segundoQuadro
             .append(primeiraLinhaSegundoQuadro)
@@ -105,7 +105,7 @@ class Placa {
             adicionarSimbolosALinha(['Espaço', 'Apagar letra', 'Apagar palavra', 'Falar'], primeiraLinhaTerceiroQuadro, ['simbolo', 'simbolo_descrito'], false);
             
             let segundaLinhaTerceiroQuadro = $('<div>');
-            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, 'Acentuadas', '.', ','], segundaLinhaTerceiroQuadro, ['simbolo', 'simbolo_descrito'], false);
+            adicionarSimbolosALinha([simboloMaiusculasOuMinusculas, 'Acentuadas', 'Ponto final', 'Vírgula'], segundaLinhaTerceiroQuadro, ['simbolo', 'simbolo_descrito'], false);
 
             terceiroQuadro
             .append(primeiraLinhaTerceiroQuadro)

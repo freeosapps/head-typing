@@ -1,8 +1,10 @@
 class Interlocutor {                
-    constructor(placaMinusculas, placaMaiusculas, relogio, anotacao) {
-        this._placaMinusculas = placaMinusculas;
-        this._placaMaiusculas = placaMaiusculas;
-        this._placa = placaMinusculas;
+    constructor(placaNaoAcentuadasMinusculas, placaNaoAcentuadasMaiusculas, placaAcentuadasMinusculas, placaAcentuadasMaiusculas, relogio, anotacao) {
+        this._placaNaoAcentuadasMinusculas = placaNaoAcentuadasMinusculas;
+        this._placaNaoAcentuadasMaiusculas = placaNaoAcentuadasMaiusculas;
+        this._placaAcentuadasMinusculas = placaAcentuadasMinusculas;
+        this._placaAcentuadasMaiusculas = placaAcentuadasMaiusculas;
+        this._placa = placaNaoAcentuadasMinusculas;
         this._relogio = relogio;
         this._anotacao = anotacao;
         this._apontarLinha = false;
@@ -34,15 +36,37 @@ class Interlocutor {
             } else if (this._simboloAtual == '<>') {
                 this._anotacao.anotarUmSimbolo(' ');
             } else if (this._simboloAtual == '::') {
-                this._placa = this._placaMaiusculas;
+                if (this._placa == this._placaNaoAcentuadasMinusculas) {
+                    this._placa = this._placaNaoAcentuadasMaiusculas;
+                } else if (this._placa == this._placaAcentuadasMinusculas) {
+                    this._placa = this._placaAcentuadasMaiusculas;
+                } else {
+                    throw 'A placa deve ser de letras minúsculas, acentuadas ou não.';
+                }
                 this._areaPlaca.empty();
                 this._placa.prepararParaMostrar(this._areaPlaca);
             } else if (this._simboloAtual == '..') {
-                this._placa = this._placaMinusculas;
+                if (this._placa == this._placaAcentuadasMaiusculas) {
+                    this._placa = this._placaAcentuadasMinusculas;
+                } else if (this._placa == this._placaNaoAcentuadasMaiusculas) {
+                    this._placa = this._placaNaoAcentuadasMinusculas;
+                } else {
+                    throw 'A placa deve ser de letras maiúsculas, acentuadas ou não.';
+                }
                 this._areaPlaca.empty();
                 this._placa.prepararParaMostrar(this._areaPlaca); 
             } else if (this._simboloAtual == '<*') {
 
+            } else if (this._simboloAtual == '><') {
+                if (this._placa == this._placaAcentuadasMaiusculas || this._placa == this._placaAcentuadasMaiusculas) {
+                    this._placa = this._placaNaoAcentuadasMinusculas;
+                } else if (this._placa == this._placaNaoAcentuadasMaiusculas || this._placa == this._placaNaoAcentuadasMinusculas) {
+                    this._placa = this._placaAcentuadasMinusculas;
+                } else {
+                    throw 'A placa deve ser de letras maiúsculas ou minúsculas, acentuadas ou não.';
+                }
+                this._areaPlaca.empty();
+                this._placa.prepararParaMostrar(this._areaPlaca); 
             } else {
                 this._anotacao.anotarUmSimbolo(this._simboloAtual);
             }                    

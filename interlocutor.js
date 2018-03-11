@@ -58,7 +58,7 @@ class Interlocutor {
             } else if (this._simboloAtual == '<*') {
 
             } else if (this._simboloAtual == '><') {
-                if (this._placa == this._placaAcentuadasMaiusculas || this._placa == this._placaAcentuadasMaiusculas) {
+                if (this._placa == this._placaAcentuadasMaiusculas || this._placa == this._placaAcentuadasMinusculas) {
                     this._placa = this._placaNaoAcentuadasMinusculas;
                 } else if (this._placa == this._placaNaoAcentuadasMaiusculas || this._placa == this._placaNaoAcentuadasMinusculas) {
                     this._placa = this._placaAcentuadasMinusculas;

@@ -25,7 +25,7 @@ class Interlocutor {
         
         this._placa.prepararParaMostrar(this._areaPlaca);
         this._anotacao.prepararParaMostrar(areaAnotacao);
-        this._relogio.acompanharOTempo(1, this);                    
+        this._relogio.acompanharOTempo(1.5, this);                    
     }
     gesticular() {
         if (this._apontarSimbolo) {
@@ -65,6 +65,10 @@ class Interlocutor {
                 } else {
                     throw 'A placa deve ser de letras maiúsculas ou minúsculas, acentuadas ou não.';
                 }
+                this._areaPlaca.empty();
+                this._placa.prepararParaMostrar(this._areaPlaca); 
+            } else if (this._simboloAtual == 'Não acentuadas') {
+                this._placa = this._placaNaoAcentuadasMinusculas;
                 this._areaPlaca.empty();
                 this._placa.prepararParaMostrar(this._areaPlaca); 
             } else {

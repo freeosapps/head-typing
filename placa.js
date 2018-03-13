@@ -181,4 +181,8 @@ class Placa {
         }
         quem.mostrarOProximoSimbolo(proximoSimbolo, proximoSimbolo.text());
     }
+    delimitarAreasDosQuadros() {
+        let quadros = $('.quadro');
+        return quadros;
+    }
 }

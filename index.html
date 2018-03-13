@@ -3,13 +3,356 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="index.css">
+        <!--<link rel="stylesheet" href="index.css">
         <script src="interlocutor.js"></script>
         <script src="placa.js"></script>
         <script src="relogio.js"></script>
         <script src="anotacao.js"></script>
-        <script src="index.js"></script>
+        <script src="index.js"></script>-->
+        <style>
+            .tela {
+                font-family: sans-serif;
+                margin: .5vh .5vw;
+            }
+            .quadro {
+                width: 100%;
+                border-collapse: collapse;
+                text-align: center;
+                color: dimgray;
+                -webkit-user-select: none; /* Safari 3.1+ */
+                -moz-user-select: none; /* Firefox 2+ */
+                -ms-user-select: none; /* IE 10+ */
+                user-select: none; /* Standard syntax */
+            }
+            .quadro_oculto {
+                display: none;
+            }
+            .celula {
+                border-width: 1px;
+                border-color: white;
+                border-style: solid;
+                background-color: #f7f7ea; 
+                height: 9vh;
+                box-sizing: border-box;
+            }
+            .celula_descricao {
+                font-size: 7pt;
+            }
+            .ponteiro {
+                position: absolute;
+                background-color: rgba(255, 224, 166, .3); 
+                border-width: 1px;
+                border-style: dotted;
+                border-color: orange;
+            }
+            .ponteiro_oculto {
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 0;
+                display: none;
+            }
+            .anotacao {
+                height: calc(9vh - 11px);
+                line-height: calc(9vh - 11px);
+            }
+        </style>
+        <script>
+        $(() => {
+            $.get('pt_BR_wordlist.txt').done((dicionario) => { 
+                let palavras = dicionario.split('\n');
+                $(window).bind('resize', () => {
+                    $('.ponteiro').addClass('ponteiro_oculto');
+                });
+                let temporizador = undefined;
+                let percorrendoQuadros = false;
+                let percorrendoLinhas = false;
+                let elementoAtual = null;
+                let permitirTrocaDeArea = true;
+
+                let percorrerAreas = (elementos) => {
+                    let arrayElementos = elementos.toArray();
+                    clearInterval(temporizador);
+                    temporizador = setInterval(() => {
+                        elementoAtual = $(arrayElementos.shift());
+                        $('.ponteiro').removeClass('ponteiro_oculto');
+                        $('.ponteiro').animate({
+                            top: elementoAtual.offset().top,
+                            left: elementoAtual.offset().left,
+                            width: elementoAtual.width(),
+                            height: elementoAtual.height()
+                        });
+                        arrayElementos.push(elementoAtual[0]);
+                        permitirTrocaDeArea = true;
+                    }, 1500);
+                };
+
+                let maiusculas = false;
+                let acentuadas = false; 
+                let trocarAreaPercorrida = function() {
+                    if (permitirTrocaDeArea) {
+                        permitirTrocaDeArea = false;
+                        if (percorrendoQuadros) {
+                            percorrendoQuadros = false;
+                            percorrendoLinhas = true;
+                            let linhas = elementoAtual.find('.linha');
+                            percorrerAreas(linhas);
+                        } else if (percorrendoLinhas) {
+                            percorrendoLinhas = false;
+                            let celulas = elementoAtual.find('.celula');
+                            percorrerAreas(celulas);
+                        } else {
+                            let sugerirPalavras = () => {
+                                $('.sugestoes').empty();
+                                $('.ponteiro').addClass('ponteiro_oculto');
+                                let ultimaPalavra = $('.anotacao').text().match(/[^|\s][^\s]*$/, '')[0];
+                                let regex = new RegExp(`\\n${ultimaPalavra}.{2,}\\n`, 'g');
+                                let palavrasEncontradas = dicionario.match(regex);
+                                if (palavrasEncontradas) {
+                                    let sugestoesDePalavras = palavrasEncontradas.slice(0, Math.min(8, palavrasEncontradas.length));
+                                    let sugestoesDePalavrasLinha1 = sugestoesDePalavras.slice(0, 4);
+                                    let sugestoesDePalavrasLinha2 = sugestoesDePalavras.slice(4, 8);
+                                    let quadroSugestoes = $('<table>').addClass('quadro');
+                                    let primeiraLinhaQuadroSugestoes = $('<tr>').addClass('linha');
+                                    let segundaLinhaQuadroSugestoes = $('<tr>').addClass('linha');
+                                    quadroSugestoes.append(primeiraLinhaQuadroSugestoes);
+                                    quadroSugestoes.append(segundaLinhaQuadroSugestoes);
+                                    for (let i = 0; i < sugestoesDePalavrasLinha1.length; i++) {
+                                        let celula = $('<td>').addClass('celula');
+                                        let sufixo = sugestoesDePalavrasLinha1[i].replace(/\n/g, '');
+                                        sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
+                                        celula.text(sufixo);
+                                        primeiraLinhaQuadroSugestoes.append(celula);
+                                    }
+                                    for (let i = 0; i < sugestoesDePalavrasLinha2.length; i++) {
+                                        let celula = $('<td>').addClass('celula');
+                                        let sufixo = sugestoesDePalavrasLinha2[i].replace(/\n/g, '');
+                                        sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
+                                        celula.text(sufixo);
+                                        segundaLinhaQuadroSugestoes.append(celula);
+                                    }
+                                    $('.sugestoes').append(quadroSugestoes);
+                                }
+                            }
+                            if (elementoAtual.hasClass('celula_descricao')) {
+                                switch (elementoAtual.text()) {
+                                    case 'Espaço':
+                                        $('.anotacao').text($('.anotacao').text() + ' ');
+                                    break;
+                                    case 'Apagar letra':
+                                        $('.anotacao').text($('.anotacao').text().substr(0, $('.anotacao').text().length - 1));
+                                        sugerirPalavras();
+                                    break;
+                                    case 'Apagar palavra':
+                                        $('.anotacao').text($('.anotacao').text().replace(/[^|\s][^\s]*$/, ''));
+                                    break;
+                                    case 'Acentuadas':
+                                        acentuadas = true;
+                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        $('.quadro_letras').addClass('quadro_oculto');
+                                        if (maiusculas) {
+                                            $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
+                                        } else {
+                                            $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
+                                        }
+                                        $('.celula_acentuadas-nao-acentuadas').text('Não acentuadas');
+                                    break;
+                                    case 'Não acentuadas':
+                                        acentuadas = false;
+                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        $('.quadro_letras').addClass('quadro_oculto');
+                                        if (maiusculas) {
+                                            $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
+                                        } else {
+                                            $('.quadro_nao-acentuadas.quadro_minusculas').removeClass('quadro_oculto');
+                                        }
+                                        $('.celula_acentuadas-nao-acentuadas').text('Acentuadas');
+                                    break;
+                                    case 'Maiúsculas':
+                                        maiusculas = true;
+                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        $('.quadro_letras').addClass('quadro_oculto');
+                                        if (acentuadas) {
+                                            $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
+                                        } else {
+                                            $('.quadro_maiusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
+                                        }
+                                        $('.celula_maiusculas-minusculas').text('Minúsculas');
+                                    break;
+                                    case 'Minúsculas':
+                                        maiusculas = false;
+                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        $('.quadro_letras').addClass('quadro_oculto');
+                                        if (acentuadas) {
+                                            $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');
+                                        } else {
+                                            $('.quadro_minusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
+                                        }
+                                        $('.celula_maiusculas-minusculas').text('Maiúsculas');
+                                    break;
+                                    case 'Ponto final':
+                                        $('.anotacao').text($('.anotacao').text() + '.');
+                                    break;
+                                    case 'Vírgula':
+                                        $('.anotacao').text($('.anotacao').text() + ',');
+                                    break;
+                                    default:
+                                    throw 'Símbolo desconhecido';
+                                    break;
+                                } 
+                            } else {
+                                $('.anotacao').text($('.anotacao').text() + elementoAtual.text());
+                                sugerirPalavras();
+                            }
+                            percorrendoQuadros = true;
+                            let quadros = $('.quadro:not(.quadro_oculto)');
+                            percorrerAreas(quadros);
+                        }
+                    }
+                } 
+
+                $(document.body).bind('click', trocarAreaPercorrida);
+
+                let quadros = $('.quadro:not(.quadro_oculto)');
+                percorrerAreas(quadros);
+                percorrendoQuadros = true;
+            });
+        });
+        </script>
     </head>
     <body class="tela">
+        <div class="ponteiro ponteiro_oculto"></div>
+        <div class="sugestoes"></div>
+        <table class="quadro quadro_letras quadro_acentuadas quadro_maiusculas quadro_oculto">
+            <tr class="linha">
+                <td class="celula">Á</td>
+                <td class="celula">Ã</td>
+                <td class="celula">À</td>
+                <td class="celula">É</td>
+                <td class="celula">Ê</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">Í</td>
+                <td class="celula">Ó</td>
+                <td class="celula">Õ</td>
+                <td class="celula">Ô</td>
+                <td class="celula">Ú</td>
+            </tr>
+        </table>
+        <table class="quadro quadro_letras quadro_acentuadas quadro_minusculas quadro_oculto">
+            <tr class="linha">
+                <td class="celula">á</td>
+                <td class="celula">ã</td>
+                <td class="celula">à</td>
+                <td class="celula">é</td>
+                <td class="celula">ê</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">í</td>
+                <td class="celula">ó</td>
+                <td class="celula">õ</td>
+                <td class="celula">ô</td>
+                <td class="celula">ú</td>
+            </tr>
+        </table>
+        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
+            <tr class="linha">
+                <td class="celula">A</td>
+                <td class="celula">E</td>
+                <td class="celula">O</td>
+                <td class="celula">S</td>
+                <td class="celula">R</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">I</td>
+                <td class="celula">N</td>
+                <td class="celula">D</td>
+                <td class="celula">M</td>
+                <td class="celula">U</td>
+            </tr>
+        </table>
+        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
+            <tr class="linha">
+                <td class="celula">T</td>
+                <td class="celula">C</td>
+                <td class="celula">L</td>
+                <td class="celula">P</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">V</td>
+                <td class="celula">G</td>
+                <td class="celula">H</td>
+                <td class="celula">Q</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">B</td>
+                <td class="celula">F</td>
+                <td class="celula">Z</td>
+                <td class="celula">J</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">X</td>
+                <td class="celula">K</td>
+                <td class="celula">W</td>
+                <td class="celula">Y</td>
+            </tr>
+        </table>
+        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
+            <tr class="linha">
+                <td class="celula">a</td>
+                <td class="celula">e</td>
+                <td class="celula">o</td>
+                <td class="celula">s</td>
+                <td class="celula">r</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">i</td>
+                <td class="celula">n</td>
+                <td class="celula">d</td>
+                <td class="celula">m</td>
+                <td class="celula">u</td>
+            </tr>
+        </table>
+        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
+            <tr class="linha">
+                <td class="celula">t</td>
+                <td class="celula">c</td>
+                <td class="celula">l</td>
+                <td class="celula">p</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">v</td>
+                <td class="celula">g</td>
+                <td class="celula">h</td>
+                <td class="celula">q</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">b</td>
+                <td class="celula">f</td>
+                <td class="celula">z</td>
+                <td class="celula">j</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula">x</td>
+                <td class="celula">k</td>
+                <td class="celula">w</td>
+                <td class="celula">y</td>
+            </tr>
+        </table>
+        <table class="quadro">
+            <tr class="linha">
+                <td class="celula celula_descricao">Espaço</td>
+                <td class="celula celula_descricao">Apagar letra</td>
+                <td class="celula celula_descricao">Apagar palavra</td>
+                <td class="celula celula_descricao">Falar</td>
+            </tr>
+            <tr class="linha">
+                <td class="celula celula_descricao celula_maiusculas-minusculas">Maiúsculas</td>
+                <td class="celula celula_descricao celula_acentuadas-nao-acentuadas">Acentuadas</td>
+                <td class="celula celula_descricao">Ponto final</td>
+                <td class="celula celula_descricao">Vírgula</td>
+            </tr>
+        </table>
+        <div class="anotacao"></div>
     </body>
 </html>

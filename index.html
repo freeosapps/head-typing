@@ -138,6 +138,7 @@
                                 switch (elementoAtual.text()) {
                                     case 'Espaço':
                                         $('.anotacao').text($('.anotacao').text() + ' ');
+                                        sugerirPalavras();
                                     break;
                                     case 'Apagar letra':
                                         $('.anotacao').text($('.anotacao').text().substr(0, $('.anotacao').text().length - 1));

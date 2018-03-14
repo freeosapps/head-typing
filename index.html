@@ -63,6 +63,7 @@
                 box-sizing: border-box;
                 color: dimgray;
                 margin: 1vh;
+                padding: 5px;
                 overflow: hidden;
             }
             .anotacao__texto {
@@ -82,8 +83,10 @@
                 font-family: monospace;
                 text-align: center;
                 text-decoration: underline;
-                position: relative;
-                top: 40%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
             .tela__botao-inicio {
                 border-radius: 100%;
@@ -332,7 +335,7 @@
                     }
                 } 
 
-                $(document.body).bind('click', trocarAreaPercorrida);
+                $('.tela__aplicativo').bind('click', trocarAreaPercorrida);
 
                 let quadros = $('.quadro:not(.quadro_oculto)');
                 percorrerAreas(quadros);

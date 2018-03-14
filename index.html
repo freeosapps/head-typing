@@ -77,24 +77,31 @@
             }
             .tela__aplicativo {
                 display: none;
+                width: 100vw;
+                height: 100vh;
             }
             .tela__inicio {
+                width: 100vw;
+                height: 100vh;
                 color: dimgray;
                 font-family: monospace;
                 text-align: center;
                 text-decoration: underline;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                background-color: beige;
             }
             .tela__botao-inicio {
                 border-radius: 100%;
                 padding: 20px;
-                background-color: cornflowerblue;
+                background-color: lightslategray;
                 color: white;
                 font-size: 12pt;
                 text-transform: uppercase;
+            }
+            .tela__conteudo {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); 
             }
         </style>
         <script>
@@ -356,8 +363,10 @@
     </head>
     <body class="tela">
         <div class="tela__inicio">
-            <h1>Head Typing</h1>
-            <button class="tela__botao-inicio">Iniciar</button>            
+            <div class="tela__conteudo">
+                <h1>Head Typing</h1>
+                <button class="tela__botao-inicio">Iniciar</button>            
+            </div>
         </div>
         <div class="tela__aplicativo">
             <div class="anotacao">

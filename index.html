@@ -35,7 +35,7 @@
                 height: 9vh;
                 box-sizing: border-box;
             }
-            .celula_descricao {
+            .celula_descrita {
                 font-size: 7pt;
             }
             .ponteiro {
@@ -54,7 +54,14 @@
             }
             .anotacao {
                 height: calc(9vh - 11px);
-                line-height: calc(9vh - 11px);
+                border-width: 1px;
+                border-style: solid;
+                border-color: white;
+                box-sizing: border-box;
+                padding: 0 1px;
+                color: white;
+                background-color: lightslategray;
+                margin-bottom: 2px;
             }
         </style>
         <script>
@@ -89,6 +96,52 @@
 
                 let maiusculas = false;
                 let acentuadas = false; 
+
+                let sugerirPalavras = () => {
+                    $('.sugestoes').empty();
+                    $('.ponteiro').addClass('ponteiro_oculto');
+                    let partesUltimaPalavra = $('.anotacao').text().match(/[^|\s][^\s]*$/, '');
+                    let ultimaPalavra = undefined;
+                    if (partesUltimaPalavra) {
+                        ultimaPalavra = partesUltimaPalavra[0];
+                    } else {
+                        ultimaPalavra = '';
+                    }
+                    let regex = new RegExp(`\\n${ultimaPalavra}.{2,}\\n`, 'g');
+                    let palavrasEncontradas = dicionario.match(regex);
+                    if (palavrasEncontradas) {
+                        let sugestoesDePalavras = palavrasEncontradas.slice(0, Math.min(8, palavrasEncontradas.length));
+                        let sugestoesDePalavrasLinha1 = sugestoesDePalavras.slice(0, 4);
+                        let sugestoesDePalavrasLinha2 = sugestoesDePalavras.slice(4, 8);
+                        let quadroSugestoes = $('<table>').addClass('quadro');
+                        let primeiraLinhaQuadroSugestoes = $('<tr>').addClass('linha');
+                        let segundaLinhaQuadroSugestoes = $('<tr>').addClass('linha');
+                        if (sugestoesDePalavrasLinha1.length) {
+                            quadroSugestoes.append(primeiraLinhaQuadroSugestoes);
+                            if (sugestoesDePalavrasLinha2.length) {
+                                quadroSugestoes.append(segundaLinhaQuadroSugestoes);
+                            }
+                        }
+                        for (let i = 0; i < sugestoesDePalavrasLinha1.length; i++) {
+                            let celula = $('<td>').addClass('celula');
+                            let sufixo = sugestoesDePalavrasLinha1[i].replace(/\n/g, '');
+                            sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
+                            celula.text(sufixo);
+                            primeiraLinhaQuadroSugestoes.append(celula);
+                        }
+                        for (let i = 0; i < sugestoesDePalavrasLinha2.length; i++) {
+                            let celula = $('<td>').addClass('celula');
+                            let sufixo = sugestoesDePalavrasLinha2[i].replace(/\n/g, '');
+                            sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
+                            celula.text(sufixo);
+                            segundaLinhaQuadroSugestoes.append(celula);
+                        }
+                        $('.sugestoes').append(quadroSugestoes);
+                    }
+                }
+
+                sugerirPalavras();
+
                 let trocarAreaPercorrida = function() {
                     if (permitirTrocaDeArea) {
                         permitirTrocaDeArea = false;
@@ -96,45 +149,25 @@
                             percorrendoQuadros = false;
                             percorrendoLinhas = true;
                             let linhas = elementoAtual.find('.linha');
-                            percorrerAreas(linhas);
+                            if (linhas.length == 1) {
+                                elementoAtual = $(linhas[0]);
+                                percorrendoLinhas = false;
+                                let celulas = elementoAtual.find('.celula');
+                                if (celulas.length == 1) {
+                                    percorrendoQuadros = true;
+                                    $('.anotacao').text($('.anotacao').text() + $(celulas[0]).text());
+                                } else {
+                                    percorrerAreas(celulas);
+                                }
+                            } else {
+                                percorrerAreas(linhas);
+                            }
                         } else if (percorrendoLinhas) {
                             percorrendoLinhas = false;
                             let celulas = elementoAtual.find('.celula');
                             percorrerAreas(celulas);
                         } else {
-                            let sugerirPalavras = () => {
-                                $('.sugestoes').empty();
-                                $('.ponteiro').addClass('ponteiro_oculto');
-                                let ultimaPalavra = $('.anotacao').text().match(/[^|\s][^\s]*$/, '')[0];
-                                let regex = new RegExp(`\\n${ultimaPalavra}.{2,}\\n`, 'g');
-                                let palavrasEncontradas = dicionario.match(regex);
-                                if (palavrasEncontradas) {
-                                    let sugestoesDePalavras = palavrasEncontradas.slice(0, Math.min(8, palavrasEncontradas.length));
-                                    let sugestoesDePalavrasLinha1 = sugestoesDePalavras.slice(0, 4);
-                                    let sugestoesDePalavrasLinha2 = sugestoesDePalavras.slice(4, 8);
-                                    let quadroSugestoes = $('<table>').addClass('quadro');
-                                    let primeiraLinhaQuadroSugestoes = $('<tr>').addClass('linha');
-                                    let segundaLinhaQuadroSugestoes = $('<tr>').addClass('linha');
-                                    quadroSugestoes.append(primeiraLinhaQuadroSugestoes);
-                                    quadroSugestoes.append(segundaLinhaQuadroSugestoes);
-                                    for (let i = 0; i < sugestoesDePalavrasLinha1.length; i++) {
-                                        let celula = $('<td>').addClass('celula');
-                                        let sufixo = sugestoesDePalavrasLinha1[i].replace(/\n/g, '');
-                                        sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
-                                        celula.text(sufixo);
-                                        primeiraLinhaQuadroSugestoes.append(celula);
-                                    }
-                                    for (let i = 0; i < sugestoesDePalavrasLinha2.length; i++) {
-                                        let celula = $('<td>').addClass('celula');
-                                        let sufixo = sugestoesDePalavrasLinha2[i].replace(/\n/g, '');
-                                        sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
-                                        celula.text(sufixo);
-                                        segundaLinhaQuadroSugestoes.append(celula);
-                                    }
-                                    $('.sugestoes').append(quadroSugestoes);
-                                }
-                            }
-                            if (elementoAtual.hasClass('celula_descricao')) {
+                            if (elementoAtual.hasClass('celula_descrita')) {
                                 switch (elementoAtual.text()) {
                                     case 'Espaço':
                                         $('.anotacao').text($('.anotacao').text() + ' ');
@@ -146,6 +179,7 @@
                                     break;
                                     case 'Apagar palavra':
                                         $('.anotacao').text($('.anotacao').text().replace(/[^|\s][^\s]*$/, ''));
+                                        sugerirPalavras();
                                     break;
                                     case 'Acentuadas':
                                         acentuadas = true;
@@ -222,6 +256,7 @@
         </script>
     </head>
     <body class="tela">
+        <div class="anotacao"></div>
         <div class="ponteiro ponteiro_oculto"></div>
         <div class="sugestoes"></div>
         <table class="quadro quadro_letras quadro_acentuadas quadro_maiusculas quadro_oculto">
@@ -342,18 +377,17 @@
         </table>
         <table class="quadro">
             <tr class="linha">
-                <td class="celula celula_descricao">Espaço</td>
-                <td class="celula celula_descricao">Apagar letra</td>
-                <td class="celula celula_descricao">Apagar palavra</td>
-                <td class="celula celula_descricao">Falar</td>
+                <td class="celula celula_descrita">Espaço</td>
+                <td class="celula celula_descrita">Apagar letra</td>
+                <td class="celula celula_descrita">Apagar palavra</td>
+                <td class="celula celula_descrita">Falar</td>
             </tr>
             <tr class="linha">
-                <td class="celula celula_descricao celula_maiusculas-minusculas">Maiúsculas</td>
-                <td class="celula celula_descricao celula_acentuadas-nao-acentuadas">Acentuadas</td>
-                <td class="celula celula_descricao">Ponto final</td>
-                <td class="celula celula_descricao">Vírgula</td>
+                <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>
+                <td class="celula celula_descrita celula_acentuadas-nao-acentuadas">Acentuadas</td>
+                <td class="celula celula_descrita">Ponto final</td>
+                <td class="celula celula_descrita">Vírgula</td>
             </tr>
         </table>
-        <div class="anotacao"></div>
     </body>
 </html>

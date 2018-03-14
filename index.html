@@ -100,13 +100,13 @@
         <script>
         $(() => {
             $('.tela__botao-inicio').bind('click', () => {
-                var el = document.documentElement,
-                rfs = el.requestFullscreen
-                    || el.webkitRequestFullScreen
-                    || el.mozRequestFullScreen
-                    || el.msRequestFullscreen 
+                let documentElement = document.documentElement,
+                requestFullscreen = documentElement.requestFullscreen
+                    || documentElement.webkitRequestFullScreen
+                    || documentElement.mozRequestFullScreen
+                    || documentElement.msRequestFullscreen 
                 ;
-                rfs.call(el);
+                requestFullscreen.call(documentElement);
                 $('.tela__inicio').hide();
                 $('.tela__aplicativo').show();
             })

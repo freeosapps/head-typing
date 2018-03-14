@@ -256,7 +256,11 @@
                                         sugerirPalavras();
                                     break;
                                     case 'Falar e apagar tudo':
-                                        let speechSynthesis = window.speechSynthesis;
+                                        SpeechSynthesisUtterance = window.webkitSpeechSynthesisUtterance ||
+                                               window.mozSpeechSynthesisUtterance ||
+                                               window.msSpeechSynthesisUtterance ||
+                                               window.oSpeechSynthesisUtterance ||
+                                               window.SpeechSynthesisUtterance;
                                         speechSynthesis.speak(new SpeechSynthesisUtterance($('.anotacao__texto').text()));
                                         $('.anotacao__texto').empty();
                                         sugerirPalavras();

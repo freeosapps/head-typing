@@ -90,7 +90,8 @@
                 padding: 20px;
                 background-color: cornflowerblue;
                 color: white;
-                font-size: 14pt;
+                font-size: 12pt;
+                text-transform: uppercase;
             }
         </style>
         <script>
@@ -111,6 +112,7 @@
                 if (!isFullScreen) {
                     $('.tela__inicio').show();
                     $('.tela__aplicativo').hide();
+                    $('.tela__botao-inicio').text('Continuar');
                 }
             });
 

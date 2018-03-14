@@ -248,9 +248,11 @@
                                     break;
                                     case 'Ponto final':
                                         anotar('.');
+                                        sugerirPalavras();
                                     break;
                                     case 'Vírgula':
                                         anotar(',');
+                                        sugerirPalavras();
                                     break;
                                     default:
                                     throw 'Símbolo desconhecido';

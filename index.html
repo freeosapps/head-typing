@@ -84,6 +84,13 @@
                 $(window).bind('resize', () => {
                     $('.ponteiro').addClass('ponteiro_oculto');
                 });
+                $(document).bind('visibilitychange', () => {
+                    if (document.visibilityState == 'visible') {
+                        $('.ponteiro').removeClass('ponteiro_oculto');
+                    } else {
+                        $('.ponteiro').addClass('ponteiro_oculto');
+                    }
+                });
                 let temporizador = undefined;
                 let percorrendoQuadros = false;
                 let percorrendoLinhas = false;

@@ -261,7 +261,12 @@
                                                window.msSpeechSynthesisUtterance ||
                                                window.oSpeechSynthesisUtterance ||
                                                window.SpeechSynthesisUtterance;
-                                        speechSynthesis.speak(new SpeechSynthesisUtterance($('.anotacao__texto').text()));
+                                        
+                                        speech = new SpeechSynthesisUtterance()
+                                        speech.text = $('.anotacao__texto').text();
+                                        speech.rate = .5;
+                                        speech.lang = "pt-BR";
+                                        speechSynthesis.speak(speech); 
                                         $('.anotacao__texto').empty();
                                         sugerirPalavras();
                                     break;

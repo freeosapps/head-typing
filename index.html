@@ -12,7 +12,8 @@
         <style>
             .tela {
                 font-family: sans-serif;
-                margin: .5vh .5vw;
+                margin: 0;
+                padding: 0;
             }
             .quadro {
                 width: 100%;
@@ -29,11 +30,11 @@
                 display: none;
             }
             .celula {
-                border-width: 1vh;
+                border-width: 1px;
                 border-color: white;
                 border-style: solid;
                 background-color: #f7f7ea; 
-                height: 8vh;
+                height: 8.5vh;
                 box-sizing: border-box;
             }
             .celula_descrita {
@@ -45,6 +46,7 @@
                 border-width: 1px;
                 border-style: dotted;
                 border-color: orange;
+                box-sizing: border-box;
             }
             .ponteiro_oculto {
                 top: 0;
@@ -54,12 +56,11 @@
                 display: none;
             }
             .anotacao {
-                height: 10vh;
+                height: 15vh;
                 border-width: 1px;
                 border-style: solid;
                 border-color: lightgray;
                 box-sizing: border-box;
-                padding: 0 1px;
                 color: dimgray;
                 margin: 1vh;
                 overflow: hidden;

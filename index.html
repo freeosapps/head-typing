@@ -74,9 +74,46 @@
                 border-right-style: solid;
                 border-right-color: dimgray;
             }
+            .tela__aplicativo {
+                display: none;
+            }
+            .tela__inicio {
+                color: dimgray;
+                font-family: monospace;
+                text-align: center;
+                text-decoration: underline;
+                position: relative;
+                top: 40%;
+            }
+            .tela__botao-inicio {
+                border-radius: 100%;
+                padding: 20px;
+                background-color: cornflowerblue;
+                color: white;
+                font-size: 14pt;
+            }
         </style>
         <script>
         $(() => {
+            $('.tela__botao-inicio').bind('click', () => {
+                var el = document.documentElement,
+                rfs = el.requestFullscreen
+                    || el.webkitRequestFullScreen
+                    || el.mozRequestFullScreen
+                    || el.msRequestFullscreen 
+                ;
+                rfs.call(el);
+                $('.tela__inicio').hide();
+                $('.tela__aplicativo').show();
+            })
+            $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
+                let isFullScreen = document.isFullScreen || document.webkitIsFullScreen;
+                if (!isFullScreen) {
+                    $('.tela__inicio').show();
+                    $('.tela__aplicativo').hide();
+                }
+            });
+
             $.get('pt_BR_wordlist.txt').done((dicionario) => { 
                 setInterval(() => {
                     $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
@@ -303,140 +340,146 @@
         </script>
     </head>
     <body class="tela">
-        <div class="anotacao">
-            <span class="anotacao__texto"></span>
+        <div class="tela__inicio">
+            <h1>Head Typing</h1>
+            <button class="tela__botao-inicio">Iniciar</button>            
         </div>
-        <div class="ponteiro ponteiro_oculto"></div>
-        <div class="sugestoes"></div>
-        <table class="quadro quadro_letras quadro_acentuadas quadro_maiusculas quadro_oculto">
-            <tr class="linha">
-                <td class="celula">Á</td>
-                <td class="celula">Ã</td>
-                <td class="celula">À</td>
-                <td class="celula">É</td>
-                <td class="celula">Ê</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">Í</td>
-                <td class="celula">Ó</td>
-                <td class="celula">Õ</td>
-                <td class="celula">Ô</td>
-                <td class="celula">Ú</td>
-            </tr>
-        </table>
-        <table class="quadro quadro_letras quadro_acentuadas quadro_minusculas quadro_oculto">
-            <tr class="linha">
-                <td class="celula">á</td>
-                <td class="celula">ã</td>
-                <td class="celula">à</td>
-                <td class="celula">é</td>
-                <td class="celula">ê</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">í</td>
-                <td class="celula">ó</td>
-                <td class="celula">õ</td>
-                <td class="celula">ô</td>
-                <td class="celula">ú</td>
-            </tr>
-        </table>
-        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
-            <tr class="linha">
-                <td class="celula">A</td>
-                <td class="celula">E</td>
-                <td class="celula">O</td>
-                <td class="celula">S</td>
-                <td class="celula">R</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">I</td>
-                <td class="celula">N</td>
-                <td class="celula">D</td>
-                <td class="celula">M</td>
-                <td class="celula">U</td>
-            </tr>
-        </table>
-        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
-            <tr class="linha">
-                <td class="celula">T</td>
-                <td class="celula">C</td>
-                <td class="celula">L</td>
-                <td class="celula">P</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">V</td>
-                <td class="celula">G</td>
-                <td class="celula">H</td>
-                <td class="celula">Q</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">B</td>
-                <td class="celula">F</td>
-                <td class="celula">Z</td>
-                <td class="celula">J</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">X</td>
-                <td class="celula">K</td>
-                <td class="celula">W</td>
-                <td class="celula">Y</td>
-            </tr>
-        </table>
-        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
-            <tr class="linha">
-                <td class="celula">a</td>
-                <td class="celula">e</td>
-                <td class="celula">o</td>
-                <td class="celula">s</td>
-                <td class="celula">r</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">i</td>
-                <td class="celula">n</td>
-                <td class="celula">d</td>
-                <td class="celula">m</td>
-                <td class="celula">u</td>
-            </tr>
-        </table>
-        <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
-            <tr class="linha">
-                <td class="celula">t</td>
-                <td class="celula">c</td>
-                <td class="celula">l</td>
-                <td class="celula">p</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">v</td>
-                <td class="celula">g</td>
-                <td class="celula">h</td>
-                <td class="celula">q</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">b</td>
-                <td class="celula">f</td>
-                <td class="celula">z</td>
-                <td class="celula">j</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula">x</td>
-                <td class="celula">k</td>
-                <td class="celula">w</td>
-                <td class="celula">y</td>
-            </tr>
-        </table>
-        <table class="quadro">
-            <tr class="linha">
-                <td class="celula celula_descrita">Espaço</td>
-                <td class="celula celula_descrita">Apagar letra</td>
-                <td class="celula celula_descrita">Apagar palavra</td>
-                <td class="celula celula_descrita">Falar e apagar tudo</td>
-            </tr>
-            <tr class="linha">
-                <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>
-                <td class="celula celula_descrita celula_acentuadas-nao-acentuadas">Acentuadas</td>
-                <td class="celula celula_descrita">Ponto final</td>
-                <td class="celula celula_descrita">Vírgula</td>
-            </tr>
-        </table>
+        <div class="tela__aplicativo">
+            <div class="anotacao">
+                <span class="anotacao__texto"></span>
+            </div>
+            <div class="ponteiro ponteiro_oculto"></div>
+            <div class="sugestoes"></div>
+            <table class="quadro quadro_letras quadro_acentuadas quadro_maiusculas quadro_oculto">
+                <tr class="linha">
+                    <td class="celula">Á</td>
+                    <td class="celula">Ã</td>
+                    <td class="celula">À</td>
+                    <td class="celula">É</td>
+                    <td class="celula">Ê</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">Í</td>
+                    <td class="celula">Ó</td>
+                    <td class="celula">Õ</td>
+                    <td class="celula">Ô</td>
+                    <td class="celula">Ú</td>
+                </tr>
+            </table>
+            <table class="quadro quadro_letras quadro_acentuadas quadro_minusculas quadro_oculto">
+                <tr class="linha">
+                    <td class="celula">á</td>
+                    <td class="celula">ã</td>
+                    <td class="celula">à</td>
+                    <td class="celula">é</td>
+                    <td class="celula">ê</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">í</td>
+                    <td class="celula">ó</td>
+                    <td class="celula">õ</td>
+                    <td class="celula">ô</td>
+                    <td class="celula">ú</td>
+                </tr>
+            </table>
+            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
+                <tr class="linha">
+                    <td class="celula">A</td>
+                    <td class="celula">E</td>
+                    <td class="celula">O</td>
+                    <td class="celula">S</td>
+                    <td class="celula">R</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">I</td>
+                    <td class="celula">N</td>
+                    <td class="celula">D</td>
+                    <td class="celula">M</td>
+                    <td class="celula">U</td>
+                </tr>
+            </table>
+            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
+                <tr class="linha">
+                    <td class="celula">T</td>
+                    <td class="celula">C</td>
+                    <td class="celula">L</td>
+                    <td class="celula">P</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">V</td>
+                    <td class="celula">G</td>
+                    <td class="celula">H</td>
+                    <td class="celula">Q</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">B</td>
+                    <td class="celula">F</td>
+                    <td class="celula">Z</td>
+                    <td class="celula">J</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">X</td>
+                    <td class="celula">K</td>
+                    <td class="celula">W</td>
+                    <td class="celula">Y</td>
+                </tr>
+            </table>
+            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
+                <tr class="linha">
+                    <td class="celula">a</td>
+                    <td class="celula">e</td>
+                    <td class="celula">o</td>
+                    <td class="celula">s</td>
+                    <td class="celula">r</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">i</td>
+                    <td class="celula">n</td>
+                    <td class="celula">d</td>
+                    <td class="celula">m</td>
+                    <td class="celula">u</td>
+                </tr>
+            </table>
+            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
+                <tr class="linha">
+                    <td class="celula">t</td>
+                    <td class="celula">c</td>
+                    <td class="celula">l</td>
+                    <td class="celula">p</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">v</td>
+                    <td class="celula">g</td>
+                    <td class="celula">h</td>
+                    <td class="celula">q</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">b</td>
+                    <td class="celula">f</td>
+                    <td class="celula">z</td>
+                    <td class="celula">j</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula">x</td>
+                    <td class="celula">k</td>
+                    <td class="celula">w</td>
+                    <td class="celula">y</td>
+                </tr>
+            </table>
+            <table class="quadro">
+                <tr class="linha">
+                    <td class="celula celula_descrita">Espaço</td>
+                    <td class="celula celula_descrita">Apagar letra</td>
+                    <td class="celula celula_descrita">Apagar palavra</td>
+                    <td class="celula celula_descrita">Falar e apagar tudo</td>
+                </tr>
+                <tr class="linha">
+                    <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>
+                    <td class="celula celula_descrita celula_acentuadas-nao-acentuadas">Acentuadas</td>
+                    <td class="celula celula_descrita">Ponto final</td>
+                    <td class="celula celula_descrita">Vírgula</td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

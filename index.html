@@ -192,11 +192,19 @@
                             celula.text(sufixo);
                             primeiraLinhaQuadroSugestoes.append(celula);
                         }
+                        if (sugestoesDePalavrasLinha1.length) {
+                            let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');
+                            primeiraLinhaQuadroSugestoes.append(celula);
+                        }
                         for (let i = 0; i < sugestoesDePalavrasLinha2.length; i++) {
                             let celula = $('<td>').addClass('celula');
                             let sufixo = sugestoesDePalavrasLinha2[i].replace(/\n/g, '');
                             sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
                             celula.text(sufixo);
+                            segundaLinhaQuadroSugestoes.append(celula);
+                        }
+                        if (sugestoesDePalavrasLinha2.length) {
+                            let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');
                             segundaLinhaQuadroSugestoes.append(celula);
                         }
                         $('.sugestoes').append(quadroSugestoes);
@@ -320,6 +328,8 @@
                                         $('.anotacao__texto').empty();
                                         sugerirPalavras();
                                     break;
+                                    case 'Continuar':
+                                    break;
                                     default:
                                     throw 'Símbolo desconhecido';
                                     break;
@@ -362,6 +372,7 @@
                     <td class="celula">À</td>
                     <td class="celula">É</td>
                     <td class="celula">Ê</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">Í</td>
@@ -369,6 +380,7 @@
                     <td class="celula">Õ</td>
                     <td class="celula">Ô</td>
                     <td class="celula">Ú</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
             </table>
             <table class="quadro quadro_letras quadro_acentuadas quadro_minusculas quadro_oculto">
@@ -378,6 +390,7 @@
                     <td class="celula">à</td>
                     <td class="celula">é</td>
                     <td class="celula">ê</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">í</td>
@@ -385,6 +398,7 @@
                     <td class="celula">õ</td>
                     <td class="celula">ô</td>
                     <td class="celula">ú</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
             </table>
             <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
@@ -394,6 +408,7 @@
                     <td class="celula">O</td>
                     <td class="celula">S</td>
                     <td class="celula">R</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">I</td>
@@ -401,6 +416,7 @@
                     <td class="celula">D</td>
                     <td class="celula">M</td>
                     <td class="celula">U</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
             </table>
             <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
@@ -409,24 +425,28 @@
                     <td class="celula">C</td>
                     <td class="celula">L</td>
                     <td class="celula">P</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">V</td>
                     <td class="celula">G</td>
                     <td class="celula">H</td>
                     <td class="celula">Q</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">B</td>
                     <td class="celula">F</td>
                     <td class="celula">Z</td>
                     <td class="celula">J</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">X</td>
                     <td class="celula">K</td>
                     <td class="celula">W</td>
                     <td class="celula">Y</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
             </table>
             <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
@@ -436,6 +456,7 @@
                     <td class="celula">o</td>
                     <td class="celula">s</td>
                     <td class="celula">r</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">i</td>
@@ -443,6 +464,7 @@
                     <td class="celula">d</td>
                     <td class="celula">m</td>
                     <td class="celula">u</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
             </table>
             <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
@@ -451,24 +473,28 @@
                     <td class="celula">c</td>
                     <td class="celula">l</td>
                     <td class="celula">p</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">v</td>
                     <td class="celula">g</td>
                     <td class="celula">h</td>
                     <td class="celula">q</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">b</td>
                     <td class="celula">f</td>
                     <td class="celula">z</td>
                     <td class="celula">j</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula">x</td>
                     <td class="celula">k</td>
                     <td class="celula">w</td>
                     <td class="celula">y</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
             </table>
             <table class="quadro">
@@ -477,12 +503,14 @@
                     <td class="celula celula_descrita">Apagar letra</td>
                     <td class="celula celula_descrita">Apagar palavra</td>
                     <td class="celula celula_descrita">Falar e apagar tudo</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
                 <tr class="linha">
                     <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>
                     <td class="celula celula_descrita celula_acentuadas-nao-acentuadas">Acentuadas</td>
                     <td class="celula celula_descrita">Ponto final</td>
                     <td class="celula celula_descrita">Vírgula</td>
+                    <td class="celula celula_descrita">Continuar</td>
                 </tr>
             </table>
         </div>

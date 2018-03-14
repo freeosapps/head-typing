@@ -255,10 +255,11 @@
                                         anotar(',');
                                         sugerirPalavras();
                                     break;
-                                    case 'Falar':
+                                    case 'Falar e apagar tudo':
                                         let speechSynthesis = window.speechSynthesis;
                                         speechSynthesis.speak(new SpeechSynthesisUtterance($('.anotacao__texto').text()));
                                         $('.anotacao__texto').empty();
+                                        sugerirPalavras();
                                     break;
                                     default:
                                     throw 'Símbolo desconhecido';
@@ -411,7 +412,7 @@
                 <td class="celula celula_descrita">Espaço</td>
                 <td class="celula celula_descrita">Apagar letra</td>
                 <td class="celula celula_descrita">Apagar palavra</td>
-                <td class="celula celula_descrita">Falar</td>
+                <td class="celula celula_descrita">Falar e apagar tudo</td>
             </tr>
             <tr class="linha">
                 <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>

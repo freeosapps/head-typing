@@ -99,8 +99,8 @@
                         $('.ponteiro').animate({
                             top: elementoAtual.offset().top,
                             left: elementoAtual.offset().left,
-                            width: elementoAtual.width(),
-                            height: elementoAtual.height()
+                            width: elementoAtual.outerWidth(),
+                            height: elementoAtual.outerHeight()
                         });
                         arrayElementos.push(elementoAtual[0]);
                         permitirTrocaDeArea = true;

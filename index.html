@@ -157,7 +157,7 @@
 
                 let alterarAnotacao = (texto) => {
                     $('.anotacao__texto').text(texto);
-                    $('.anotacao').scrollTop($('.anotacao')[0].scrollHeight);
+                    $('.anotacao').scrollTop($('.anotacao').prop('scrollHeight'));
                 }
 
                 let anotar = (texto) => {
@@ -254,6 +254,11 @@
                                     case 'Vírgula':
                                         anotar(',');
                                         sugerirPalavras();
+                                    break;
+                                    case 'Falar':
+                                        let speechSynthesis = window.speechSynthesis;
+                                        speechSynthesis.speak(new SpeechSynthesisUtterance($('.anotacao__texto').text()));
+                                        $('.anotacao__texto').empty();
                                     break;
                                     default:
                                     throw 'Símbolo desconhecido';

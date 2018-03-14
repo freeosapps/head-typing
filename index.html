@@ -112,7 +112,7 @@
                 let sugerirPalavras = () => {
                     $('.sugestoes').empty();
                     $('.ponteiro').addClass('ponteiro_oculto');
-                    let partesUltimaPalavra = $('.anotacao__texto').text().match(/[^|\s][^\s]*$/, '');
+                    let partesUltimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,][^\s\.\,]*$/, '');
                     let ultimaPalavra = undefined;
                     if (partesUltimaPalavra) {
                         ultimaPalavra = partesUltimaPalavra[0];

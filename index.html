@@ -113,6 +113,8 @@
                 let percorrendoLinhas = false;
                 let elementoAtual = null;
                 let permitirTrocaDeArea = true;
+                let maiusculas = false;
+                let acentuadas = false; 
 
                 let exibirPonteiro = () => {
                     $('.ponteiro').removeClass('ponteiro_oculto');
@@ -187,9 +189,6 @@
                     clearInterval(temporizador);
                     percorrerQuadros();
                 });
-
-                let maiusculas = false;
-                let acentuadas = false; 
 
                 let sugerirPalavras = () => {
                     $('.sugestoes').empty();

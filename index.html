@@ -53,10 +53,6 @@
                 box-sizing: border-box;
             }
             .ponteiro_oculto {
-                top: 0;
-                left: 0;
-                width: 0;
-                height: 0;
                 display: none;
             }
             .anotacao {
@@ -111,72 +107,86 @@
         </style>
         <script>
         $(() => {
-            $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
-                let documentElement = document.documentElement,
-                requestFullscreen = documentElement.requestFullscreen
-                    || documentElement.webkitRequestFullScreen
-                    || documentElement.mozRequestFullScreen
-                    || documentElement.msRequestFullscreen 
-                ;
-                requestFullscreen.call(documentElement);
-            })
-            $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
-                let isFullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
-                if (!isFullScreen) {
-                    pausar = true;
-                    $('.tela__inicio').show();
-                    $('.tela__aplicativo').hide();
-                    $('.tela__botao_iniciar').hide();
-                    $('.tela__botao_continuar').show();
-                } else {
-                    $('.tela__inicio').hide();
-                    $('.tela__aplicativo').show();
-                    $('.tela__wotao_iniciar').show();
-                    $('.tela__botao_continuar').hide();
-                    pausar = false;
-                }
-            });
-
             $.get('pt_BR_wordlist.txt').done((dicionario) => { 
-                setInterval(() => {
-                    $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
-                }, 500);
-                let palavras = dicionario.split('\n');
-                $(window).bind('resize', () => {
-                    $('.ponteiro').addClass('ponteiro_oculto');
-                });
                 let temporizador = undefined;
                 let percorrendoQuadros = false;
                 let percorrendoLinhas = false;
                 let elementoAtual = null;
                 let permitirTrocaDeArea = true;
-                let pausar = false;
+
+                let exibirPonteiro = () => {
+                    $('.ponteiro').removeClass('ponteiro_oculto');
+                };
+
+                let ocultarPonteiro = () => {
+                    $('.ponteiro').addClass('ponteiro_oculto');
+                    $('.ponteiro').css({
+                        top: 0,
+                        left: 0,
+                        width: 0,
+                        height: 0
+                    });
+                };
 
                 let percorrerAreas = (elementos) => {
                     let arrayElementos = elementos.toArray();
                     clearInterval(temporizador);
                     temporizador = setInterval(() => {
-                        if (!pausar) {
-                            elementoAtual = $(arrayElementos.shift());
-                            $('.ponteiro').removeClass('ponteiro_oculto');
-                            $('.ponteiro').animate({
-                                top: elementoAtual.offset().top,
-                                left: elementoAtual.offset().left,
-                                width: elementoAtual.outerWidth(),
-                                height: elementoAtual.outerHeight()
-                            });
-                            arrayElementos.push(elementoAtual[0]);
-                            permitirTrocaDeArea = true;
-                        }
+                        elementoAtual = $(arrayElementos.shift());
+                        exibirPonteiro();
+                        $('.ponteiro').animate({
+                            top: elementoAtual.offset().top,
+                            left: elementoAtual.offset().left,
+                            width: elementoAtual.outerWidth(),
+                            height: elementoAtual.outerHeight()
+                        });
+                        arrayElementos.push(elementoAtual[0]);
+                        permitirTrocaDeArea = true;
                     }, 1500);
                 };
+
+                $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
+                    let documentElement = document.documentElement;
+                    let requestFullscreen = documentElement.requestFullscreen
+                        || documentElement.webkitRequestFullScreen
+                        || documentElement.mozRequestFullScreen
+                        || documentElement.msRequestFullscreen;
+                    requestFullscreen.call(documentElement);
+                })
+
+                $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
+                    let fullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
+                    if (fullScreen) {
+                        let quadros = $('.quadro:not(.quadro_oculto)');
+                        percorrerAreas(quadros);
+                        percorrendoQuadros = true;
+                        $('.tela__inicio').hide();
+                        $('.tela__aplicativo').show();
+                        $('.tela__wotao_iniciar').show();
+                        $('.tela__botao_continuar').hide();
+                    } else {
+                        clearInterval(temporizador);
+                        ocultarPonteiro();
+                        $('.tela__inicio').show();
+                        $('.tela__aplicativo').hide();
+                        $('.tela__botao_iniciar').hide();
+                        $('.tela__botao_continuar').show();
+                    }
+                });
+
+                setInterval(() => {
+                    $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
+                }, 500);
+                $(window).bind('resize', () => {
+                    ocultarPonteiro();
+                });
 
                 let maiusculas = false;
                 let acentuadas = false; 
 
                 let sugerirPalavras = () => {
                     $('.sugestoes').empty();
-                    $('.ponteiro').addClass('ponteiro_oculto');
+                    ocultarPonteiro();
                     let partesUltimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,][^\s\.\,]*$/, '');
                     let ultimaPalavra = undefined;
                     if (partesUltimaPalavra) {
@@ -277,7 +287,7 @@
                                     break;
                                     case 'Acentuadas':
                                         acentuadas = true;
-                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        ocultarPonteiro();
                                         $('.quadro_letras').addClass('quadro_oculto');
                                         if (maiusculas) {
                                             $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
@@ -288,7 +298,7 @@
                                     break;
                                     case 'Não acentuadas':
                                         acentuadas = false;
-                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        ocultarPonteiro();
                                         $('.quadro_letras').addClass('quadro_oculto');
                                         if (maiusculas) {
                                             $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
@@ -299,7 +309,7 @@
                                     break;
                                     case 'Maiúsculas':
                                         maiusculas = true;
-                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        ocultarPonteiro();
                                         $('.quadro_letras').addClass('quadro_oculto');
                                         if (acentuadas) {
                                             $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
@@ -310,7 +320,7 @@
                                     break;
                                     case 'Minúsculas':
                                         maiusculas = false;
-                                        $('.ponteiro').addClass('ponteiro_oculto');
+                                        ocultarPonteiro();
                                         $('.quadro_letras').addClass('quadro_oculto');
                                         if (acentuadas) {
                                             $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');

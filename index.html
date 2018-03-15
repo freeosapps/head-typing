@@ -181,8 +181,11 @@
                 setInterval(() => {
                     $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
                 }, 500);
+
                 $(window).bind('resize', () => {
+                    clearInterval(temporizador);
                     ocultarPonteiro();
+                    percorrerQuadros();
                 });
 
                 let maiusculas = false;

@@ -169,8 +169,8 @@
                         $('.tela__wotao_iniciar').show();
                         $('.tela__botao_continuar').hide();
                     } else {
-                        clearInterval(temporizador);
                         ocultarPonteiro();
+                        clearInterval(temporizador);
                         $('.tela__inicio').show();
                         $('.tela__aplicativo').hide();
                         $('.tela__botao_iniciar').hide();
@@ -183,8 +183,8 @@
                 }, 500);
 
                 $(window).bind('resize', () => {
-                    clearInterval(temporizador);
                     ocultarPonteiro();
+                    clearInterval(temporizador);
                     percorrerQuadros();
                 });
 

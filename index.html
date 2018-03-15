@@ -91,15 +91,17 @@
                 text-align: center;
                 background-color: beige;
             }
-            .tela__botao-inicio {
+            .tela__botao {
                 border-radius: 100%;
                 padding: 20px;
                 background-color: lightslategray;
                 color: white;
                 font-size: 12pt;
-                text-transform: uppercase;
             }
-            .tela__conteudo {
+            .tela__botao_continuar {
+                display: none;
+            }
+            .tela__conteudo-inicio {
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -109,7 +111,7 @@
         </style>
         <script>
         $(() => {
-            $('.tela__botao-inicio').bind('click', () => {
+            $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
                 let documentElement = document.documentElement,
                 requestFullscreen = documentElement.requestFullscreen
                     || documentElement.webkitRequestFullScreen
@@ -117,15 +119,21 @@
                     || documentElement.msRequestFullscreen 
                 ;
                 requestFullscreen.call(documentElement);
-                $('.tela__inicio').hide();
-                $('.tela__aplicativo').show();
             })
             $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
-                let isFullScreen = document.isFullScreen || document.webkitIsFullScreen;
+                let isFullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
                 if (!isFullScreen) {
+                    pausar = true;
                     $('.tela__inicio').show();
                     $('.tela__aplicativo').hide();
-                    $('.tela__botao-inicio').text('Continuar');
+                    $('.tela__botao_iniciar').hide();
+                    $('.tela__botao_continuar').show();
+                } else {
+                    $('.tela__inicio').hide();
+                    $('.tela__aplicativo').show();
+                    $('.tela__wotao_iniciar').show();
+                    $('.tela__botao_continuar').hide();
+                    pausar = false;
                 }
             });
 
@@ -137,33 +145,29 @@
                 $(window).bind('resize', () => {
                     $('.ponteiro').addClass('ponteiro_oculto');
                 });
-                $(document).bind('visibilitychange', () => {
-                    if (document.visibilityState == 'visible') {
-                        $('.ponteiro').removeClass('ponteiro_oculto');
-                    } else {
-                        $('.ponteiro').addClass('ponteiro_oculto');
-                    }
-                });
                 let temporizador = undefined;
                 let percorrendoQuadros = false;
                 let percorrendoLinhas = false;
                 let elementoAtual = null;
                 let permitirTrocaDeArea = true;
+                let pausar = false;
 
                 let percorrerAreas = (elementos) => {
                     let arrayElementos = elementos.toArray();
                     clearInterval(temporizador);
                     temporizador = setInterval(() => {
-                        elementoAtual = $(arrayElementos.shift());
-                        $('.ponteiro').removeClass('ponteiro_oculto');
-                        $('.ponteiro').animate({
-                            top: elementoAtual.offset().top,
-                            left: elementoAtual.offset().left,
-                            width: elementoAtual.outerWidth(),
-                            height: elementoAtual.outerHeight()
-                        });
-                        arrayElementos.push(elementoAtual[0]);
-                        permitirTrocaDeArea = true;
+                        if (!pausar) {
+                            elementoAtual = $(arrayElementos.shift());
+                            $('.ponteiro').removeClass('ponteiro_oculto');
+                            $('.ponteiro').animate({
+                                top: elementoAtual.offset().top,
+                                left: elementoAtual.offset().left,
+                                width: elementoAtual.outerWidth(),
+                                height: elementoAtual.outerHeight()
+                            });
+                            arrayElementos.push(elementoAtual[0]);
+                            permitirTrocaDeArea = true;
+                        }
                     }, 1500);
                 };
 
@@ -366,9 +370,10 @@
     </head>
     <body class="tela">
         <div class="tela__inicio">
-            <div class="tela__conteudo">
+            <div class="tela__conteudo-inicio">
                 <h1>Head Typing</h1>
-                <button class="tela__botao-inicio">Iniciar</button>            
+                <button class="tela__botao tela__botao_iniciar">Iniciar</button>            
+                <button class="tela__botao tela__botao_continuar">Continuar</button>            
             </div>
         </div>
         <div class="tela__aplicativo">

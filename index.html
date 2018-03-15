@@ -252,123 +252,144 @@
                     alterarAnotacao($('.anotacao__texto').text() + texto);
                 };
 
+                let trocarParaQuadros = () => {
+                    percorrerQuadros();
+                };
+
+                let trocarParaLinhas = () => {
+                    percorrendoQuadros = false;
+                    percorrendoLinhas = true;
+                    let linhas = elementoAtual.find('.linha');
+                    if (linhas.length == 1) {
+                        elementoAtual = $(linhas[0]);
+                        percorrendoLinhas = false;
+                        let celulas = elementoAtual.find('.celula');
+                        if (celulas.length == 1) {
+                            percorrendoQuadros = true;
+                            anotar($(celulas[0].text()));
+                        } else {
+                            percorrerAreas(celulas);
+                        }
+                    } else {
+                        percorrerAreas(linhas);
+                    }
+                };
+
+                let trocarParaCelulas = () => {
+                    percorrendoLinhas = false;
+                    let celulas = elementoAtual.find('.celula');
+                    percorrerAreas(celulas);
+                };
+
+                let executarLetraOuSimbolo = () => {
+                    if (elementoAtual.hasClass('celula_descrita')) {
+                        executarSimbolo();
+                    } else {
+                        anotar(elementoAtual.text());
+                        sugerirPalavras();
+                    }
+                };
+
+                let executarSimbolo = () => {
+                    switch (elementoAtual.text()) {
+                        case 'Espaço':
+                            anotar(' ');
+                            sugerirPalavras();
+                        break;
+                        case 'Apagar letra':
+                            alterarAnotacao($('.anotacao__texto').text().substr(0, $('.anotacao__texto').text().length - 1));
+                            sugerirPalavras();
+                        break;
+                        case 'Apagar palavra':
+                            alterarAnotacao($('.anotacao__texto').text().replace(/[^|\s][^\s]*$/, ''));
+                            sugerirPalavras();
+                        break;
+                        case 'Acentuadas':
+                            acentuadas = true;
+                            ocultarPonteiro();
+                            $('.quadro_letras').addClass('quadro_oculto');
+                            if (maiusculas) {
+                                $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
+                            } else {
+                                $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
+                            }
+                            $('.celula_acentuadas-nao-acentuadas').text('Não acentuadas');
+                        break;
+                        case 'Não acentuadas':
+                            acentuadas = false;
+                            ocultarPonteiro();
+                            $('.quadro_letras').addClass('quadro_oculto');
+                            if (maiusculas) {
+                                $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
+                            } else {
+                                $('.quadro_nao-acentuadas.quadro_minusculas').removeClass('quadro_oculto');
+                            }
+                            $('.celula_acentuadas-nao-acentuadas').text('Acentuadas');
+                        break;
+                        case 'Maiúsculas':
+                            maiusculas = true;
+                            ocultarPonteiro();
+                            $('.quadro_letras').addClass('quadro_oculto');
+                            if (acentuadas) {
+                                $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
+                            } else {
+                                $('.quadro_maiusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
+                            }
+                            $('.celula_maiusculas-minusculas').text('Minúsculas');
+                        break;
+                        case 'Minúsculas':
+                            maiusculas = false;
+                            ocultarPonteiro();
+                            $('.quadro_letras').addClass('quadro_oculto');
+                            if (acentuadas) {
+                                $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');
+                            } else {
+                                $('.quadro_minusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
+                            }
+                            $('.celula_maiusculas-minusculas').text('Maiúsculas');
+                        break;
+                        case 'Ponto final':
+                            anotar('.');
+                            sugerirPalavras();
+                        break;
+                        case 'Vírgula':
+                            anotar(',');
+                            sugerirPalavras();
+                        break;
+                        case 'Falar e apagar tudo':
+                            SpeechSynthesisUtterance = window.webkitSpeechSynthesisUtterance ||
+                                    window.mozSpeechSynthesisUtterance ||
+                                    window.msSpeechSynthesisUtterance ||
+                                    window.oSpeechSynthesisUtterance ||
+                                    window.SpeechSynthesisUtterance;
+                            
+                            speech = new SpeechSynthesisUtterance();
+                            speech.text = $('.anotacao__texto').text();
+                            speech.rate = .5;
+                            speech.lang = 'pt-BR';
+                            speechSynthesis.speak(speech); 
+                            $('.anotacao__texto').empty();
+                            sugerirPalavras();
+                        break;
+                        case 'Continuar':
+                            // Não faz nada.
+                        break;
+                        default:
+                            throw 'Símbolo desconhecido';
+                        break;
+                    } 
+                };
+
                 let trocarAreaPercorrida = function() {
                     if (permitirTrocaDeArea) {
                         permitirTrocaDeArea = false;
                         if (percorrendoQuadros) {
-                            percorrendoQuadros = false;
-                            percorrendoLinhas = true;
-                            let linhas = elementoAtual.find('.linha');
-                            if (linhas.length == 1) {
-                                elementoAtual = $(linhas[0]);
-                                percorrendoLinhas = false;
-                                let celulas = elementoAtual.find('.celula');
-                                if (celulas.length == 1) {
-                                    percorrendoQuadros = true;
-                                    anotar($(celulas[0].text()));
-                                } else {
-                                    percorrerAreas(celulas);
-                                }
-                            } else {
-                                percorrerAreas(linhas);
-                            }
+                            trocarParaLinhas();
                         } else if (percorrendoLinhas) {
-                            percorrendoLinhas = false;
-                            let celulas = elementoAtual.find('.celula');
-                            percorrerAreas(celulas);
+                            trocarParaCelulas();
                         } else {
-                            if (elementoAtual.hasClass('celula_descrita')) {
-                                switch (elementoAtual.text()) {
-                                    case 'Espaço':
-                                        anotar(' ');
-                                        sugerirPalavras();
-                                    break;
-                                    case 'Apagar letra':
-                                        alterarAnotacao($('.anotacao__texto').text().substr(0, $('.anotacao__texto').text().length - 1));
-                                        sugerirPalavras();
-                                    break;
-                                    case 'Apagar palavra':
-                                        alterarAnotacao($('.anotacao__texto').text().replace(/[^|\s][^\s]*$/, ''));
-                                        sugerirPalavras();
-                                    break;
-                                    case 'Acentuadas':
-                                        acentuadas = true;
-                                        ocultarPonteiro();
-                                        $('.quadro_letras').addClass('quadro_oculto');
-                                        if (maiusculas) {
-                                            $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
-                                        } else {
-                                            $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
-                                        }
-                                        $('.celula_acentuadas-nao-acentuadas').text('Não acentuadas');
-                                    break;
-                                    case 'Não acentuadas':
-                                        acentuadas = false;
-                                        ocultarPonteiro();
-                                        $('.quadro_letras').addClass('quadro_oculto');
-                                        if (maiusculas) {
-                                            $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
-                                        } else {
-                                            $('.quadro_nao-acentuadas.quadro_minusculas').removeClass('quadro_oculto');
-                                        }
-                                        $('.celula_acentuadas-nao-acentuadas').text('Acentuadas');
-                                    break;
-                                    case 'Maiúsculas':
-                                        maiusculas = true;
-                                        ocultarPonteiro();
-                                        $('.quadro_letras').addClass('quadro_oculto');
-                                        if (acentuadas) {
-                                            $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
-                                        } else {
-                                            $('.quadro_maiusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
-                                        }
-                                        $('.celula_maiusculas-minusculas').text('Minúsculas');
-                                    break;
-                                    case 'Minúsculas':
-                                        maiusculas = false;
-                                        ocultarPonteiro();
-                                        $('.quadro_letras').addClass('quadro_oculto');
-                                        if (acentuadas) {
-                                            $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');
-                                        } else {
-                                            $('.quadro_minusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
-                                        }
-                                        $('.celula_maiusculas-minusculas').text('Maiúsculas');
-                                    break;
-                                    case 'Ponto final':
-                                        anotar('.');
-                                        sugerirPalavras();
-                                    break;
-                                    case 'Vírgula':
-                                        anotar(',');
-                                        sugerirPalavras();
-                                    break;
-                                    case 'Falar e apagar tudo':
-                                        SpeechSynthesisUtterance = window.webkitSpeechSynthesisUtterance ||
-                                               window.mozSpeechSynthesisUtterance ||
-                                               window.msSpeechSynthesisUtterance ||
-                                               window.oSpeechSynthesisUtterance ||
-                                               window.SpeechSynthesisUtterance;
-                                        
-                                        speech = new SpeechSynthesisUtterance()
-                                        speech.text = $('.anotacao__texto').text();
-                                        speech.rate = .5;
-                                        speech.lang = "pt-BR";
-                                        speechSynthesis.speak(speech); 
-                                        $('.anotacao__texto').empty();
-                                        sugerirPalavras();
-                                    break;
-                                    case 'Continuar':
-                                    break;
-                                    default:
-                                    throw 'Símbolo desconhecido';
-                                    break;
-                                } 
-                            } else {
-                                anotar(elementoAtual.text());
-                                sugerirPalavras();
-                            }
-                            percorrerQuadros();
+                            executarLetraOuSimbolo();
+                            trocarParaQuadros();
                         }
                     }
                 } 

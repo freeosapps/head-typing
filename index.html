@@ -182,7 +182,7 @@
                     $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
                 }, 500);
 
-                $(window).bind('resize', () => {
+                $(window).bind('resize orientationchange', () => {
                     ocultarPonteiro();
                     clearInterval(temporizador);
                     percorrerQuadros();

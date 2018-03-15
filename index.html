@@ -148,18 +148,22 @@
                     });
                 };
 
+                let moverPonteiro = (elementoAtual) => {
+                    $('.ponteiro').animate({
+                        top: elementoAtual.offset().top,
+                        left: elementoAtual.offset().left,
+                        width: elementoAtual.outerWidth(),
+                        height: elementoAtual.outerHeight()
+                    });
+                }
+
                 let percorrerAreas = (elementos) => {
                     let arrayElementos = elementos.toArray();
                     clearInterval(temporizador);
                     temporizador = setInterval(() => {
                         elementoAtual = $(arrayElementos.shift());
                         exibirPonteiro();
-                        $('.ponteiro').animate({
-                            top: elementoAtual.offset().top,
-                            left: elementoAtual.offset().left,
-                            width: elementoAtual.outerWidth(),
-                            height: elementoAtual.outerHeight()
-                        });
+                        moverPonteiro(elementoAtual);
                         arrayElementos.push(elementoAtual[0]);
                         permitirTrocaDeArea = true;
                     }, 1500);
@@ -174,8 +178,12 @@
                     requestFullscreen.call(documentElement);
                 })
 
+                let listarQuadrosVisiveis = () => {
+                    return $('.quadro:not(.quadro_oculto)');
+                }
+
                 let percorrerQuadros = () => {
-                    let quadros = $('.quadro:not(.quadro_oculto)');
+                    let quadros = listarQuadrosVisiveis();
                     percorrerAreas(quadros);
                     percorrendoQuadros = true;
                 };
@@ -308,6 +316,42 @@
                     }
                 };
 
+                let exibirQuadrosDeAcentuadas = (maiusculas) => {
+                    $('.quadro_letras').addClass('quadro_oculto');
+                    if (maiusculas) {
+                        $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
+                    } else {
+                        $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
+                    }
+                }
+
+                let exibirQuadrosDeNaoAcentuadas = (maiusculas) => {
+                    $('.quadro_letras').addClass('quadro_oculto');
+                    if (maiusculas) {
+                        $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
+                    } else {
+                        $('.quadro_nao-acentuadas.quadro_minusculas').removeClass('quadro_oculto');
+                    }
+                }
+
+                let exibirQuadroDeMaiusculas = (acentuadas) => {
+                    $('.quadro_letras').addClass('quadro_oculto');
+                    if (acentuadas) {
+                        $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
+                    } else {
+                        $('.quadro_maiusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
+                    }
+                }
+
+                let exibirQuadroDeMinusculas = (acentuadas) => {
+                    $('.quadro_letras').addClass('quadro_oculto');
+                    if (acentuadas) {
+                        $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');
+                    } else {
+                        $('.quadro_minusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
+                    } 
+                }
+
                 let executarSimbolo = () => {
                     switch (elementoAtual.text()) {
                         case 'Espaço':
@@ -325,45 +369,25 @@
                         case 'Acentuadas':
                             acentuadas = true;
                             ocultarPonteiro();
-                            $('.quadro_letras').addClass('quadro_oculto');
-                            if (maiusculas) {
-                                $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
-                            } else {
-                                $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
-                            }
+                            exibirQuadrosDeAcentuadas(maiusculas);
                             $('.celula_acentuadas-nao-acentuadas').text('Não acentuadas');
                         break;
                         case 'Não acentuadas':
                             acentuadas = false;
                             ocultarPonteiro();
-                            $('.quadro_letras').addClass('quadro_oculto');
-                            if (maiusculas) {
-                                $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
-                            } else {
-                                $('.quadro_nao-acentuadas.quadro_minusculas').removeClass('quadro_oculto');
-                            }
+                            exibirQuadrosDeNaoAcentuadas(maiusculas);
                             $('.celula_acentuadas-nao-acentuadas').text('Acentuadas');
                         break;
                         case 'Maiúsculas':
                             maiusculas = true;
                             ocultarPonteiro();
-                            $('.quadro_letras').addClass('quadro_oculto');
-                            if (acentuadas) {
-                                $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
-                            } else {
-                                $('.quadro_maiusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
-                            }
+                            exibirQuadroDeMaiusculas(acentuadas);
                             $('.celula_maiusculas-minusculas').text('Minúsculas');
                         break;
                         case 'Minúsculas':
                             maiusculas = false;
                             ocultarPonteiro();
-                            $('.quadro_letras').addClass('quadro_oculto');
-                            if (acentuadas) {
-                                $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');
-                            } else {
-                                $('.quadro_minusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
-                            }
+                            exibirQuadroDeMinusculas(acentuadas);
                             $('.celula_maiusculas-minusculas').text('Maiúsculas');
                         break;
                         case 'Ponto final':

@@ -241,23 +241,33 @@
                                 quadroSugestoes.append(segundaLinhaQuadroSugestoes);
                             }
                         }
-                        for (let i = 0; i < sugestoesDePalavrasLinha1.length; i++) {
-                            let celula = $('<td>').addClass('celula');
-                            let sufixo = sugestoesDePalavrasLinha1[i].replace(/\n/g, '');
-                            sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
-                            celula.text(sufixo);
-                            primeiraLinhaQuadroSugestoes.append(celula);
+                        if (sugestoesDePalavrasLinha1.length) {
+                            for (let i = 0; i < 4; i++) {
+                                let celula = $('<td>');
+                                if (sugestoesDePalavrasLinha1[i]) {
+                                    celula.addClass('celula');
+                                    let sufixo = sugestoesDePalavrasLinha1[i].replace(/\n/g, '');
+                                    sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
+                                    celula.text(sufixo);
+                                }
+                                primeiraLinhaQuadroSugestoes.append(celula);
+                            }
                         }
                         if (sugestoesDePalavrasLinha1.length) {
                             let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');
                             primeiraLinhaQuadroSugestoes.append(celula);
                         }
-                        for (let i = 0; i < sugestoesDePalavrasLinha2.length; i++) {
-                            let celula = $('<td>').addClass('celula');
-                            let sufixo = sugestoesDePalavrasLinha2[i].replace(/\n/g, '');
-                            sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
-                            celula.text(sufixo);
-                            segundaLinhaQuadroSugestoes.append(celula);
+                        if (sugestoesDePalavrasLinha2.length) {
+                            for (let i = 0; i < 4; i++) {
+                                let celula = $('<td>');
+                                if (sugestoesDePalavrasLinha2[i]) {
+                                    celula.addClass('celula');
+                                    let sufixo = sugestoesDePalavrasLinha2[i].replace(/\n/g, '');
+                                    sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
+                                    celula.text(sufixo);
+                                }
+                                segundaLinhaQuadroSugestoes.append(celula);
+                            }
                         }
                         if (sugestoesDePalavrasLinha2.length) {
                             let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');

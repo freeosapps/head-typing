@@ -88,11 +88,12 @@
                 background-color: beige;
             }
             .tela__botao {
-                border-radius: 100%;
-                padding: 20px;
                 background-color: cornflowerblue;
                 color: white;
                 font-size: 12pt;
+                transform: rotate(-20deg) translate(11px, 11px);
+                width: 136px;
+                height: 50px;
             }
             .tela__botao_continuar {
                 display: none;
@@ -102,10 +103,24 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%); 
-                text-decoration: underline;
+            }
+            .tela__titulo {
+                transform: rotate(-20deg) translate(-20px, -95px);
+                color: white;
+            }
+            .tela__conteudo-inicio::before {
+                content: '';
+                transform: rotate(-20deg) translate(-430px, -450px);
+                position: absolute;
+                z-index: -1;
+                background-image: url('keyboard.png');
+                background-repeat: no-repeat;
+                width: 640px;
+                height: 627px;
             }
         </style>
         <script>
+
         $(() => {
             $.get('pt_BR_wordlist.txt').done((dicionario) => { 
                 let temporizador = undefined;
@@ -402,7 +417,7 @@
     <body class="tela">
         <div class="tela__inicio">
             <div class="tela__conteudo-inicio">
-                <h1>Head Typing</h1>
+                <h1 class="tela__titulo">Head Typing</h1>
                 <button class="tela__botao tela__botao_iniciar">Iniciar</button>            
                 <button class="tela__botao tela__botao_continuar">Continuar</button>            
             </div>

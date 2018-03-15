@@ -154,12 +154,16 @@
                     requestFullscreen.call(documentElement);
                 })
 
+                let percorrerQuadros = () => {
+                    let quadros = $('.quadro:not(.quadro_oculto)');
+                    percorrerAreas(quadros);
+                    percorrendoQuadros = true;
+                };
+
                 $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
                     let fullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
                     if (fullScreen) {
-                        let quadros = $('.quadro:not(.quadro_oculto)');
-                        percorrerAreas(quadros);
-                        percorrendoQuadros = true;
+                        percorrerQuadros();
                         $('.tela__inicio').hide();
                         $('.tela__aplicativo').show();
                         $('.tela__wotao_iniciar').show();
@@ -362,18 +366,12 @@
                                 anotar(elementoAtual.text());
                                 sugerirPalavras();
                             }
-                            percorrendoQuadros = true;
-                            let quadros = $('.quadro:not(.quadro_oculto)');
-                            percorrerAreas(quadros);
+                            percorrerQuadros();
                         }
                     }
                 } 
 
                 $('.tela__aplicativo').bind('click', trocarAreaPercorrida);
-
-                let quadros = $('.quadro:not(.quadro_oculto)');
-                percorrerAreas(quadros);
-                percorrendoQuadros = true;
             });
         });
         </script>

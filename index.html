@@ -3,6 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.6.0/NoSleep.min.js"></script>
         <!--<link rel="stylesheet" href="index.css">
         <script src="interlocutor.js"></script>
         <script src="placa.js"></script>
@@ -125,6 +126,8 @@
         <script>
 
         $(() => {
+            let noSleep = new NoSleep();
+            noSleep.enable();
             $.get('pt_BR_wordlist.txt').done((dicionario) => { 
                 let temporizador = undefined;
                 let percorrendoQuadros = false;

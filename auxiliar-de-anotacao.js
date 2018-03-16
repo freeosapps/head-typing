@@ -9,7 +9,7 @@ let AuxiliarDeAnotacao = function(ponteiro, dicionario, placa, sugestoesDePalavr
     let percorrerAreas = (elementos) => {
         let arrayElementos = elementos.toArray();
         relogio1.parar();
-        relogio1.avisarAoPassarOTempo(1500, () => {
+        relogio1.acompanharOTempo(1500, () => {
             elementoAtual = $(arrayElementos.shift());
             ponteiro.exibir();
             ponteiro.posicionarSobre(elementoAtual);
@@ -159,7 +159,7 @@ let AuxiliarDeAnotacao = function(ponteiro, dicionario, placa, sugestoesDePalavr
     this.comecar = () => {
         sugerirPalavras();
         percorrerQuadros();
-        relogio2.avisarAoPassarOTempo(500, () => {
+        relogio2.acompanharOTempo(500, () => {
             anotacao.apontarFinalDoTexto();
         });
     }

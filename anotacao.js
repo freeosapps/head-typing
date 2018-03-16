@@ -36,6 +36,6 @@ let Anotacao = function() {
     }
     
     this.copiarUltimaPalavraAnotada = () => {
-        return recortarUltimaPalavraAnotada();
+        return copiarUltimaPalavraAnotada();
     }
 }

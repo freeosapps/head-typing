@@ -110,6 +110,7 @@
             .tela__titulo {
                 transform: rotate(-20deg) translate(-35px, -95px);
                 color: white;
+                white-space: nowrap;
             }
             .tela__conteudo-inicio::before {
                 content: '';
@@ -188,21 +189,29 @@
                     percorrendoQuadros = true;
                 };
 
+                let exibirTelaDoAplicativo = () => {
+                    $('.tela__inicio').hide();
+                    $('.tela__aplicativo').show();
+                    $('.tela__wotao_iniciar').show();
+                    $('.tela__botao_continuar').hide();
+                }
+
+                let exibirTelaInicial = () => {
+                    $('.tela__inicio').show();
+                    $('.tela__aplicativo').hide();
+                    $('.tela__botao_iniciar').hide();
+                    $('.tela__botao_continuar').show();
+                }
+
                 $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
                     let fullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
                     if (fullScreen) {
                         percorrerQuadros();
-                        $('.tela__inicio').hide();
-                        $('.tela__aplicativo').show();
-                        $('.tela__wotao_iniciar').show();
-                        $('.tela__botao_continuar').hide();
+                        exibirTelaDoAplicativo();
                     } else {
                         ocultarPonteiro();
                         clearInterval(temporizador);
-                        $('.tela__inicio').show();
-                        $('.tela__aplicativo').hide();
-                        $('.tela__botao_iniciar').hide();
-                        $('.tela__botao_continuar').show();
+                        exibirTelaInicial();
                     }
                 });
 
@@ -216,63 +225,69 @@
                     percorrerQuadros();
                 });
 
+                let criarLinhaDeSugestoes = (sufixos, linha) => {
+                    for (let i = 0; i < 4; i++) {
+                        let celula = $('<td>');
+                        if (sufixos[i]) {
+                            celula.addClass('celula').text(sufixos[i]);
+                        }
+                        linha.append(celula);
+                    } 
+                    if (sufixos.length) {
+                        let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');
+                        linha.append(celula);
+                    }
+                }
+
+                let recortarUltimaPalavraAnotada = () => {
+                    let partes = $('.anotacao__texto').text().match(/[^\s\.\,][^\s\.\,]*$/, '');
+                    let palavra = undefined;
+                    if (partes) {
+                        palavra = partes[0];
+                    } else {
+                        palavra = '';
+                    }
+                    return palavra;
+                }
+
+                let pesquisarSufixos = (prefixo, dicionario) => {
+                    let regex = new RegExp(`\\n${prefixo}.{2,}\\n`, 'g');
+                    return dicionario.match(regex).map((palavra) => {
+                        let sufixo = palavra.replace(/\n/g, '')
+                        sufixo = sufixo.slice(prefixo.length, sufixo.length);
+                        return sufixo;
+                    });
+                }
+
+                let criarQuadroDeSugestoes = (sufixos) => { 
+                    let sugestoes = sufixos.slice(0, Math.min(8, sufixos.length));
+                    let sugestoesLinha1 = sugestoes.slice(0, 4);
+                    let sugestoesLinha2 = sugestoes.slice(4, 8);
+                    let quadro = $('<table>').addClass('quadro');
+                    let linha1 = $('<tr>').addClass('linha');
+                    let linha2 = $('<tr>').addClass('linha');
+                    if (sugestoesLinha1.length) {
+                        quadro.append(linha1);
+                        if (sugestoesLinha2.length) {
+                            quadro.append(linha2);
+                        }
+                    }
+                    if (sugestoesLinha1.length) {
+                        criarLinhaDeSugestoes(sugestoesLinha1, linha1);
+                    }
+                    if (sugestoesLinha2.length) {
+                        criarLinhaDeSugestoes(sugestoesLinha2, linha2);
+                    }
+                    return quadro;
+                }
+
                 let sugerirPalavras = () => {
                     $('.sugestoes').empty();
                     ocultarPonteiro();
-                    let partesUltimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,][^\s\.\,]*$/, '');
-                    let ultimaPalavra = undefined;
-                    if (partesUltimaPalavra) {
-                        ultimaPalavra = partesUltimaPalavra[0];
-                    } else {
-                        ultimaPalavra = '';
-                    }
-                    let regex = new RegExp(`\\n${ultimaPalavra}.{2,}\\n`, 'g');
-                    let palavrasEncontradas = dicionario.match(regex);
-                    if (palavrasEncontradas) {
-                        let sugestoesDePalavras = palavrasEncontradas.slice(0, Math.min(8, palavrasEncontradas.length));
-                        let sugestoesDePalavrasLinha1 = sugestoesDePalavras.slice(0, 4);
-                        let sugestoesDePalavrasLinha2 = sugestoesDePalavras.slice(4, 8);
-                        let quadroSugestoes = $('<table>').addClass('quadro');
-                        let primeiraLinhaQuadroSugestoes = $('<tr>').addClass('linha');
-                        let segundaLinhaQuadroSugestoes = $('<tr>').addClass('linha');
-                        if (sugestoesDePalavrasLinha1.length) {
-                            quadroSugestoes.append(primeiraLinhaQuadroSugestoes);
-                            if (sugestoesDePalavrasLinha2.length) {
-                                quadroSugestoes.append(segundaLinhaQuadroSugestoes);
-                            }
-                        }
-                        if (sugestoesDePalavrasLinha1.length) {
-                            for (let i = 0; i < 4; i++) {
-                                let celula = $('<td>');
-                                if (sugestoesDePalavrasLinha1[i]) {
-                                    celula.addClass('celula');
-                                    let sufixo = sugestoesDePalavrasLinha1[i].replace(/\n/g, '');
-                                    sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
-                                    celula.text(sufixo);
-                                }
-                                primeiraLinhaQuadroSugestoes.append(celula);
-                            }
-                        }
-                        if (sugestoesDePalavrasLinha1.length) {
-                            let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');
-                            primeiraLinhaQuadroSugestoes.append(celula);
-                        }
-                        if (sugestoesDePalavrasLinha2.length) {
-                            for (let i = 0; i < 4; i++) {
-                                let celula = $('<td>');
-                                if (sugestoesDePalavrasLinha2[i]) {
-                                    celula.addClass('celula');
-                                    let sufixo = sugestoesDePalavrasLinha2[i].replace(/\n/g, '');
-                                    sufixo = sufixo.slice(ultimaPalavra.length, sufixo.length);
-                                    celula.text(sufixo);
-                                }
-                                segundaLinhaQuadroSugestoes.append(celula);
-                            }
-                        }
-                        if (sugestoesDePalavrasLinha2.length) {
-                            let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');
-                            segundaLinhaQuadroSugestoes.append(celula);
-                        }
+                    let ultimaPalavraAnotada = recortarUltimaPalavraAnotada();
+                    let sufixos = pesquisarSufixos(ultimaPalavraAnotada, dicionario);
+                    if (sufixos) {
+                        let quadroSugestoes = criarQuadroDeSugestoes(sufixos);
                         $('.sugestoes').append(quadroSugestoes);
                     }
                 }

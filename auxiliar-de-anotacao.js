@@ -29,7 +29,7 @@ let AuxiliarDeAnotacao = function(ponteiro, dicionario, placa, sugestoesDePalavr
         ponteiro.ocultar();
         let prefixo = anotacao.recortarUltimaPalavraAnotada();
         let sufixos = dicionario.pesquisarSufixos(prefixo);
-        if (sufixos) {
+        if (sufixos.length) {
             sugestoesDePalavras.anotar(sufixos);
         }
     }

@@ -58,7 +58,6 @@
                 display: none;
             }
             .anotacao {
-                height: 15vh;
                 border-width: 1px 0;
                 border-style: solid;
                 border-color: lightgray;
@@ -66,6 +65,7 @@
                 color: dimgray;
                 padding: 5px;
                 overflow: hidden;
+                height: 20%;
             }
             .anotacao__texto {
                 word-wrap: break-word;
@@ -122,6 +122,9 @@
                 background-repeat: no-repeat;
                 width: 640px;
                 height: 627px;
+            }
+            .placa {
+                height: 80%;
             }
         </style>
         <script>
@@ -195,156 +198,158 @@
             <div class="anotacao">
                 <span class="anotacao__texto"></span>
             </div>
-            <div class="ponteiro ponteiro_oculto"></div>
-            <div class="sugestoes"></div>
-            <table class="quadro quadro_letras quadro_acentuadas quadro_maiusculas quadro_oculto">
-                <tr class="linha">
-                    <td class="celula celula_pequena">Á</td>
-                    <td class="celula celula_pequena">Ã</td>
-                    <td class="celula celula_pequena">À</td>
-                    <td class="celula celula_pequena">É</td>
-                    <td class="celula celula_pequena">Ê</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula celula_pequena">Í</td>
-                    <td class="celula celula_pequena">Ó</td>
-                    <td class="celula celula_pequena">Õ</td>
-                    <td class="celula celula_pequena">Ô</td>
-                    <td class="celula celula_pequena">Ú</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-            </table>
-            <table class="quadro quadro_letras quadro_acentuadas quadro_minusculas quadro_oculto">
-                <tr class="linha">
-                    <td class="celula celula_pequena">á</td>
-                    <td class="celula celula_pequena">ã</td>
-                    <td class="celula celula_pequena">à</td>
-                    <td class="celula celula_pequena">é</td>
-                    <td class="celula celula_pequena">ê</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula celula_pequena">í</td>
-                    <td class="celula celula_pequena">ó</td>
-                    <td class="celula celula_pequena">õ</td>
-                    <td class="celula celula_pequena">ô</td>
-                    <td class="celula celula_pequena">ú</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-            </table>
-            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
-                <tr class="linha">
-                    <td class="celula celula_pequena">A</td>
-                    <td class="celula celula_pequena">E</td>
-                    <td class="celula celula_pequena">O</td>
-                    <td class="celula celula_pequena">S</td>
-                    <td class="celula celula_pequena">R</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula celula_pequena">I</td>
-                    <td class="celula celula_pequena">N</td>
-                    <td class="celula celula_pequena">D</td>
-                    <td class="celula celula_pequena">M</td>
-                    <td class="celula celula_pequena">U</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-            </table>
-            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
-                <tr class="linha">
-                    <td class="celula">T</td>
-                    <td class="celula">C</td>
-                    <td class="celula">L</td>
-                    <td class="celula">P</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula">V</td>
-                    <td class="celula">G</td>
-                    <td class="celula">H</td>
-                    <td class="celula">Q</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula">B</td>
-                    <td class="celula">F</td>
-                    <td class="celula">Z</td>
-                    <td class="celula">J</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula">X</td>
-                    <td class="celula">K</td>
-                    <td class="celula">W</td>
-                    <td class="celula">Y</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-            </table>
-            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
-                <tr class="linha">
-                    <td class="celula celula_pequena">a</td>
-                    <td class="celula celula_pequena">e</td>
-                    <td class="celula celula_pequena">o</td>
-                    <td class="celula celula_pequena">s</td>
-                    <td class="celula celula_pequena">r</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula celula_pequena">i</td>
-                    <td class="celula celula_pequena">n</td>
-                    <td class="celula celula_pequena">d</td>
-                    <td class="celula celula_pequena">m</td>
-                    <td class="celula celula_pequena">u</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-            </table>
-            <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
-                <tr class="linha">
-                    <td class="celula">t</td>
-                    <td class="celula">c</td>
-                    <td class="celula">l</td>
-                    <td class="celula">p</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula">v</td>
-                    <td class="celula">g</td>
-                    <td class="celula">h</td>
-                    <td class="celula">q</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula">b</td>
-                    <td class="celula">f</td>
-                    <td class="celula">z</td>
-                    <td class="celula">j</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula">x</td>
-                    <td class="celula">k</td>
-                    <td class="celula">w</td>
-                    <td class="celula">y</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-            </table>
-            <table class="quadro">
-                <tr class="linha">
-                    <td class="celula celula_descrita">Espaço</td>
-                    <td class="celula celula_descrita">Apagar letra</td>
-                    <td class="celula celula_descrita">Apagar palavra</td>
-                    <td class="celula celula_descrita">Falar e apagar tudo</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-                <tr class="linha">
-                    <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>
-                    <td class="celula celula_descrita celula_acentuadas-nao-acentuadas">Acentuadas</td>
-                    <td class="celula celula_descrita">Ponto final</td>
-                    <td class="celula celula_descrita">Vírgula</td>
-                    <td class="celula celula_descrita">Continuar</td>
-                </tr>
-            </table>
+            <div class="placa">
+                <div class="ponteiro ponteiro_oculto"></div>
+                <div class="sugestoes"></div>
+                <table class="quadro quadro_letras quadro_acentuadas quadro_maiusculas quadro_oculto">
+                    <tr class="linha">
+                        <td class="celula celula_pequena">Á</td>
+                        <td class="celula celula_pequena">Ã</td>
+                        <td class="celula celula_pequena">À</td>
+                        <td class="celula celula_pequena">É</td>
+                        <td class="celula celula_pequena">Ê</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula celula_pequena">Í</td>
+                        <td class="celula celula_pequena">Ó</td>
+                        <td class="celula celula_pequena">Õ</td>
+                        <td class="celula celula_pequena">Ô</td>
+                        <td class="celula celula_pequena">Ú</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                </table>
+                <table class="quadro quadro_letras quadro_acentuadas quadro_minusculas quadro_oculto">
+                    <tr class="linha">
+                        <td class="celula celula_pequena">á</td>
+                        <td class="celula celula_pequena">ã</td>
+                        <td class="celula celula_pequena">à</td>
+                        <td class="celula celula_pequena">é</td>
+                        <td class="celula celula_pequena">ê</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula celula_pequena">í</td>
+                        <td class="celula celula_pequena">ó</td>
+                        <td class="celula celula_pequena">õ</td>
+                        <td class="celula celula_pequena">ô</td>
+                        <td class="celula celula_pequena">ú</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                </table>
+                <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
+                    <tr class="linha">
+                        <td class="celula celula_pequena">A</td>
+                        <td class="celula celula_pequena">E</td>
+                        <td class="celula celula_pequena">O</td>
+                        <td class="celula celula_pequena">S</td>
+                        <td class="celula celula_pequena">R</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula celula_pequena">I</td>
+                        <td class="celula celula_pequena">N</td>
+                        <td class="celula celula_pequena">D</td>
+                        <td class="celula celula_pequena">M</td>
+                        <td class="celula celula_pequena">U</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                </table>
+                <table class="quadro quadro_letras quadro_nao-acentuadas quadro_maiusculas quadro_oculto">
+                    <tr class="linha">
+                        <td class="celula">T</td>
+                        <td class="celula">C</td>
+                        <td class="celula">L</td>
+                        <td class="celula">P</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula">V</td>
+                        <td class="celula">G</td>
+                        <td class="celula">H</td>
+                        <td class="celula">Q</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula">B</td>
+                        <td class="celula">F</td>
+                        <td class="celula">Z</td>
+                        <td class="celula">J</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula">X</td>
+                        <td class="celula">K</td>
+                        <td class="celula">W</td>
+                        <td class="celula">Y</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                </table>
+                <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
+                    <tr class="linha">
+                        <td class="celula celula_pequena">a</td>
+                        <td class="celula celula_pequena">e</td>
+                        <td class="celula celula_pequena">o</td>
+                        <td class="celula celula_pequena">s</td>
+                        <td class="celula celula_pequena">r</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula celula_pequena">i</td>
+                        <td class="celula celula_pequena">n</td>
+                        <td class="celula celula_pequena">d</td>
+                        <td class="celula celula_pequena">m</td>
+                        <td class="celula celula_pequena">u</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                </table>
+                <table class="quadro quadro_letras quadro_nao-acentuadas quadro_minusculas">
+                    <tr class="linha">
+                        <td class="celula">t</td>
+                        <td class="celula">c</td>
+                        <td class="celula">l</td>
+                        <td class="celula">p</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula">v</td>
+                        <td class="celula">g</td>
+                        <td class="celula">h</td>
+                        <td class="celula">q</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula">b</td>
+                        <td class="celula">f</td>
+                        <td class="celula">z</td>
+                        <td class="celula">j</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula">x</td>
+                        <td class="celula">k</td>
+                        <td class="celula">w</td>
+                        <td class="celula">y</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                </table>
+                <table class="quadro">
+                    <tr class="linha">
+                        <td class="celula celula_descrita">Espaço</td>
+                        <td class="celula celula_descrita">Apagar letra</td>
+                        <td class="celula celula_descrita">Apagar palavra</td>
+                        <td class="celula celula_descrita">Falar e apagar tudo</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                    <tr class="linha">
+                        <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>
+                        <td class="celula celula_descrita celula_acentuadas-nao-acentuadas">Acentuadas</td>
+                        <td class="celula celula_descrita">Ponto final</td>
+                        <td class="celula celula_descrita">Vírgula</td>
+                        <td class="celula celula_descrita">Continuar</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>

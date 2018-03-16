@@ -1,17 +1,41 @@
-class Anotacao {                
-    constructor() {
-        this._areaAnotacao = null;
+let Anotacao = function() {
+    let alterarAnotacao = (texto) => {
+        $('.anotacao__texto').text(texto);
+        $('.anotacao').scrollTop($('.anotacao').prop('scrollHeight'));
     }
-    prepararParaMostrar(onde) {
-        this._areaAnotacao = onde;
+
+    let anotar = (texto) => {
+        alterarAnotacao($('.anotacao__texto').text() + texto);
     }
-    anotarUmSimbolo(simbolo) {
-        this._areaAnotacao.append(simbolo);
+
+    let recortarUltimaPalavraAnotada = () => {
+        let partes = $('.anotacao__texto').text().match(/[^\s\.\,][^\s\.\,]*$/, '');
+        let palavra = undefined;
+        if (partes) {
+            palavra = partes[0];
+        } else {
+            palavra = '';
+        }
+        return palavra;
     }
-    apagarUmSimbolo() {
-        this._areaAnotacao.text(this._areaAnotacao.text().substr(0, this._areaAnotacao.text().length - 1));
+
+    this.anotar = (texto) => {
+        anotar(texto);
     }
-    apagarUmaPalavra() {
-        this._areaAnotacao.text(this._areaAnotacao.text().replace(/[^|\s][^\s]*$/, ''));
+
+    this.apagarLetra = () => {
+        alterarAnotacao($('.anotacao__texto').text().substr(0, $('.anotacao__texto').text().length - 1));
+    }
+
+    this.limpar = () => {
+        $('.anotacao__texto').empty();
+    }
+
+    this.apontarFinalDoTexto = () => {
+        $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
+    }
+    
+    this.recortarUltimaPalavraAnotada = () => {
+        return recortarUltimaPalavraAnotada();
     }
 }

@@ -1,10 +1,11 @@
-class Relogio {
-    constructor() {
-
+let Relogio = function() {
+    let temporizador = undefined;
+    
+    this.avisarAoPassarOTempo = (tempo, aviso) => {
+        temporizador = setInterval(aviso, tempo);
     }
-    acompanharOTempo(segundos, quem) {
-        setInterval(() => {
-            quem.passarOTempo();
-        }, segundos * 1000);
-    }                
+
+    this.parar = () => {
+        clearInterval(temporizador);
+    }
 }

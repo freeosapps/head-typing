@@ -3,12 +3,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <!--<link rel="stylesheet" href="index.css">
-        <script src="interlocutor.js"></script>
-        <script src="placa.js"></script>
         <script src="relogio.js"></script>
         <script src="anotacao.js"></script>
-        <script src="index.js"></script>-->
+        <script src="dicionario.js"></script>
+        <script src="sugestoes-de-palavras.js"></script>
+        <script src="placa.js"></script>
+        <script src="ponteiro.js"></script>
+        <script src="auxiliar-de-anotacao.js"></script>
         <style>
             .tela {
                 font-family: sans-serif;
@@ -126,50 +127,16 @@
         <script>
 
         $(() => {
-            $.get('pt_BR_wordlist.txt').done((dicionario) => { 
-                let temporizador = undefined;
-                let percorrendoQuadros = false;
-                let percorrendoLinhas = false;
-                let elementoAtual = null;
-                let permitirTrocaDeArea = true;
-                let maiusculas = false;
-                let acentuadas = false; 
-
-                let exibirPonteiro = () => {
-                    $('.ponteiro').removeClass('ponteiro_oculto');
-                };
-
-                let ocultarPonteiro = () => {
-                    $('.ponteiro').addClass('ponteiro_oculto');
-                    $('.ponteiro').css({
-                        top: 0,
-                        left: 0,
-                        width: 0,
-                        height: 0
-                    });
-                };
-
-                let moverPonteiro = (elementoAtual) => {
-                    $('.ponteiro').animate({
-                        top: elementoAtual.offset().top,
-                        left: elementoAtual.offset().left,
-                        width: elementoAtual.outerWidth(),
-                        height: elementoAtual.outerHeight()
-                    });
-                }
-
-                let percorrerAreas = (elementos) => {
-                    let arrayElementos = elementos.toArray();
-                    clearInterval(temporizador);
-                    temporizador = setInterval(() => {
-                        elementoAtual = $(arrayElementos.shift());
-                        exibirPonteiro();
-                        moverPonteiro(elementoAtual);
-                        arrayElementos.push(elementoAtual[0]);
-                        permitirTrocaDeArea = true;
-                    }, 1500);
-                };
-
+            $.get('pt_BR_wordlist.txt').done((palavras) => { 
+                let ponteiro = new Ponteiro();
+                let dicionario = new Dicionario(palavras);
+                let placa = new Placa();
+                let relogio1 = new Relogio();
+                let relogio2 = new Relogio();
+                let sugestoesDePalavras = new SugestoesDePalavras();
+                let anotacao = new Anotacao();
+                let auxiliarDeAnotacao = new AuxiliarDeAnotacao(ponteiro, dicionario, placa, sugestoesDePalavras, relogio1, relogio2, anotacao);
+ 
                 $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
                     let documentElement = document.documentElement;
                     let requestFullscreen = documentElement.requestFullscreen
@@ -178,16 +145,6 @@
                         || documentElement.msRequestFullscreen;
                     requestFullscreen.call(documentElement);
                 })
-
-                let listarQuadrosVisiveis = () => {
-                    return $('.quadro:not(.quadro_oculto)');
-                }
-
-                let percorrerQuadros = () => {
-                    let quadros = listarQuadrosVisiveis();
-                    percorrerAreas(quadros);
-                    percorrendoQuadros = true;
-                };
 
                 let exibirTelaDoAplicativo = () => {
                     $('.tela__inicio').hide();
@@ -206,270 +163,22 @@
                 $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
                     let fullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
                     if (fullScreen) {
-                        percorrerQuadros();
+                        auxiliarDeAnotacao.comecar();
                         exibirTelaDoAplicativo();
                     } else {
-                        ocultarPonteiro();
-                        clearInterval(temporizador);
+                        auxiliarDeAnotacao.parar();
                         exibirTelaInicial();
                     }
                 });
 
-                setInterval(() => {
-                    $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
-                }, 500);
-
                 $(window).bind('resize orientationchange', () => {
-                    ocultarPonteiro();
-                    clearInterval(temporizador);
-                    percorrerQuadros();
+                    auxiliarDeAnotacao.parar();
+                    auxiliarDeAnotacao.comecar();
+                });                
+
+                $('.tela__aplicativo').bind('click', () => {
+                    auxiliarDeAnotacao.gesticular();
                 });
-
-                let criarLinhaDeSugestoes = (sufixos, linha) => {
-                    for (let i = 0; i < 4; i++) {
-                        let celula = $('<td>');
-                        if (sufixos[i]) {
-                            celula.addClass('celula').text(sufixos[i]);
-                        }
-                        linha.append(celula);
-                    } 
-                    if (sufixos.length) {
-                        let celula = $('<td>').addClass('celula').addClass('celula_descrita').text('Continuar');
-                        linha.append(celula);
-                    }
-                }
-
-                let recortarUltimaPalavraAnotada = () => {
-                    let partes = $('.anotacao__texto').text().match(/[^\s\.\,][^\s\.\,]*$/, '');
-                    let palavra = undefined;
-                    if (partes) {
-                        palavra = partes[0];
-                    } else {
-                        palavra = '';
-                    }
-                    return palavra;
-                }
-
-                let pesquisarSufixos = (prefixo, dicionario) => {
-                    let regex = new RegExp(`\\n${prefixo}.{2,}\\n`, 'g');
-                    return dicionario.match(regex).map((palavra) => {
-                        let sufixo = palavra.replace(/\n/g, '')
-                        sufixo = sufixo.slice(prefixo.length, sufixo.length);
-                        return sufixo;
-                    });
-                }
-
-                let criarQuadroDeSugestoes = (sufixos) => { 
-                    let sugestoes = sufixos.slice(0, Math.min(8, sufixos.length));
-                    let sugestoesLinha1 = sugestoes.slice(0, 4);
-                    let sugestoesLinha2 = sugestoes.slice(4, 8);
-                    let quadro = $('<table>').addClass('quadro');
-                    let linha1 = $('<tr>').addClass('linha');
-                    let linha2 = $('<tr>').addClass('linha');
-                    if (sugestoesLinha1.length) {
-                        quadro.append(linha1);
-                        if (sugestoesLinha2.length) {
-                            quadro.append(linha2);
-                        }
-                    }
-                    if (sugestoesLinha1.length) {
-                        criarLinhaDeSugestoes(sugestoesLinha1, linha1);
-                    }
-                    if (sugestoesLinha2.length) {
-                        criarLinhaDeSugestoes(sugestoesLinha2, linha2);
-                    }
-                    return quadro;
-                }
-
-                let sugerirPalavras = () => {
-                    $('.sugestoes').empty();
-                    ocultarPonteiro();
-                    let ultimaPalavraAnotada = recortarUltimaPalavraAnotada();
-                    let sufixos = pesquisarSufixos(ultimaPalavraAnotada, dicionario);
-                    if (sufixos) {
-                        let quadroSugestoes = criarQuadroDeSugestoes(sufixos);
-                        $('.sugestoes').append(quadroSugestoes);
-                    }
-                }
-
-                sugerirPalavras();
-
-                let alterarAnotacao = (texto) => {
-                    $('.anotacao__texto').text(texto);
-                    $('.anotacao').scrollTop($('.anotacao').prop('scrollHeight'));
-                }
-
-                let anotar = (texto) => {
-                    alterarAnotacao($('.anotacao__texto').text() + texto);
-                };
-
-                let trocarParaQuadros = () => {
-                    percorrerQuadros();
-                };
-
-                let listarLinhas = (elementoAtual) => {
-                    return elementoAtual.find('.linha');
-                }
-
-                let listarCelulas = (elementoAtual) => {
-                    return elementoAtual.find('.celula');
-                }
-
-                let trocarParaLinhas = () => {
-                    percorrendoQuadros = false;
-                    percorrendoLinhas = true;
-                    let linhas = listarLinhas(elementoAtual);
-                    if (linhas.length == 1) {
-                        elementoAtual = $(linhas[0]);
-                        percorrendoLinhas = false;
-                        let celulas = listarCelulas(elementoAtual);
-                        if (celulas.length == 1) {
-                            percorrendoQuadros = true;
-                            anotar($(celulas[0].text()));
-                        } else {
-                            percorrerAreas(celulas);
-                        }
-                    } else {
-                        percorrerAreas(linhas);
-                    }
-                };
-
-                let trocarParaCelulas = () => {
-                    percorrendoLinhas = false;
-                    let celulas = listarCelulas(elementoAtual);
-                    percorrerAreas(celulas);
-                };
-
-                let executarLetraOuSimbolo = () => {
-                    if (elementoAtual.hasClass('celula_descrita')) {
-                        executarSimbolo();
-                    } else {
-                        anotar(elementoAtual.text());
-                        sugerirPalavras();
-                    }
-                };
-
-                let exibirQuadrosDeAcentuadas = (maiusculas) => {
-                    $('.quadro_letras').addClass('quadro_oculto');
-                    if (maiusculas) {
-                        $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
-                    } else {
-                        $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
-                    }
-                }
-
-                let exibirQuadrosDeNaoAcentuadas = (maiusculas) => {
-                    $('.quadro_letras').addClass('quadro_oculto');
-                    if (maiusculas) {
-                        $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
-                    } else {
-                        $('.quadro_nao-acentuadas.quadro_minusculas').removeClass('quadro_oculto');
-                    }
-                }
-
-                let exibirQuadroDeMaiusculas = (acentuadas) => {
-                    $('.quadro_letras').addClass('quadro_oculto');
-                    if (acentuadas) {
-                        $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
-                    } else {
-                        $('.quadro_maiusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
-                    }
-                }
-
-                let exibirQuadroDeMinusculas = (acentuadas) => {
-                    $('.quadro_letras').addClass('quadro_oculto');
-                    if (acentuadas) {
-                        $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');
-                    } else {
-                        $('.quadro_minusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
-                    } 
-                }
-
-                let executarSimbolo = () => {
-                    switch (elementoAtual.text()) {
-                        case 'Espaço':
-                            anotar(' ');
-                            sugerirPalavras();
-                        break;
-                        case 'Apagar letra':
-                            alterarAnotacao($('.anotacao__texto').text().substr(0, $('.anotacao__texto').text().length - 1));
-                            sugerirPalavras();
-                        break;
-                        case 'Apagar palavra':
-                            alterarAnotacao($('.anotacao__texto').text().replace(/[^|\s][^\s]*$/, ''));
-                            sugerirPalavras();
-                        break;
-                        case 'Acentuadas':
-                            acentuadas = true;
-                            ocultarPonteiro();
-                            exibirQuadrosDeAcentuadas(maiusculas);
-                            $('.celula_acentuadas-nao-acentuadas').text('Não acentuadas');
-                        break;
-                        case 'Não acentuadas':
-                            acentuadas = false;
-                            ocultarPonteiro();
-                            exibirQuadrosDeNaoAcentuadas(maiusculas);
-                            $('.celula_acentuadas-nao-acentuadas').text('Acentuadas');
-                        break;
-                        case 'Maiúsculas':
-                            maiusculas = true;
-                            ocultarPonteiro();
-                            exibirQuadroDeMaiusculas(acentuadas);
-                            $('.celula_maiusculas-minusculas').text('Minúsculas');
-                        break;
-                        case 'Minúsculas':
-                            maiusculas = false;
-                            ocultarPonteiro();
-                            exibirQuadroDeMinusculas(acentuadas);
-                            $('.celula_maiusculas-minusculas').text('Maiúsculas');
-                        break;
-                        case 'Ponto final':
-                            anotar('.');
-                            sugerirPalavras();
-                        break;
-                        case 'Vírgula':
-                            anotar(',');
-                            sugerirPalavras();
-                        break;
-                        case 'Falar e apagar tudo':
-                            SpeechSynthesisUtterance = window.webkitSpeechSynthesisUtterance ||
-                                    window.mozSpeechSynthesisUtterance ||
-                                    window.msSpeechSynthesisUtterance ||
-                                    window.oSpeechSynthesisUtterance ||
-                                    window.SpeechSynthesisUtterance;
-                            
-                            speech = new SpeechSynthesisUtterance();
-                            speech.text = $('.anotacao__texto').text();
-                            speech.rate = .5;
-                            speech.lang = 'pt-BR';
-                            speechSynthesis.speak(speech); 
-                            $('.anotacao__texto').empty();
-                            sugerirPalavras();
-                        break;
-                        case 'Continuar':
-                            // Não faz nada.
-                        break;
-                        default:
-                            throw 'Símbolo desconhecido';
-                        break;
-                    } 
-                };
-
-                let trocarAreaPercorrida = function() {
-                    if (permitirTrocaDeArea) {
-                        permitirTrocaDeArea = false;
-                        if (percorrendoQuadros) {
-                            trocarParaLinhas();
-                        } else if (percorrendoLinhas) {
-                            trocarParaCelulas();
-                        } else {
-                            executarLetraOuSimbolo();
-                            trocarParaQuadros();
-                        }
-                    }
-                } 
-
-                $('.tela__aplicativo').bind('click', trocarAreaPercorrida);
             });
         });
         </script>

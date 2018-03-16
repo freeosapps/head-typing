@@ -167,5 +167,6 @@ let AuxiliarDeAnotacao = function(ponteiro, dicionario, placa, sugestoesDePalavr
     this.parar = () => {
         ponteiro.ocultar();
         relogio1.parar();
+        relogio2.parar();
     }
 }

@@ -27,7 +27,7 @@ let AuxiliarDeAnotacao = function(ponteiro, dicionario, placa, sugestoesDePalavr
     let sugerirPalavras = () => {
         sugestoesDePalavras.limpar();
         ponteiro.ocultar();
-        let prefixo = anotacao.recortarUltimaPalavraAnotada();
+        let prefixo = anotacao.copiarUltimaPalavraAnotada();
         let sufixos = dicionario.pesquisarSufixos(prefixo);
         if (sufixos.length) {
             sugestoesDePalavras.anotar(sufixos);

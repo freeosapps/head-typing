@@ -8,7 +8,7 @@ let Anotacao = function() {
         alterarAnotacao($('.anotacao__texto').text() + texto);
     }
 
-    let recortarUltimaPalavraAnotada = () => {
+    let copiarUltimaPalavraAnotada = () => {
         let partes = $('.anotacao__texto').text().match(/[^\s\.\,][^\s\.\,]*$/, '');
         let palavra = undefined;
         if (partes) {

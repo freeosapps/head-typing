@@ -35,7 +35,7 @@ let Anotacao = function() {
         $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
     }
     
-    this.recortarUltimaPalavraAnotada = () => {
+    this.copiarUltimaPalavraAnotada = () => {
         return recortarUltimaPalavraAnotada();
     }
 }

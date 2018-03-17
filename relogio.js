@@ -1,8 +1,10 @@
 let Relogio = function() {
     let temporizador = undefined;
     
-    this.acompanharOTempo = (tempo, aviso) => {
-        temporizador = setInterval(aviso, tempo);
+    this.notificarOTempo = (tempo, quem) => {
+        temporizador = setInterval(() => {
+            quem.tempoPassou();
+        }, tempo);
     }
 
     this.parar = () => {

@@ -1,4 +1,17 @@
-let SugestoesDePalavras = function() {
+let AuxiliarDeSugestoesDePalavras = function(palavras) {
+    let pesquisarSufixos = (prefixo) => {
+        let regex = new RegExp(`\\n${prefixo}.{2,}\\n`, 'g');
+        let encontradas = palavras.match(regex);
+        if (!encontradas) {
+            encontradas = [];
+        }
+        return encontradas.map((palavra) => {
+            let sufixo = palavra.replace(/\n/g, '')
+            sufixo = sufixo.slice(prefixo.length, sufixo.length);
+            return sufixo;
+        });
+    }
+
     let criarLinhaDeSugestoes = (sufixos, linha) => {
         for (let i = 0; i < 4; i++) {
             let celula = $('<td>');
@@ -35,12 +48,19 @@ let SugestoesDePalavras = function() {
         return quadro;
     }
 
-    this.anotar = (sufixos) => {
-        let quadroSugestoes = criarQuadroDeSugestoes(sufixos);
-        $('.sugestoes').append(quadroSugestoes);
+    let limpar = () => {
+        $('.sugestoes').empty();
     }
 
-    this.limpar = () => {
-        $('.sugestoes').empty();
+    let anotar = (sufixos) => {
+        limpar();
+        if (sufixos.length) {
+            let quadroSugestoes = criarQuadroDeSugestoes(sufixos);
+            $('.sugestoes').append(quadroSugestoes);
+        }
+    }
+
+    this.prefixoAnotado = (prefixo) => {
+        anotar(pesquisarSufixos(prefixo));
     }
 }

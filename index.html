@@ -3,13 +3,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tracking.js/1.1.3/tracking-min.js"></script>
+        <script src="auxiliar-de-anotacoes.js"></script>
+        <script src="auxiliar-de-sugestoes-de-palavras.js"></script>
+        <script src="auxiliar-de-troca-de-area.js"></script>
         <script src="relogio.js"></script>
-        <script src="anotacao.js"></script>
-        <script src="dicionario.js"></script>
-        <script src="sugestoes-de-palavras.js"></script>
-        <script src="placa.js"></script>
-        <script src="ponteiro.js"></script>
-        <script src="auxiliar-de-anotacao.js"></script>
         <style>
             .tela {
                 font-family: sans-serif;
@@ -126,63 +124,115 @@
             .placa {
                 height: 80%;
             }
+            .video {
+                position: absolute;
+                top: 0;
+                width: 0;
+                height: 100vh;
+                width: 100vw;
+                z-index: -1;
+            }
         </style>
         <script>
 
         $(() => {
-            $.get('pt_BR_wordlist.txt').done((palavras) => { 
-                let ponteiro = new Ponteiro();
-                let dicionario = new Dicionario(palavras);
-                let placa = new Placa();
-                let relogio1 = new Relogio();
-                let relogio2 = new Relogio();
-                let sugestoesDePalavras = new SugestoesDePalavras();
-                let anotacao = new Anotacao();
-                let auxiliarDeAnotacao = new AuxiliarDeAnotacao(ponteiro, dicionario, placa, sugestoesDePalavras, relogio1, relogio2, anotacao);
- 
-                $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
-                    let documentElement = document.documentElement;
-                    let requestFullscreen = documentElement.requestFullscreen
-                        || documentElement.webkitRequestFullScreen
-                        || documentElement.mozRequestFullScreen
-                        || documentElement.msRequestFullscreen;
-                    requestFullscreen.call(documentElement);
-                })
+            navigator.getUserMedia (
+            // constraints
+            {
+                video: true,
+                audio: false
+            },
 
-                let exibirTelaDoAplicativo = () => {
-                    $('.tela__inicio').hide();
-                    $('.tela__aplicativo').show();
-                    $('.tela__wotao_iniciar').show();
-                    $('.tela__botao_continuar').hide();
-                }
+            // successCallback
+            (localMediaStream) => {
+                $('.video').prop('src', window.URL.createObjectURL(localMediaStream)).bind('loadedmetadata', () => {
 
-                let exibirTelaInicial = () => {
-                    $('.tela__inicio').show();
-                    $('.tela__aplicativo').hide();
-                    $('.tela__botao_iniciar').hide();
-                    $('.tela__botao_continuar').show();
-                }
+                    var colors = new tracking.ColorTracker(['magenta']);
 
-                $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
-                    let fullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
-                    if (fullScreen) {
-                        auxiliarDeAnotacao.comecar();
-                        exibirTelaDoAplicativo();
+                    colors.on('track', function(event) {
+                    if (event.data.length === 0) {
+                        // No colors were detected in this frame.
                     } else {
-                        auxiliarDeAnotacao.parar();
-                        exibirTelaInicial();
+                        event.data.forEach(function(rect) {
+                        
+                        });
                     }
-                });
+                    });
 
-                $(window).bind('resize orientationchange', () => {
-                    auxiliarDeAnotacao.parar();
-                    auxiliarDeAnotacao.comecar();
-                });                
+                    tracking.track('.video', colors);
 
-                $('.tela__aplicativo').bind('click', () => {
-                    auxiliarDeAnotacao.gesticular();
+                    $.get('pt_BR_wordlist.txt').done((palavras) => {
+                        let relogio1 = new Relogio();
+                        let relogio2 = new Relogio();
+                        let auxiliarDeSugestaoDePalavras = new AuxiliarDeSugestoesDePalavras(palavras);
+                        let auxiliarDeAnotacoes = new AuxiliarDeAnotacoes(auxiliarDeSugestaoDePalavras);
+                        let auxiliarDeTrocaDeArea = new AuxiliarDeTrocaDeArea(auxiliarDeAnotacoes);
+        
+                        $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
+                            let documentElement = document.documentElement;
+                            let requestFullscreen = documentElement.requestFullscreen
+                                || documentElement.webkitRequestFullScreen
+                                || documentElement.mozRequestFullScreen
+                                || documentElement.msRequestFullscreen;
+                            requestFullscreen.call(documentElement);
+                        })
+
+                        let exibirTelaDoAplicativo = () => {
+                            $('.tela__inicio').hide();
+                            $('.tela__aplicativo').show();
+                            $('.tela__wotao_iniciar').show();
+                            $('.tela__botao_continuar').hide();
+                        }
+
+                        let exibirTelaInicial = () => {
+                            $('.tela__inicio').show();
+                            $('.tela__aplicativo').hide();
+                            $('.tela__botao_iniciar').hide();
+                            $('.tela__botao_continuar').show();
+                        }
+
+                        let comecar = () => {
+                            auxiliarDeSugestaoDePalavras.prefixoAnotado('');
+                            relogio1.notificarOTempo(1500, auxiliarDeTrocaDeArea);
+                            relogio2.notificarOTempo(500, auxiliarDeAnotacoes);
+                        }
+
+                        let parar = () => {
+                            auxiliarDeTrocaDeArea.parar();
+                            relogio1.parar();
+                            relogio2.parar();
+                        }
+
+
+                        $(document).bind('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', () => {
+                            let fullScreen = document.isFullScreen || document.webkitIsFullScreen || document.mozFullScreen;
+                            if (fullScreen) {
+                                comecar();
+                                exibirTelaDoAplicativo();
+                            } else {
+                                parar();
+                                exibirTelaInicial();
+                            }
+                        });
+
+                        $(window).bind('resize orientationchange', () => {
+                        
+                        });                
+
+                        $('.tela__aplicativo').bind('click', () => {
+                            auxiliarDeTrocaDeArea.gesticulou();
+                        });
+                    });
                 });
-            });
+            },
+
+            // errorCallback
+            (err) => {
+                if(err.message === 'Permission denied') {
+                // Explain why you need permission and how to update the permission setting
+                }
+            }
+            );
         });
         </script>
     </head>
@@ -351,5 +401,6 @@
                 </table>
             </div>
         </div>
+        <video class="video" preload autoplay loop muted></video>
     </body>
 </html>

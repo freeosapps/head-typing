@@ -52,6 +52,16 @@ let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
             height: elemento.outerHeight(),
             width: elemento.outerWidth()
         });
+        let linhas = elemento.find('.linha');
+        if (linhas.length == 1) {
+            $('.ponteiro').animate({
+                top: $(linhas[0]).offset().top,
+                left: $(linhas[0]).offset().left,
+                height: $(linhas[0]).outerHeight(),
+                width: $(linhas[0]).outerWidth()
+            });
+            percorrendoLinha = true;
+        }
         indiceSeletor++;
         indiceSeletor = indiceSeletor % $(seletor).length;
         trocandoDeArea = false;
@@ -68,7 +78,7 @@ let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
                 executarSimbolo();
                 seletor = '.quadro:not(.quadro_oculto)';
                 percorrendoCelula = false;
-            } else if (elemento) {
+            } else {
                 seletor = `${seletor}:eq(${indiceSeletor-1}) .linha`;
                 percorrendoLinha = true;
             }

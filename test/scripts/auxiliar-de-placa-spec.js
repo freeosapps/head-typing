@@ -8,7 +8,9 @@ describe('AuxiliarDePlaca', () => {
     let linhaBQuadroA = null;
     let linhaCQuadroA = null;
     let linhaAQuadroB = null;
-    let linhaAQuadroC = null;                
+    let linhaBQuadroB = null;
+    let linhaAQuadroC = null;
+    let linhaBQuadroC = null;    
     let celulaALinhaAQuadroA = null;
     let celulaALinhaAQuadroB = null;
     let celulaALinhaAQuadroC = null;
@@ -36,20 +38,22 @@ describe('AuxiliarDePlaca', () => {
         linhaCQuadroA = $('<div>').addClass('linha');
         quadroA.append(linhaAQuadroA).append(linhaBQuadroA).append(linhaCQuadroA);
         linhaAQuadroB = $('<div>').addClass('linha');
+        linhaBQuadroB = $('<div>').addClass('linha');
         celulaALinhaAQuadroB = $('<div>').addClass('celula');
         linhaAQuadroB.append(celulaALinhaAQuadroB);
         quadroB = $('<div>').addClass('quadro').css({
             position: 'absolute'
         });
-        quadroB.append(linhaAQuadroB);
+        quadroB.append(linhaAQuadroB).append(linhaBQuadroB);
         quadroC = $('<div>').addClass('quadro').addClass('quadro_oculto').css({
             position: 'absolute'
         });
         linhaAQuadroC = $('<div>').addClass('linha');
+        linhaBQuadroC = $('<div>').addClass('linha');
         celulaALinhaAQuadroC = $('<div>').addClass('celula');
         celulaBLinhaAQuadroC = $('<div>').addClass('celula');
-        linhaAQuadroC.append(celulaALinhaAQuadroC).append(celulaBLinhaAQuadroC);;
-        quadroC.append(linhaAQuadroC);
+        linhaAQuadroC.append(celulaALinhaAQuadroC).append(celulaBLinhaAQuadroC);
+        quadroC.append(linhaAQuadroC).append(linhaBQuadroC);
         $(document.body).append(ponteiro).append(quadroA).append(quadroB).append(quadroC);
     });
     afterEach(() => {
@@ -60,6 +64,10 @@ describe('AuxiliarDePlaca', () => {
         linhaAQuadroA.remove();
         linhaBQuadroA.remove();
         linhaCQuadroA.remove();
+        linhaAQuadroB.remove();
+        linhaBQuadroB.remove();
+        linhaAQuadroC.remove();
+        linhaBQuadroC.remove();        
         celulaALinhaAQuadroA.remove();
         celulaALinhaAQuadroB.remove();
         celulaALinhaAQuadroC.remove();
@@ -577,6 +585,7 @@ describe('AuxiliarDePlaca', () => {
         });
         it('não exibe o quadro de maiúsculas', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas');
             quadroC.removeClass('quadro_oculto');
             celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Minúsculas');
@@ -1012,6 +1021,303 @@ describe('AuxiliarDePlaca', () => {
             auxiliarDePlaca.tempoPassou();
             auxiliarDePlaca.tempoPassou();            
             expect(ponteiro.offset().top).not.toBe(0);
+        });
+    });
+    describe('ao trocar para quadro', () => {
+        describe('e ele tiver apenas uma linha', () => {
+            it('dimensiona o ponteiro com a altura da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    width: '600px',
+                    height: '30px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.outerHeight()).toBe(30);
+            });
+            it('dimensiona o ponteiro com outra altura da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    width: '600px',
+                    height: '15px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.outerHeight()).toBe(15);
+            });
+            it('dimensiona o ponteiro com a altura da linha com borda', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    width: '600px',
+                    height: '15px',
+                    borderWidth: '2.5px',
+                    borderStyle: 'solid'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.outerHeight()).toBe(20);
+            });
+            it('dimensiona o ponteiro com a largura da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    width: '500px',
+                    height: '15px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.outerWidth()).toBe(500);
+            });
+            it('dimensiona o ponteiro com outra largura da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    width: '400px',
+                    height: '15px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.outerWidth()).toBe(400);
+            });
+            it('dimensiona o ponteiro com a largura da linha com borda', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    width: '400px',
+                    height: '15px',
+                    borderWidth: '2.5px',
+                    borderStyle: 'solid'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.outerWidth()).toBe(405);
+            });
+            it('posiciona o ponteiro na posição Y da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    position: 'relative',
+                    top: '10px',
+                    width: '400px',
+                    height: '15px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.offset().top).toBe(40);
+            });
+            it('posiciona o ponteiro em outra posição Y da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    position: 'relative',
+                    top: '19px',
+                    width: '400px',
+                    height: '15px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.offset().top).toBe(49);
+            });
+            it('posiciona o ponteiro na posição X da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    position: 'relative',
+                    left: '13px',
+                    width: '400px',
+                    height: '15px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.offset().left).toBe(23);
+            });
+            it('posiciona o ponteiro em outra posição X da linha', () => {
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    position: 'relative',
+                    left: '34px',
+                    width: '400px',
+                    height: '15px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect(ponteiro.offset().left).toBe(44);
+            });
+            describe('ao gesticular', () => {
+                it('posiciona o ponteiro na posição Y da primeira célula da linha', () => {
+                    quadroA.addClass('quadro_oculto');
+                    quadroB.addClass('quadro_oculto');
+                    quadroC.removeClass('quadro_oculto').css({
+                        top: '30px',
+                        left: '10px',
+                        width: '600px',
+                        height: '60px'
+                    });
+                    linhaAQuadroC.css({
+                        width: '600px',
+                        height: '30px'
+                    });
+                    linhaBQuadroC.remove();
+                    celulaALinhaAQuadroC.css({
+                        width: '100px',
+                        height: '20px',
+                        position: 'relative',
+                        top: '12px'
+                    });
+                    celulaBLinhaAQuadroC.css({
+                        width: '100px',
+                        height: '20px'
+                    });
+                    auxiliarDePlaca.tempoPassou();
+                    auxiliarDePlaca.deficienteGesticulou();
+                    auxiliarDePlaca.tempoPassou();
+                    expect(ponteiro.offset().top).toBe(42);
+                });
+            });
         });
     });
 });

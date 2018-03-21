@@ -76,7 +76,7 @@ let AuxiliarDeAnotacoes = function(auxiliarDeSugestoesDePalavras) {
         apontarFinalDoTexto();
     }
 
-    this.simboloEscolhido = (simbolo) => {
+    this.escolheuSimbolo = (simbolo) => {
         executarSimbolo(simbolo);
         auxiliarDeSugestoesDePalavras.prefixoAnotado(copiarUltimaPalavraAnotada());
     }

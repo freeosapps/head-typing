@@ -1,4 +1,4 @@
-let AuxiliarDeTrocaDeArea = function(auxiliarDeAnotacoes) {
+let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
     let permitirTrocaDeArea = true;
     let percorrendoQuadros = true;
     let percorrendoLinhas = false;

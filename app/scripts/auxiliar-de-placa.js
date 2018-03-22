@@ -45,6 +45,7 @@ let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
     }
 
     this.tempoPassou = () => {
+        $('.ponteiro').css('display', 'block');
         elemento = $($(seletor)[indiceSeletor]);
         $('.ponteiro').animate({            
             top: elemento.offset().top,
@@ -60,11 +61,11 @@ let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
                 height: $(linhas[0]).outerHeight(),
                 width: $(linhas[0]).outerWidth()
             });
-            percorrendoLinha = true;
+            percorrendoLinha = true;            
         }
         indiceSeletor++;
         indiceSeletor = indiceSeletor % $(seletor).length;
-        trocandoDeArea = false;
+        trocandoDeArea = false;        
     }
 
     this.deficienteGesticulou = () => {
@@ -78,11 +79,18 @@ let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
                 executarSimbolo();
                 seletor = '.quadro:not(.quadro_oculto)';
                 percorrendoCelula = false;
+                $('.ponteiro').css({
+                    display: 'none',
+                    width: 0,
+                    height: 0,
+                    top: 0,
+                    left: 0
+                });
             } else {
                 seletor = `${seletor}:eq(${indiceSeletor-1}) .linha`;
                 percorrendoLinha = true;
             }
             indiceSeletor = 0;            
-        }
+        }        
     }
 }

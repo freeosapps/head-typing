@@ -21,7 +21,7 @@ describe('AuxiliarDePlaca', () => {
         $.fx.off = true; // Desabilita animações do jQuery
         auxiliarDeAnotacoes = new AuxiliarDeAnotacoes(null);
         auxiliarDePlaca = new AuxiliarDePlaca(auxiliarDeAnotacoes);
-        ponteiro = $('<div>').addClass('ponteiro ponteiro_oculto').css({
+        ponteiro = $('<div>').addClass('ponteiro').css({
             position: 'absolute',
             top: 0,
             left: 0,
@@ -901,6 +901,76 @@ describe('AuxiliarDePlaca', () => {
             auxiliarDePlaca.deficienteGesticulou();            
             expect(auxiliarDeAnotacoes.escolheuSimbolo.calledWith('a')).toBe(true);
         });
+        it('oculta o ponteiro', () => {
+            quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            celulaALinhaAQuadroA.text('a');
+            quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Maiúsculas');
+            quadroC.removeClass('quadro_oculto');
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // quadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // linhaAQuadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // celulaALinhaAQuadroA
+            expect(ponteiro.css('display')).toBe('none');
+        });
+        it('dimensiona o ponteiro com largura 0', () => {
+            quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            celulaALinhaAQuadroA.text('a');
+            quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Maiúsculas');
+            quadroC.removeClass('quadro_oculto');
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // quadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // linhaAQuadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // celulaALinhaAQuadroA
+            expect(ponteiro.css('width')).toBe('0px');
+        });
+        it('dimensiona o ponteiro com altura 0', () => {
+            quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            celulaALinhaAQuadroA.text('a');
+            quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Maiúsculas');
+            quadroC.removeClass('quadro_oculto');
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // quadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // linhaAQuadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // celulaALinhaAQuadroA
+            expect(ponteiro.css('height')).toBe('0px');
+        });
+        it('posiciona o ponteiro na posição Y 0', () => {
+            quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            celulaALinhaAQuadroA.text('a');
+            quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Maiúsculas');
+            quadroC.removeClass('quadro_oculto');
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // quadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // linhaAQuadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // celulaALinhaAQuadroA
+            expect(ponteiro.css('top')).toBe('0px');
+        });
+        it('posiciona o ponteiro na posição X 0', () => {
+            quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            celulaALinhaAQuadroA.text('a');
+            quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Maiúsculas');
+            quadroC.removeClass('quadro_oculto');
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // quadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // linhaAQuadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // celulaALinhaAQuadroA
+            expect(ponteiro.css('left')).toBe('0px');
+        });
     });
     describe('ao gesticular na letra "b"', () => {
         it('informa o símbolo escolhido para o auxiliar de anotações', () => {
@@ -1318,6 +1388,37 @@ describe('AuxiliarDePlaca', () => {
                     expect(ponteiro.offset().top).toBe(42);
                 });
             });
+        });
+    });
+    describe('ao gesticular em linha', () => {
+        it('não oculta o ponteiro', () => {
+            quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            celulaALinhaAQuadroA.text('a');
+            quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Maiúsculas');
+            quadroC.removeClass('quadro_oculto');
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // quadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // linhaAQuadroA
+            expect(ponteiro.css('display')).toBe('block');
+        });
+    });
+    describe('ao passar o tempo após ocultar o ponteiro', () => {
+        it('exibe o ponteiro', () => {
+            quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
+            celulaALinhaAQuadroA.text('a');
+            quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').text('Maiúsculas');
+            quadroC.removeClass('quadro_oculto');
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // quadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // linhaAQuadroA
+            auxiliarDePlaca.tempoPassou();
+            auxiliarDePlaca.deficienteGesticulou(); // celulaALinhaAQuadroA
+            auxiliarDePlaca.tempoPassou();
+            expect(ponteiro.css('position')).toBe('absolute');
         });
     });
 });

@@ -44,15 +44,8 @@ let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
         }        
     }
 
-    this.tempoPassou = () => {
-        $('.ponteiro').css('display', 'block');
-        elemento = $($(seletor)[indiceSeletor]);
-        $('.ponteiro').animate({            
-            top: elemento.offset().top,
-            left: elemento.offset().left,
-            height: elemento.outerHeight(),
-            width: elemento.outerWidth()
-        });
+    this.tempoPassou = () => {        
+        elemento = $($(seletor)[indiceSeletor]);        
         let linhas = elemento.find('.linha');
         if (linhas.length == 1) {
             $('.ponteiro').animate({
@@ -62,10 +55,18 @@ let AuxiliarDePlaca = function(auxiliarDeAnotacoes) {
                 width: $(linhas[0]).outerWidth()
             });
             percorrendoLinha = true;            
+        } else {
+            $('.ponteiro').animate({            
+                top: elemento.offset().top,
+                left: elemento.offset().left,
+                height: elemento.outerHeight(),
+                width: elemento.outerWidth()
+            });
         }
         indiceSeletor++;
         indiceSeletor = indiceSeletor % $(seletor).length;
-        trocandoDeArea = false;        
+        trocandoDeArea = false;
+        $('.ponteiro').css('display', 'block');
     }
 
     this.deficienteGesticulou = () => {

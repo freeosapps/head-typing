@@ -1388,6 +1388,32 @@ describe('AuxiliarDePlaca', () => {
                     expect(ponteiro.offset().top).toBe(42);
                 });
             });
+            it('movimenta o ponteiro apenas uma vez', () => {
+                sinon.spy($.fn, 'animate');
+                quadroA.addClass('quadro_oculto');
+                quadroB.addClass('quadro_oculto');
+                quadroC.removeClass('quadro_oculto').css({
+                    top: '30px',
+                    left: '10px',
+                    width: '600px',
+                    height: '60px'
+                });
+                linhaAQuadroC.css({
+                    width: '600px',
+                    height: '30px'
+                });
+                linhaBQuadroC.remove();
+                celulaALinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                celulaBLinhaAQuadroC.css({
+                    width: '100px',
+                    height: '20px'
+                });
+                auxiliarDePlaca.tempoPassou();
+                expect($.fn.animate.calledOnce).toBe(true);
+            });
         });
     });
     describe('ao gesticular em linha', () => {

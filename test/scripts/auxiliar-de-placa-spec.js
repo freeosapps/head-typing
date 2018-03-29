@@ -1262,6 +1262,10 @@ describe('AuxiliarDePlaca', () => {
             palavrasSugeridas(['z']);
             expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(1)').text()).toBe('z');
         });
+        it('exibe o símbolo "Continuar" com marcação de célula descrita', () => {
+            palavrasSugeridas(['z']);
+            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
+        });
     });
     describe('ao sugerir 5 palavras', () => {
         it('exibe a tabela de sugestões de palavras com 2 linhas', () => {
@@ -1307,6 +1311,10 @@ describe('AuxiliarDePlaca', () => {
         it('exibe a quinta palavra na célula 1 da linha 2', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
             expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').text()).toBe('k');
+        });
+        it('exibe o símbolo "Continuar" com marcação de célula descrita', () => {
+            palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
         });
     });
     describe('ao sugerir 6 palavras', () => {

@@ -11,25 +11,25 @@ let AuxiliarDePlaca = function() {
         if (palavras.length) {
             let celulasLinha1 = '';
             for (let i = 0; i < 4 && i < palavras.length; i++) {
-                celulasLinha1 += '<td class="celula">' + palavras[i] + '</td>';
+                celulasLinha1 += `<td class="celula">${palavras[i]}</td>`;
             }
             for (let i = palavras.length; i < 4; i++) {
                 celulasLinha1 += '<td></td>';
             }
-            celulasLinha1 += '<td class="celula">Continuar</td>';
+            celulasLinha1 += '<td class="celula celula_descrita">Continuar</td>';
             let linha2 = '';
             if (palavras.length > 4) {
                 let celulasLinha2 = '';
                 for (let i = 4; i < 8 && i < palavras.length; i++) {    
-                    celulasLinha2 += '<td class="celula">' + palavras[i] + '</td>';                
+                    celulasLinha2 += `<td class="celula">${palavras[i]}</td>`;
                 }
                 for (let i = palavras.length - 4; i < 4; i++) {
                     celulasLinha2 += '<td></td>';
                 }
-                celulasLinha2 += '<td class="celula">Continuar</td>';
-                linha2 += '<tr class="linha">' + celulasLinha2 + '</tr>';
+                celulasLinha2 += '<td class="celula celula_descrita">Continuar</td>';
+                linha2 += `<tr class="linha">${celulasLinha2}</tr>`;
             }        
-            $('.sugestoes').append('<table class="quadro"><tr class="linha">' + celulasLinha1 + '</tr>' + linha2 + '</table>');
+            $('.sugestoes').append(`<table class="quadro"><tr class="linha">${celulasLinha1}</tr>${linha2}</table>`);
         }
     }    
     

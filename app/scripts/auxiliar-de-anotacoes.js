@@ -1,10 +1,6 @@
 let AuxiliarDeAnotacoes = function() {
-    this.escolheuSimbolo = (simbolo) => {
-        if (simbolo == 'Ponto final') {
-            $('.anotacao__texto').append('.');    
-        } else if (simbolo == 'Vírgula') {
-            $('.anotacao__texto').append(',');
-        } else if (simbolo == 'Apagar letra') {
+    let deficienteEscolheuOSimbolo = (simbolo) => {
+        if (simbolo == 'Apagar letra') {
             $('.anotacao__texto').text($('.anotacao__texto').text().substr(0, $('.anotacao__texto').text().length - 1));
         } else if (simbolo == 'Apagar palavra') {
             $('.anotacao__texto').text($('.anotacao__texto').text().replace(/[^\s]+(\s+)?$/, ''));
@@ -13,9 +9,19 @@ let AuxiliarDeAnotacoes = function() {
         } else {
             $('.anotacao__texto').append(simbolo);
         }
+        let ultimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,\?\!]+$/);
+        if (ultimaPalavra) {
+            ultimaPalavra = ultimaPalavra[0];
+        } else {
+            ultimaPalavra = '';
+        }
+        PubSub.publish('ultimaPalavraAnotada', ultimaPalavra);
     }
 
-    this.tempoPassou = () => {
+    let passaram500Milisegundos = () => {
         $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
     }
+    
+    PubSub.subscribe('deficienteEscolheuOSimbolo', (message, data) => deficienteEscolheuOSimbolo(data));
+    PubSub.subscribe('passaram500Milisegundos', (message, data) => passaram500Milisegundos(data));
 }

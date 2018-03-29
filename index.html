@@ -3,8 +3,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pubsub-js/1.6.0/pubsub.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tracking.js/1.1.3/tracking-min.js"></script>       
-        <script src="auxiliar-de-sugestoes-de-palavras.js"></script>
+       
+        <script src="app/scripts/auxiliar-de-sugestoes-de-palavras.js"></script>
         <script src="app/scripts/auxiliar-de-anotacoes.js"></script>
         <script src="app/scripts/auxiliar-de-placa.js"></script>        
         <script src="relogio.js"></script>
@@ -43,6 +45,9 @@
             }
             .celula_descrita {
                 font-size: 7pt;
+            }
+            .celula_pontuacao {
+                font-size: 20pt;
             }
             .ponteiro {
                 display: none;
@@ -166,11 +171,9 @@
                     tracking.track('.video', colors);
 
                     $.get('pt_BR_wordlist.txt').done((palavras) => {
-                        let relogio1 = new Relogio();
-                        let relogio2 = new Relogio();
-                        let auxiliarDeSugestaoDePalavras = new AuxiliarDeSugestoesDePalavras(palavras);
-                        let auxiliarDeAnotacoes = new AuxiliarDeAnotacoes(auxiliarDeSugestaoDePalavras);
-                        let auxiliarDePlaca = new AuxiliarDePlaca(auxiliarDeAnotacoes);
+                        AuxiliarDeSugestoesDePalavras(palavras);
+                        AuxiliarDeAnotacoes();
+                        AuxiliarDePlaca();
         
                         $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
                             let documentElement = document.documentElement;
@@ -196,15 +199,15 @@
                         }
 
                         let comecar = () => {
-                            auxiliarDeSugestaoDePalavras.prefixoAnotado('');
-                            relogio1.notificarOTempo(1500, auxiliarDePlaca);
-                            relogio2.notificarOTempo(500, auxiliarDeAnotacoes);
+                            Relogio(1500);
+                            Relogio(500);
+                            //auxiliarDeSugestaoDePalavras.prefixoAnotado('');
                         }
 
                         let parar = () => {
                             //auxiliarDeTrocaDeArea.parar();
-                            relogio1.parar();
-                            relogio2.parar();
+                            PubSub.publish('pararDeAcompanharOTempoACada500Milisegundos');
+                            PubSub.publish('pararDeAcompanharOTempoACada1500Milisegundos');
                         }
 
 
@@ -224,7 +227,7 @@
                         });                
 
                         $('.tela__aplicativo').bind('click', () => {
-                            auxiliarDePlaca.deficienteGesticulou();
+                            PubSub.publish('deficienteGesticulou');
                         });
                     });
                 });
@@ -389,17 +392,19 @@
                 </table>
                 <table class="quadro">
                     <tr class="linha">
-                        <td class="celula celula_descrita">Espaço</td>
-                        <td class="celula celula_descrita">Apagar letra</td>
-                        <td class="celula celula_descrita">Apagar palavra</td>
-                        <td class="celula celula_descrita">Falar e apagar tudo</td>
+                        <td class="celula celula_descrita celula_pequena">Espaço</td>
+                        <td class="celula celula_descrita celula_maiusculas-minusculas celula_pequena">Maiúsculas</td>
+                        <td class="celula celula_descrita celula_acentuadas-nao-acentuadas celula_pequena">Acentuadas</td>
+                        <td class="celula celula_descrita celula_pequena">Apagar letra</td>
+                        <td class="celula celula_descrita celula_pequena">Apagar palavra</td>                        
                         <td class="celula celula_descrita">Continuar</td>
                     </tr>
-                    <tr class="linha">
-                        <td class="celula celula_descrita celula_maiusculas-minusculas">Maiúsculas</td>
-                        <td class="celula celula_descrita celula_acentuadas-nao-acentuadas">Acentuadas</td>
-                        <td class="celula celula_descrita">Ponto final</td>
-                        <td class="celula celula_descrita">Vírgula</td>
+                    <tr class="linha">                        
+                        <td class="celula celula_pontuacao celula_pequena">.</td>
+                        <td class="celula celula_pontuacao celula_pequena">,</td>
+                        <td class="celula celula_pontuacao celula_pequena">?</td>
+                        <td class="celula celula_pontuacao celula_pequena">!</td>
+                        <td class="celula celula_descrita celula_pequena">Falar e apagar tudo</td>
                         <td class="celula celula_descrita">Continuar</td>
                     </tr>
                 </table>

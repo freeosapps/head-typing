@@ -32,8 +32,12 @@
                 display: none;
             }
             .celula {
+                border-width: 1px;
+                border-color: white;
+                border-style: solid;
+                border-radius: 5px;
                 background-color: #f7f7ea; 
-                height: 8vh;
+                height: calc(8vh - 1.4px); /* tabelas não aceitam border-box, então foi tirada a largura da borda: 14 bordas de 1px/10 células = 1.4px */
                 width: 20%;
             }
             .celula_pequena {

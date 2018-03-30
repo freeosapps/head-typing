@@ -15,7 +15,7 @@
                 font-family: sans-serif;
                 margin: 0;
                 padding: 0;
-                /*overflow: hidden;*/
+                overflow: hidden;
                 -webkit-user-select: none; /* Safari 3.1+ */
                 -moz-user-select: none; /* Firefox 2+ */
                 -ms-user-select: none; /* IE 10+ */
@@ -36,8 +36,7 @@
                 border-color: white;
                 border-style: solid;
                 background-color: #f7f7ea; 
-                height: 8vh; /* seria 8.5vh, mas para evitar scroll foi usado 8vh */
-                box-sizing: border-box;
+                height: calc(8vh - 1px); /* tabelas não aceitam border-box, então foi tirada a largura da linha */
                 width: 20%;
             }
             .celula_pequena {

@@ -23,7 +23,6 @@
             }
             .quadro {
                 width: 100%;
-                border-collapse: collapse;
                 text-align: center;
                 color: dimgray;
                 margin: 0;
@@ -34,10 +33,10 @@
             .celula {
                 border-width: 1px;
                 border-color: white;
-                border-style: solid;
-                background-color: #f7f7ea; 
-                height: calc(8vh - 1.4px); /* tabelas não aceitam border-box, então foi tirada a largura da borda */
+                border-style: solid;                
+                height: calc(8vh - 3px); /* tabelas não aceitam border-box, então foi tirada a largura da borda */
                 width: 20%;
+                background-color: floralwhite;
             }
             .celula_pequena {
                 width: 16%;
@@ -131,6 +130,7 @@
             }
             .placa {
                 height: 80%;
+                background-color:#f7f7ea;
             }
             .video {
                 height: 100vh;
@@ -141,8 +141,7 @@
                 z-index: -1;
             }
             .sugestoes {
-                height: 16vh;
-                background-color:#f7f7ea;
+                height: 16vh;                
             }
         </style>
         <script>

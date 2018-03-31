@@ -26,15 +26,13 @@
                 text-align: center;
                 color: dimgray;
                 margin: 0;
+                border-spacing: 1px;
             }
             .quadro_oculto {
                 display: none;
             }
-            .celula {
-                border-width: 1px;
-                border-color: white;
-                border-style: solid;                
-                height: calc(8vh - 3px); /* tabelas não aceitam border-box, então foi tirada a largura da borda */
+            .celula {                
+                height: calc(8vh - 1.4px); /* tabelas não aceitam border-box, então foi tirada a largura da borda */
                 width: 20%;
                 background-color: floralwhite;
             }
@@ -130,7 +128,7 @@
             }
             .placa {
                 height: 80%;
-                background-color: bisque;
+                background-color: linen;
             }
             .video {
                 height: 100vh;
@@ -141,7 +139,7 @@
                 z-index: -1;
             }
             .sugestoes {
-                height: 16vh;                
+                height: calc(8vh - 1.4px + 8vh - 1.4px + 2px);                
             }
         </style>
         <script>

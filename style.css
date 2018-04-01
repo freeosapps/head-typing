@@ -13,7 +13,6 @@
     text-align: center;
     color: dimgray;
     margin: 0;
-    border-spacing: 1px;
 }
 .quadro_oculto {
     display: none;
@@ -31,7 +30,7 @@
     box-sizing: border-box;
     border-width: 1px;
     border-style: solid;
-    border-color: linen;
+    border-color: white;
 }
 .celula_pequena {
     width: 16%;

@@ -34,6 +34,14 @@
     border-style: solid;
     border-color: linen;
 }
+.celula_oculta {
+    margin: 1px;
+    height: calc(8vh - 2px);   
+    width: calc(20% - 2px);
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
 .celula_pequena {
     width: calc(16% - 2px);
 }

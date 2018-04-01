@@ -20,10 +20,11 @@
 .linha {
     font-size: 0;
 }
-.celula {                
-    height: 8vh;
-    line-height: 8vh;
-    width: 20%;
+.celula {
+    margin: 1px;
+    height: calc(8vh - 2px);
+    line-height: calc(8vh - 2px);
+    width: calc(20% - 2px);
     background-color: floralwhite;
     font-size: 12pt;
     display: inline-block;
@@ -34,7 +35,7 @@
     border-color: linen;
 }
 .celula_pequena {
-    width: 16%;
+    width: calc(16% - 2px);
 }
 .celula_descrita {
     font-size: 7pt;

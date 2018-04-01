@@ -1206,11 +1206,11 @@ describe('AuxiliarDePlaca', () => {
         });
         it('exibe a tabela de sugestões de palavras', () => {
             palavrasSugeridas(['c', 'd']);
-            expect(sugestoes.children().first().is('table')).toBe(true);
+            expect(sugestoes.children().first().is('div')).toBe(true);
         });
         it('exibe a tabela de sugestões de palavras com 5 células', () => {
             palavrasSugeridas(['x', 'y']);
-            expect(sugestoes.children().first().children().first().children().first().children().length).toBe(5);
+            expect(sugestoes.children().first().children().first().children().length).toBe(5);
         });
         it('exibe a tabela de sugestões de palavras marcada como quadro', () => {
             palavrasSugeridas(['c', 'd']);
@@ -1218,149 +1218,149 @@ describe('AuxiliarDePlaca', () => {
         });
         it('exibe a segunda palavra na célula 2 da linha 1', () => {
             palavrasSugeridas(['a', 'b']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(2)').text()).toBe('b');
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').text()).toBe('b');
         });
         it('exibe a primeira palavra na célula 1 da linha 1', () => {
             palavrasSugeridas(['a', 'b']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(1)').text()).toBe('a');
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(1)').text()).toBe('a');
         });
     });
     describe('ao sugerir 1 palavra', () => {
         it('exibe a tabela de sugestões de palavras com 1 linha', () => {
             palavrasSugeridas(['x']);
-            expect(sugestoes.children().first().children().first().children().length).toBe(1);
+            expect(sugestoes.children().first().children().length).toBe(1);
         });
         it('exibe a tabela de sugestões de palavras com 1 linha e 5 células', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().length).toBe(5);
+            expect(sugestoes.children().first().children().first().children().length).toBe(5);
         });
         it('exibe a tabela de sugestões de palavras com a linha 1 marcada como linha', () => {
             palavrasSugeridas(['x']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(1)').hasClass('linha')).toBe(true);
+            expect(sugestoes.children().first().children().filter(':nth-child(1)').hasClass('linha')).toBe(true);
         });
         it('exibe a tabela de sugestões de palavras com 1 linha e com a célula 1 marcada como célula', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().first().hasClass('celula')).toBe(true);
+            expect(sugestoes.children().first().children().first().children().first().hasClass('celula')).toBe(true);
         });
         it('exibe a tabela de sugestões de palavras com 1 linha e com a célula 2 sem marcação de célula', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(2)').hasClass('celula')).toBe(false);
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').hasClass('celula')).toBe(false);
         });
         it('exibe a tabela de sugestões de palavras com 1 linha e com a célula 3 sem marcação de célula', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(3)').hasClass('celula')).toBe(false);
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(3)').hasClass('celula')).toBe(false);
         });
         it('exibe a tabela de sugestões de palavras com 1 linha e com a célula 5 com marcação de célula', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(5)').hasClass('celula')).toBe(true);
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(5)').hasClass('celula')).toBe(true);
         });
         it('exibe o símbolo "Continuar" na célula 5 da linha 1', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(5)').text()).toBe('Continuar');
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(5)').text()).toBe('Continuar');
         });
         it('exibe a primeira palavra na célula 1 da linha 1', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(1)').text()).toBe('z');
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(1)').text()).toBe('z');
         });
         it('exibe o símbolo "Continuar" com marcação de célula descrita', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
         });
     });
     describe('ao sugerir 5 palavras', () => {
         it('exibe a tabela de sugestões de palavras com 2 linhas', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().first().children().length).toBe(2);
+            expect(sugestoes.children().first().children().length).toBe(2);
         });
         it('exibe a segunda linha da tabela de sugestões de palavras com 5 células', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().length).toBe(5);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().length).toBe(5);
         });
         it('exibe a tabela de sugestões de palavras com a linha 2 marcada como linha', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').hasClass('linha')).toBe(true);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').hasClass('linha')).toBe(true);
         });
         it('exibe a segunda linha da tabela de sugestões de palavras com a célula 1 marcada como célula', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').hasClass('celula')).toBe(true);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').hasClass('celula')).toBe(true);
         });
         it('exibe a célula 2 da linha 2 da tabela de sugestões de palavras sem marcação de célula', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(2)').hasClass('celula')).toBe(false);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(2)').hasClass('celula')).toBe(false);
         });
         it('exibe a tabela de sugestões de palavras com 2 linhas e com a célula 5 com marcação de célula', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').hasClass('celula')).toBe(true);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').hasClass('celula')).toBe(true);
         });
         it('exibe o símbolo "Continuar" na célula 5 da linha 2', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').text()).toBe('Continuar');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').text()).toBe('Continuar');
         });
         it('exibe a terceira palavra na célula 3 da linha 1', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(3)').text()).toBe('l');
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(3)').text()).toBe('l');
         });
         it('exibe a quarta palavra na célula 4 da linha 1', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(4)').text()).toBe('w');
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(4)').text()).toBe('w');
         });
         it('exibe a segunda palavra na célula 2 da linha 1', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
-            expect(sugestoes.children().first().children().first().children().first().children().filter(':nth-child(2)').text()).toBe('y');
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').text()).toBe('y');
         });
         it('exibe a quinta palavra na célula 1 da linha 2', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').text()).toBe('k');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').text()).toBe('k');
         });
         it('exibe o símbolo "Continuar" com marcação de célula descrita', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
         });
     });
     describe('ao sugerir 6 palavras', () => {
         it('exibe a tabela de sugestões de palavras com 2 linhas', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e', 'f']);
-            expect(sugestoes.children().first().children().first().children().length).toBe(2);
+            expect(sugestoes.children().first().children().length).toBe(2);
         });
         it('exibe a linha 2 da tabela de sugestões de palavras com 5 células', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e', 'f']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().length).toBe(5);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().length).toBe(5);
         });
         it('exibe a linha 1 da tabela de sugestões de palavras com 5 células', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e', 'f']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(1)').children().length).toBe(5);
+            expect(sugestoes.children().first().children().filter(':nth-child(1)').children().length).toBe(5);
         });
         it('exibe a célula 3 da linha 2 da tabela de sugestões de palavras sem marcação de célula', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e', 'f']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(3)').hasClass('celula')).toBe(false);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(3)').hasClass('celula')).toBe(false);
         });
         it('exibe a quinta palavra na célula 1 da linha 2', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e', 'f']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').text()).toBe('e');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').text()).toBe('e');
         });
         it('exibe a sexta palavra na célula 2 da linha 2', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e', 'f']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(2)').text()).toBe('f');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(2)').text()).toBe('f');
         });
     });
     describe('ao sugerir 7 palavras', () => {
         it('exibe a sétima palavra na célula 3 da linha 2', () => {
             palavrasSugeridas(['q', 'n', 't', 's', 'v', 'p', 'g']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(3)').text()).toBe('g');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(3)').text()).toBe('g');
         });
         it('exibe a sexta palavra na célula 2 da linha 2', () => {
             palavrasSugeridas(['q', 'n', 't', 's', 'v', 'p', 'g']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(2)').text()).toBe('p');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(2)').text()).toBe('p');
         });        
     });
     describe('ao sugerir 8 palavras', () => {
         it('exibe a sétima palavra na célula 3 da linha 2', () => {
             palavrasSugeridas(['e', 'o', 'i', 'm', 'j', 'u', 'y', 's']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(3)').text()).toBe('y');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(3)').text()).toBe('y');
         });
         it('exibe a oitava palavra na célula 4 da linha 2', () => {
             palavrasSugeridas(['e', 'o', 'i', 'm', 'j', 'u', 'y', 's']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').children().filter(':nth-child(4)').text()).toBe('s');
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(4)').text()).toBe('s');
         });
     });
     describe('ao sugerir 0 palavras', () => {
@@ -1370,7 +1370,7 @@ describe('AuxiliarDePlaca', () => {
         });
         describe('e a tabela de sugestões de palavras já estiver preenchida', () => {
             it('não exibe a tabela de sugestões de palavras', () => {
-                sugestoes.append('<table><tr><td></td></tr></table>');
+                sugestoes.append('<div><div><div></div></div></div>');
                 palavrasSugeridas([]);
                 expect(sugestoes.children().length).toBe(0);
             });

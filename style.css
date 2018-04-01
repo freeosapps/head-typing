@@ -18,10 +18,20 @@
 .quadro_oculto {
     display: none;
 }
+.linha {
+    font-size: 0;
+}
 .celula {                
-    height: calc(8vh - 1.4px); /* tabelas não aceitam border-box, então foi tirada a largura da borda */
+    height: 8vh;
     width: 20%;
     background-color: floralwhite;
+    font-size: 12pt;
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: linen;
 }
 .celula_pequena {
     width: 16%;
@@ -115,7 +125,7 @@
 }
 .placa {
     height: 80%;
-    background-color: linen;
+    background-color: floralwhite;
 }
 .video {
     height: 100vh;
@@ -126,5 +136,5 @@
     z-index: -1;
 }
 .sugestoes {
-    height: calc(8vh - 1.4px + 8vh - 1.4px + 2px);                
+    height: 16vh;
 }

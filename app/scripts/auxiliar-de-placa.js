@@ -11,7 +11,7 @@ let AuxiliarDePlaca = function() {
         if (palavras.length) {
             let celulasLinha1 = '';
             for (let i = 0; i < 4 && i < palavras.length; i++) {
-                celulasLinha1 += `<div class="celula">${palavras[i]}</div>`;
+                celulasLinha1 += `<div class="celula celula_sugestao">${palavras[i]}</div>`;
             }
             for (let i = palavras.length; i < 4; i++) {
                 celulasLinha1 += '<div class="celula_oculta"></div>';
@@ -21,7 +21,7 @@ let AuxiliarDePlaca = function() {
             if (palavras.length > 4) {
                 let celulasLinha2 = '';
                 for (let i = 4; i < 8 && i < palavras.length; i++) {    
-                    celulasLinha2 += `<div class="celula">${palavras[i]}</div>`;
+                    celulasLinha2 += `<div class="celula celula_sugestao">${palavras[i]}</div>`;
                 }
                 for (let i = palavras.length - 4; i < 4; i++) {
                     celulasLinha2 += '<div class="celula_oculta"></div>';

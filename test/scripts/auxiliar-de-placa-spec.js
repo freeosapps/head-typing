@@ -1266,6 +1266,10 @@ describe('AuxiliarDePlaca', () => {
             palavrasSugeridas(['z']);
             expect(sugestoes.children().first().children().first().children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
         });
+        it('exibe a célula 1 da linha 1 com marcação de célula de sugestão', () => {
+            palavrasSugeridas(['z']);
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(1)').hasClass('celula_sugestao')).toBe(true);
+        });
         it('marca a célula 2 da linha 1 como célula oculta', () => {
             palavrasSugeridas(['z']);
             expect(sugestoes.children().first().children().first().children().filter(':nth-child(2)').hasClass('celula_oculta')).toBe(true);
@@ -1319,6 +1323,10 @@ describe('AuxiliarDePlaca', () => {
         it('exibe o símbolo "Continuar" com marcação de célula descrita', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
             expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').hasClass('celula_descrita')).toBe(true);
+        });
+        it('exibe a célula 1 da linha 2 com marcação de célula de sugestão', () => {
+            palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(1)').hasClass('celula_sugestao')).toBe(true);
         });
         it('marca a célula 2 da linha 2 como célula oculta', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);

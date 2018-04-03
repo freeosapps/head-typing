@@ -81,6 +81,7 @@
     overflow: hidden;
     height: 20%;
     background-color: white;
+    font-size: 4vmin;
 }
 .anotacao__texto {
     word-wrap: break-word;

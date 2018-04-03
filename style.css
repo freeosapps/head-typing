@@ -19,6 +19,7 @@
 }
 .linha {
     font-size: 0;
+    display: flex;
 }
 .celula {
     margin: 1px;
@@ -27,8 +28,6 @@
     width: calc(20% - 2px);
     background-color: floralwhite;
     font-size: 4vmin;
-    display: inline-block;
-    vertical-align: middle;
     box-sizing: border-box;
     border-width: 1px;
     border-style: solid;
@@ -151,6 +150,9 @@
     top: 0;
     left: 0;
     z-index: -1;
+}
+.quadros-letras {
+    height: 48vh;
 }
 .sugestoes {
     height: 16vh;

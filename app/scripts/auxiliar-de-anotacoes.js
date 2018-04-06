@@ -6,10 +6,12 @@ let AuxiliarDeAnotacoes = function() {
             $('.anotacao__texto').text($('.anotacao__texto').text().replace(/[^\s]+(\s+)?$/, ''));
         } else if (simbolo == 'Espaço') {
             $('.anotacao__texto').append(' ');
+        } else if (simbolo == 'Apagar tudo') {
+            $('.anotacao__texto').text('');
         } else {
             $('.anotacao__texto').append(simbolo);
         }
-        let ultimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,\?\!]+$/);
+        let ultimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,\?\!\-]+$/);
         if (ultimaPalavra) {
             ultimaPalavra = ultimaPalavra[0];
         } else {

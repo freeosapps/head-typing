@@ -178,7 +178,23 @@ describe('AuxiliarDeAnotacoes', () => {
             PubSub.publish.restore();
         });
     });
-    xdescribe('ao escolher o símbolo "Falar e apagar tudo"', () => {
+    describe('ao escolher o símbolo "-"', () => {
+        it('não passa palavra com "-" no final para o auxiliar de sugestões', () => {
+            sinon.spy(PubSub, 'publish');
+            anotacao.text('primei');
+            deficienteEscolheuOSimbolo('-');
+            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
+            PubSub.publish.restore();
+        });
+    });
+    describe('ao escolher o símbolo "Apagar tudo"', () => {
+        it('apaga tudo o que foi anotado', () => {
+            anotacao.text('tudo o que foi anotado');
+            deficienteEscolheuOSimbolo('Apagar tudo');
+            expect(anotacao.text()).toBe('');
+        });
+    });
+    xdescribe('ao escolher o símbolo "Falar"', () => {
         it('');
     });
 });

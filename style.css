@@ -29,7 +29,9 @@
     background-color: floralwhite;
     font-size: 4vmin;
     box-sizing: border-box;
-    box-shadow: 1px 1px linen;
+    border-width: 1px;
+    border-style: solid;
+    border-color: linen;
 }
 .celula_oculta {
     margin: 1px;

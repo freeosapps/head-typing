@@ -66,7 +66,7 @@ let AuxiliarDePlaca = function() {
             } else {
                 $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
             }
-            $('.celula_acentuadas-nao-acentuadas').html(NAO_ACENTUADAS);
+            $('.celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
         } else if (elemento.text().localeCompare(NAO_ACENTUADAS) == 0) {
             $('.quadro_acentuadas').addClass('quadro_oculto');
             if ($('.celula_maiusculas-minusculas').text().localeCompare(MAIUSCULAS) == 0) {                    

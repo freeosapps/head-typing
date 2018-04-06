@@ -1,12 +1,17 @@
 let AuxiliarDeAnotacoes = function() {
+    const ESPACO = 'Espaço';
+    const APAGAR_LETRA = 'Apagar letra';
+    const APAGAR_PALAVRA = 'Apagar palavra';
+    const APAGAR_TUDO = 'Apagar tudo';
+
     let deficienteEscolheuOSimbolo = (simbolo) => {
-        if (simbolo == 'Apagar letra') {
+        if (simbolo.localeCompare(APAGAR_LETRA) == 0) {
             $('.anotacao__texto').text($('.anotacao__texto').text().substr(0, $('.anotacao__texto').text().length - 1));
-        } else if (simbolo == 'Apagar palavra') {
+        } else if (simbolo.localeCompare(APAGAR_PALAVRA) == 0) {
             $('.anotacao__texto').text($('.anotacao__texto').text().replace(/[^\s]+(\s+)?$/, ''));
-        } else if (simbolo == 'Espaço') {
+        } else if (simbolo.localeCompare(ESPACO) == 0) {
             $('.anotacao__texto').append(' ');
-        } else if (simbolo == 'Apagar tudo') {
+        } else if (simbolo.localeCompare(APAGAR_TUDO) == 0) {
             $('.anotacao__texto').text('');
         } else {
             $('.anotacao__texto').append(simbolo);

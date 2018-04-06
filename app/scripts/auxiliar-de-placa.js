@@ -1,4 +1,13 @@
 let AuxiliarDePlaca = function() {
+    const MAI_US_CU_LAS = 'Mai&shy;ús&shy;cu&shy;las';
+    const MAIUSCULAS = 'Maiúsculas';
+    const MI_NUS_CU_LAS = 'Mi&shy;nús&shy;cu&shy;las';
+    const MINUSCULAS = 'Minúsculas';
+    const A_CEN_TU_A_DAS = 'A&shy;cen&shy;tu&shy;a&shy;das';
+    const ACENTUADAS = 'Acentuadas';
+    const NAO_A_CEN_TU_A_DAS = 'Não a&shy;cen&shy;tu&shy;a&shy;das';
+    const NAO_ACENTUADAS = 'Não acentuadas';
+    const CONTINUAR = 'Continuar';
     let indiceSeletor = 0;
     let seletor = '.quadro:not(.quadro_oculto)';
     let elemento = null;
@@ -34,39 +43,39 @@ let AuxiliarDePlaca = function() {
     }    
     
     let executarSimbolo = function() {
-        if (elemento.text() == 'Maiúsculas') {
+        if (elemento.text().localeCompare(MAIUSCULAS) == 0) {
             $('.quadro_minusculas').addClass('quadro_oculto');
-            if ($('.celula_acentuadas-nao-acentuadas').text() == 'Não acentuadas') { // exibindo acentuadas
+            if ($('.celula_acentuadas-nao-acentuadas').text().localeCompare(NAO_ACENTUADAS) == 0) { // exibindo acentuadas
                 $('.quadro_maiusculas.quadro_acentuadas').removeClass('quadro_oculto');
             } else { // exibindo não acentuadas
                 $('.quadro_maiusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');
             }
-            $('.celula_maiusculas-minusculas').text('Minúsculas');
-        } else if (elemento.text() == 'Minúsculas') {
+            $('.celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+        } else if (elemento.text().localeCompare(MINUSCULAS) == 0) {
             $('.quadro_maiusculas').addClass('quadro_oculto');
-            if ($('.celula_acentuadas-nao-acentuadas').text() == 'Não acentuadas') {
+            if ($('.celula_acentuadas-nao-acentuadas').text().localeCompare(NAO_ACENTUADAS) == 0) {
                 $('.quadro_minusculas.quadro_acentuadas').removeClass('quadro_oculto');
             } else {
                 $('.quadro_minusculas.quadro_nao-acentuadas').removeClass('quadro_oculto');                        
             }
-            $('.celula_maiusculas-minusculas').text('Maiúsculas');
-        } else if (elemento.text() == 'Acentuadas') {
+            $('.celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+        } else if (elemento.text().localeCompare(ACENTUADAS) == 0) {
             $('.quadro_nao-acentuadas').addClass('quadro_oculto');
-            if ($('.celula_maiusculas-minusculas').text() == 'Minúsculas') {
+            if ($('.celula_maiusculas-minusculas').text().localeCompare(MINUSCULAS) == 0) {
                 $('.quadro_acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
             } else {
                 $('.quadro_acentuadas.quadro_minusculas').removeClass('quadro_oculto');
             }
-            $('.celula_acentuadas-nao-acentuadas').text('Não acentuadas');
-        } else if (elemento.text() == 'Não acentuadas') {
+            $('.celula_acentuadas-nao-acentuadas').html(NAO_ACENTUADAS);
+        } else if (elemento.text().localeCompare(NAO_ACENTUADAS) == 0) {
             $('.quadro_acentuadas').addClass('quadro_oculto');
-            if ($('.celula_maiusculas-minusculas').text() == 'Maiúsculas') {                    
+            if ($('.celula_maiusculas-minusculas').text().localeCompare(MAIUSCULAS) == 0) {                    
                 $('.quadro_nao-acentuadas.quadro_minusculas').removeClass('quadro_oculto');
             } else {
                 $('.quadro_nao-acentuadas.quadro_maiusculas').removeClass('quadro_oculto');
             }
-            $('.celula_acentuadas-nao-acentuadas').text('Acentuadas');
-        } else if (elemento.text() != 'Continuar') {
+            $('.celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+        } else if (elemento.text().localeCompare(CONTINUAR) != 0) {
             PubSub.publish('deficienteEscolheuOSimbolo', elemento.text());
         }        
     }

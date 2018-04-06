@@ -1,14 +1,27 @@
 describe('AuxiliarDeAnotacoes', () => {
     let anotacao = null;
+    let celulaEspaco = null;
+    let celulaApagarLetra = null;
+    let celulaApagarPalavra = null;
+    let celulaApagarTudo = null;
 
     beforeEach(() => {        
         AuxiliarDeAnotacoes();
         anotacao = $('<div>').addClass('anotacao__texto');
-        $(document.body).append(anotacao);
+        celulaEspaco = $('<div>').html('Es&shy;pa&shy;ço');
+        celulaApagarLetra = $('<div>').html('A&shy;pa&shy;gar le&shy;tra');
+        celulaApagarPalavra = $('<div>').html('A&shy;pa&shy;gar pa&shy;la&shy;vra');
+        celulaApagarTudo = $('<div>').html('A&shy;pa&shy;gar tu&shy;do');
+
+        $(document.body).append(anotacao).append(celulaEspaco).append(celulaApagarLetra).append(celulaApagarPalavra).append(celulaApagarTudo);
     });
     afterEach(() => {
         PubSub.clearAllSubscriptions();
         anotacao.remove();
+        celulaEspaco.remove();
+        celulaApagarLetra.remove();
+        celulaApagarPalavra.remove();
+        celulaApagarTudo.remove();
     })
     let deficienteEscolheuOSimbolo = (simbolo) => {
         PubSub.publishSync('deficienteEscolheuOSimbolo', simbolo);
@@ -18,13 +31,13 @@ describe('AuxiliarDeAnotacoes', () => {
     }
     describe('ao escolher o símbolo "Espaço"', () => {
         it('anota um espaço', () => {
-            deficienteEscolheuOSimbolo('Espaço');
+            deficienteEscolheuOSimbolo(celulaEspaco.text());
             expect(anotacao.text()).toBe(' ');
         });
         describe('e já tiver anotação', () => {
             it('acrescenta um espaço no final', () => {
                 anotacao.text('palavra');
-                deficienteEscolheuOSimbolo('Espaço');
+                deficienteEscolheuOSimbolo(celulaEspaco.text());
                 expect(anotacao.text()).toBe('palavra ');
             });
         });
@@ -72,19 +85,19 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "Apagar letra"', () => {
         it('apaga uma letra de uma palavra', () => {
             anotacao.text('palavra');
-            deficienteEscolheuOSimbolo('Apagar letra');
+            deficienteEscolheuOSimbolo(celulaApagarLetra.text());
             expect(anotacao.text()).toBe('palavr');
         });
         it('apaga uma letra de outra palavra', () => {
             anotacao.text('outra');
-            deficienteEscolheuOSimbolo('Apagar letra');
+            deficienteEscolheuOSimbolo(celulaApagarLetra.text());
             expect(anotacao.text()).toBe('outr');
         });
         describe('e tiver apenas uma letra', () => {
             it('passa vazio para o auxiliar de sugestões de palavras', () => {
                 sinon.spy(PubSub, 'publish');
                 anotacao.text('a');
-                deficienteEscolheuOSimbolo('Apagar letra');
+                deficienteEscolheuOSimbolo(celulaApagarLetra.text());
                 expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
                 PubSub.publish.restore();
             });
@@ -93,17 +106,17 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "Apagar palavra"', () => {
         it('apaga uma palavra', () => {
             anotacao.text('palavra');
-            deficienteEscolheuOSimbolo('Apagar palavra');
+            deficienteEscolheuOSimbolo(celulaApagarPalavra.text());
             expect(anotacao.text()).toBe('');
         });
         it('apaga outra palavra', () => {
             anotacao.text('outra palavra');
-            deficienteEscolheuOSimbolo('Apagar palavra');
+            deficienteEscolheuOSimbolo(celulaApagarPalavra.text());
             expect(anotacao.text()).toBe('outra ');
         });
         it('apaga uma palavra com espaço no final', () => {
             anotacao.text('outra ');
-            deficienteEscolheuOSimbolo('Apagar palavra');
+            deficienteEscolheuOSimbolo(celulaApagarPalavra.text());
             expect(anotacao.text()).toBe('');
         });      
     });
@@ -190,7 +203,7 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "Apagar tudo"', () => {
         it('apaga tudo o que foi anotado', () => {
             anotacao.text('tudo o que foi anotado');
-            deficienteEscolheuOSimbolo('Apagar tudo');
+            deficienteEscolheuOSimbolo(celulaApagarTudo.text());
             expect(anotacao.text()).toBe('');
         });
     });

@@ -116,8 +116,14 @@ let AuxiliarDePlaca = function() {
             indiceSeletor = 0;            
         }        
     }
-    
-    PubSub.subscribe('deficienteGesticulou', (message, data) => deficienteGesticulou(data));
-    PubSub.subscribe('passaram1500Milisegundos', (message, data) => passaram1500Milisegundos(data));
+
     PubSub.subscribe('palavrasSugeridas', (message, data) => palavrasSugeridas(data));
+    PubSub.subscribe('deficienteNaoEstaPreparado', (message, data) => {
+        PubSub.unsubscribe('passaram1500Milisegundos');
+        PubSub.unsubscribe('deficienteGesticulou');
+    });
+    PubSub.subscribe('deficienteEstaPreparado', (message, data) => {
+        PubSub.subscribe('passaram1500Milisegundos', (message, data) => passaram1500Milisegundos());
+        PubSub.subscribe('deficienteGesticulou', (message, data) => deficienteGesticulou(data));
+    });
 }

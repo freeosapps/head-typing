@@ -44,7 +44,9 @@
                         AuxiliarDeSugestoesDePalavras(palavras);
                         AuxiliarDeAnotacoes();
                         AuxiliarDePlaca();
-        
+                        Relogio(1500);
+                        Relogio(500);
+
                         $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
                             let documentElement = document.documentElement;
                             let requestFullscreen = documentElement.requestFullscreen
@@ -69,15 +71,11 @@
                         }
 
                         let comecar = () => {
-                            Relogio(1500);
-                            Relogio(500);
-                            //auxiliarDeSugestaoDePalavras.prefixoAnotado('');
+                            PubSub.publish('deficienteEstaPreparado');
                         }
 
-                        let parar = () => {
-                            //auxiliarDeTrocaDeArea.parar();
-                            //PubSub.publish('pararDeAcompanharOTempoACada500Milisegundos');
-                            //PubSub.publish('pararDeAcompanharOTempoACada1500Milisegundos');
+                        let parar = () => {                            
+                            PubSub.publish('deficienteNaoEstaPreparado');
                         }
 
 

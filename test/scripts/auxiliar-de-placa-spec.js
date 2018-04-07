@@ -1,15 +1,4 @@
 describe('AuxiliarDePlaca', () => {
-    const MAI_US_CU_LAS = 'Mai&shy;ús&shy;cu&shy;las';
-    const MAIUSCULAS = 'Maiúsculas';
-    const MI_NUS_CU_LAS = 'Mi&shy;nús&shy;cu&shy;las';
-    const MINUSCULAS = 'Minúsculas';
-    const A_CEN_TU_A_DAS = 'A&shy;cen&shy;tu&shy;a&shy;das';
-    const ACENTUADAS = 'Acentuadas';
-    const NAO_A_CEN_TU_A_DAS = 'Não a&shy;cen&shy;tu&shy;a&shy;das';
-    const NAO_ACENTUADAS = 'Não acentuadas';
-    const CON_TI_NU_AR = 'Con&shy;ti&shy;nu&shy;ar';
-    const CONTINUAR = 'Continuar';
-
     let quadroA = null;
     let quadroB = null;
     let quadroC = null;
@@ -86,16 +75,16 @@ describe('AuxiliarDePlaca', () => {
         celulaALinhaAQuadroC.remove();
     });
     let passaram1500Milisegundos = () => {
-        PubSub.publishSync('passaram1500Milisegundos');
+        PubSub.publishSync(EVENTO.PASSARAM_1500_MILISEGUNDOS);
     }
     let deficienteGesticulou = () => {
-        PubSub.publishSync('deficienteGesticulou');
+        PubSub.publishSync(EVENTO.DEFICIENTE_GESTICULOU);
     }
     let palavrasSugeridas = (palavras) => {
-        PubSub.publishSync('palavrasSugeridas', palavras);
+        PubSub.publishSync(EVENTO.PALAVRAS_SUGERIDAS, palavras);
     }
     let deficienteEstaPreparado = () => {
-        PubSub.publishSync('deficienteEstaPreparado');
+        PubSub.publishSync(EVENTO.DEFICIENTE_ESTA_PREPARADO);
     }
     describe('ao passar o tempo 1 vez', () => {
         describe('posiciona o ponteiro', () => {
@@ -540,7 +529,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
             quadroC.removeClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou();
@@ -555,7 +544,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas')
             quadroB.addClass('quadro_maiusculas').addClass('quadro_oculto');
             quadroC.removeClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou();
@@ -570,7 +559,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_oculto');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_oculto');
             quadroC.removeClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             passaram1500Milisegundos();
             deficienteGesticulou();
             passaram1500Milisegundos();
@@ -585,7 +574,7 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto').css('top', '50px');
                 quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou();
                 passaram1500Milisegundos();
@@ -602,8 +591,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
                 quadroB.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
-                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
+                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
                 passaram1500Milisegundos();
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
@@ -621,8 +610,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
                 quadroB.addClass('quadro_minusculas').addClass('quadro_acentuadas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
-                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
+                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
                 passaram1500Milisegundos();
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
@@ -637,8 +626,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
                 quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
-                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
+                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
                 passaram1500Milisegundos();
@@ -653,7 +642,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -661,14 +650,14 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Maiúsculas
-            expect(celulaALinhaAQuadroC.text().localeCompare(MINUSCULAS)).toBe(0);
+            expect(celulaALinhaAQuadroC.text().localeCompare(SIMBOLO.MINUSCULAS)).toBe(0);
         });
         it('troca o texto de "Maiúsculas" para "Minúsculas" com hífen', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -676,22 +665,22 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Maiúsculas
-            expect(celulaALinhaAQuadroC.text()).not.toBe(MINUSCULAS); // não é "Minúsculas" sem hífen
+            expect(celulaALinhaAQuadroC.text()).not.toBe(SIMBOLO.MINUSCULAS); // não é "Minúsculas" sem hífen
         });
         it('não troca o texto de "Acentuadas" para "Não acentuadas"', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_oculto').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
-            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
+            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Minúsculas
-            expect(celulaBLinhaAQuadroC.text().localeCompare(ACENTUADAS)).toBe(0);
+            expect(celulaBLinhaAQuadroC.text().localeCompare(SIMBOLO.ACENTUADAS)).toBe(0);
         });
     });
     describe('ao gesticular no símbolo "Minúsculas"', () => {
@@ -700,7 +689,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -708,14 +697,14 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Minúsculas
-            expect(celulaALinhaAQuadroC.text().localeCompare(MAIUSCULAS)).toBe(0);
+            expect(celulaALinhaAQuadroC.text().localeCompare(SIMBOLO.MAIUSCULAS)).toBe(0);
         });
         it('troca o texto de "Minúsculas" para "Maiúsculas" com hífen', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -723,15 +712,15 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Minúsculas
-            expect(celulaALinhaAQuadroC.text()).not.toBe(MAIUSCULAS); // não é "Maiúsculas" sem hífen
+            expect(celulaALinhaAQuadroC.text()).not.toBe(SIMBOLO.MAIUSCULAS); // não é "Maiúsculas" sem hífen
         });
         it('exibe o quadro de minúsculas', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
             quadroC.removeClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
-            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
+            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou();
@@ -746,8 +735,8 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');            
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas');
             quadroC.removeClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
-            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
+            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             passaram1500Milisegundos();
@@ -764,8 +753,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
                 quadroB.addClass('quadro_minusculas').addClass('quadro_acentuadas').addClass('quadro_oculto');
                 quadroC.removeClass('quadro_oculto');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
-                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
+                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou();
                 passaram1500Milisegundos();
@@ -779,8 +768,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
                 quadroB.addClass('quadro_minusculas').addClass('quadro_acentuadas').addClass('quadro_oculto');
                 quadroC.removeClass('quadro_oculto');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
-                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
+                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou();
                 passaram1500Milisegundos();
@@ -796,8 +785,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
                 quadroB.addClass('quadro_minusculas').addClass('quadro_acentuadas').addClass('quadro_oculto');
                 quadroC.removeClass('quadro_oculto');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
-                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
+                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou();
                 passaram1500Milisegundos();
@@ -811,8 +800,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
                 quadroB.addClass('quadro_minusculas').addClass('quadro_acentuadas').addClass('quadro_oculto');
                 quadroC.removeClass('quadro_oculto');
-                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
-                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+                celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
+                celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou();
                 passaram1500Milisegundos();
@@ -827,15 +816,15 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_oculto').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
-            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
+            celulaBLinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Maiúsculas
-            expect(celulaBLinhaAQuadroC.text().localeCompare(ACENTUADAS)).toBe(0);
+            expect(celulaBLinhaAQuadroC.text().localeCompare(SIMBOLO.ACENTUADAS)).toBe(0);
         });
     });
     describe('ao gesticular no símbolo "Acentuadas"', () => {
@@ -844,36 +833,36 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_oculto').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Acentuadas
-            expect(celulaALinhaAQuadroC.text().localeCompare(NAO_ACENTUADAS)).toBe(0);
+            expect(celulaALinhaAQuadroC.text().localeCompare(SIMBOLO.NAO_ACENTUADAS)).toBe(0);
         });
         it('troca o texto de "Acentuadas" para "Não acentuadas" com hífen', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_oculto').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Acentuadas
-            expect(celulaALinhaAQuadroC.text()).not.toBe(NAO_ACENTUADAS); // não é "Não acentuadas" sem hífen
+            expect(celulaALinhaAQuadroC.text()).not.toBe(SIMBOLO.NAO_ACENTUADAS); // não é "Não acentuadas" sem hífen
         });
         it('exibe o quadro de acentuadas', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_oculto').addClass('quadro_acentuadas').addClass('quadro_minusculas').css('top', '50px');
             quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
-            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
+            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
@@ -888,8 +877,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_oculto').addClass('quadro_acentuadas').addClass('quadro_maiusculas').css('top', '50px');
                 quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
-                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
+                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
                 passaram1500Milisegundos();
@@ -905,8 +894,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_oculto').addClass('quadro_acentuadas').addClass('quadro_maiusculas').css('top', '50px');
                 quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
-                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
+                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
                 passaram1500Milisegundos();
@@ -920,8 +909,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_oculto').addClass('quadro_acentuadas').addClass('quadro_minusculas').css('top', '50px');
                 quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
-                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
+                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
                 passaram1500Milisegundos();
@@ -936,8 +925,8 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_oculto').addClass('quadro_acentuadas').addClass('quadro_minusculas').css('top', '50px');
             quadroB.addClass('quadro_nao-acentuadas').addClass('quadro_maiusculas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
-            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.A_CEN_TU_A_DAS);
+            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -954,36 +943,36 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_oculto').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Não acentuadas
-            expect(celulaALinhaAQuadroC.text().localeCompare(ACENTUADAS)).toBe(0);
+            expect(celulaALinhaAQuadroC.text().localeCompare(SIMBOLO.ACENTUADAS)).toBe(0);
         });
         it('troca o texto de "Não acentuadas" para "Acentuadas" com hífen', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_oculto').css('top', '50px');
             quadroB.addClass('quadro_oculto').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Não acentuadas
-            expect(celulaALinhaAQuadroC.text()).not.toBe(ACENTUADAS); // não é "Acentuadas" sem hífen
+            expect(celulaALinhaAQuadroC.text()).not.toBe(SIMBOLO.ACENTUADAS); // não é "Acentuadas" sem hífen
         });
         it('exibe o quadro de não acentuadas', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_oculto').addClass('quadro_acentuadas').addClass('quadro_minusculas').css('top', '50px');
             quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
-            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
+            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
             passaram1500Milisegundos();
@@ -998,8 +987,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '50px');
                 quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_maiusculas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
-                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
+                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
                 passaram1500Milisegundos();
@@ -1013,8 +1002,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '50px');
                 quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_maiusculas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
-                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
+                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
                 passaram1500Milisegundos();
@@ -1030,8 +1019,8 @@ describe('AuxiliarDePlaca', () => {
                 quadroA.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_minusculas').css('top', '50px');
                 quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_maiusculas').css('top', '150px');
                 quadroC.removeClass('quadro_oculto').css('top', '250px');
-                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
-                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+                celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
+                celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
                 passaram1500Milisegundos();
                 deficienteGesticulou(); // quadroC
                 passaram1500Milisegundos();
@@ -1046,8 +1035,8 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_acentuadas').addClass('quadro_maiusculas').css('top', '50px');
             quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_maiusculas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
-            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
+            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -1063,8 +1052,8 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_acentuadas').addClass('quadro_maiusculas').css('top', '50px');
             quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_maiusculas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
-            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(SIMBOLO.NAO_A_CEN_TU_A_DAS);
+            celulaBLinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MI_NUS_CU_LAS);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -1072,7 +1061,7 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Não acentuadas
-            expect(PubSub.publish.calledWith('deficienteEscolheuOSimbolo', 'a')).toBe(false);
+            expect(PubSub.publish.calledWith(EVENTO.DEFICIENTE_ESCOLHEU_O_SIMBOLO, 'a')).toBe(false);
             PubSub.publish.restore();
         });        
     });
@@ -1082,7 +1071,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou();
@@ -1098,7 +1087,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou();
@@ -1106,7 +1095,7 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou();
             passaram1500Milisegundos();
             deficienteGesticulou();            
-            expect(PubSub.publish.calledWith('deficienteEscolheuOSimbolo', 'a')).toBe(true);
+            expect(PubSub.publish.calledWith(EVENTO.DEFICIENTE_ESCOLHEU_O_SIMBOLO, 'a')).toBe(true);
             PubSub.publish.restore();
         });
         it('oculta o ponteiro', () => {
@@ -1114,7 +1103,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroA
@@ -1129,7 +1118,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroA
@@ -1144,7 +1133,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroA
@@ -1159,7 +1148,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroA
@@ -1174,7 +1163,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroA
@@ -1192,7 +1181,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('b');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou();
@@ -1200,7 +1189,7 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou();
             passaram1500Milisegundos();
             deficienteGesticulou();            
-            expect(PubSub.publish.calledWith('deficienteEscolheuOSimbolo', 'b')).toBe(true);
+            expect(PubSub.publish.calledWith(EVENTO.DEFICIENTE_ESCOLHEU_O_SIMBOLO, 'b')).toBe(true);
             PubSub.publish.restore();
         });
     });
@@ -1211,7 +1200,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_acentuadas').addClass('quadro_maiusculas').css('top', '50px');
             quadroB.addClass('quadro_oculto').addClass('quadro_nao-acentuadas').addClass('quadro_maiusculas').css('top', '150px');
             quadroC.removeClass('quadro_oculto').css('top', '250px');
-            celulaALinhaAQuadroC.html(CON_TI_NU_AR);
+            celulaALinhaAQuadroC.html(SIMBOLO.CON_TI_NU_AR);
             passaram1500Milisegundos();
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroC
@@ -1219,7 +1208,7 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // linha 1, quadro C
             passaram1500Milisegundos();
             deficienteGesticulou(); // Continuar
-            expect(PubSub.publish.calledWith('deficienteEscolheuOSimbolo', CONTINUAR)).toBe(false);
+            expect(PubSub.publish.calledWith(EVENTO.DEFICIENTE_ESCOLHEU_O_SIMBOLO, SIMBOLO.CONTINUAR)).toBe(false);
             PubSub.publish.restore();
         });
     });
@@ -1231,7 +1220,7 @@ describe('AuxiliarDePlaca', () => {
                 top: '40px'
             });
             quadroA.css('top', '50px');
-            celulaALinhaAQuadroA.html(CON_TI_NU_AR);
+            celulaALinhaAQuadroA.html(SIMBOLO.CON_TI_NU_AR);
             quadroB.css('top', '150px');
             passaram1500Milisegundos();
             deficienteGesticulou();
@@ -1319,7 +1308,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroA
@@ -1334,7 +1323,7 @@ describe('AuxiliarDePlaca', () => {
             quadroA.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas');
             celulaALinhaAQuadroA.text('a');
             quadroB.addClass('quadro_maiusculas').addClass('quadro_nao-acentuadas').addClass('quadro_oculto');
-            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(SIMBOLO.MAI_US_CU_LAS);
             quadroC.removeClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou(); // quadroA
@@ -1403,7 +1392,7 @@ describe('AuxiliarDePlaca', () => {
         });
         it('exibe o símbolo "Continuar" na célula 5 da linha 1', () => {
             palavrasSugeridas(['z']);
-            expect(sugestoes.children().first().children().first().children().filter(':nth-child(5)').text()).toBe(CONTINUAR);
+            expect(sugestoes.children().first().children().first().children().filter(':nth-child(5)').text()).toBe(SIMBOLO.CONTINUAR);
         });
         it('exibe a primeira palavra na célula 1 da linha 1', () => {
             palavrasSugeridas(['z']);
@@ -1449,7 +1438,7 @@ describe('AuxiliarDePlaca', () => {
         });
         it('exibe o símbolo "Continuar" na célula 5 da linha 2', () => {
             palavrasSugeridas(['a', 'b', 'c', 'd', 'e']);
-            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').text()).toBe(CONTINUAR);
+            expect(sugestoes.children().first().children().filter(':nth-child(2)').children().filter(':nth-child(5)').text()).toBe(SIMBOLO.CONTINUAR);
         });
         it('exibe a terceira palavra na célula 3 da linha 1', () => {
             palavrasSugeridas(['x', 'y', 'l', 'w', 'k']);
@@ -1548,13 +1537,13 @@ describe('AuxiliarDePlaca', () => {
     });
     describe('ao parar', () => {
         it('não movimenta o ponteiro', () => {
-            PubSub.publishSync('deficienteNaoEstaPreparado');
+            PubSub.publishSync(EVENTO.DEFICIENTE_NAO_ESTA_PREPARADO);
             quadroA.css('top', '50px');
             passaram1500Milisegundos();
             expect(ponteiro.offset().top).not.toBe(50);
         });
         it('não acompanha gestos', () => {
-            PubSub.publishSync('deficienteNaoEstaPreparado');
+            PubSub.publishSync(EVENTO.DEFICIENTE_NAO_ESTA_PREPARADO);
             quadroA.css({
                 top: '50px',
                 height: '300px'
@@ -1565,21 +1554,21 @@ describe('AuxiliarDePlaca', () => {
             quadroB.addClass('quadro_oculto');
             passaram1500Milisegundos();
             deficienteGesticulou();
-            PubSub.publishSync('deficienteEstaPreparado');
+            PubSub.publishSync(EVENTO.DEFICIENTE_ESTA_PREPARADO);
             passaram1500Milisegundos();
             expect(ponteiro.outerHeight()).toBe(300);
         });
         describe('e começar', () => {
             it('movimenta o ponteiro', () => {
-                PubSub.publishSync('deficienteNaoEstaPreparado');
+                PubSub.publishSync(EVENTO.DEFICIENTE_NAO_ESTA_PREPARADO);
                 quadroA.css('top', '50px');
                 passaram1500Milisegundos();
-                PubSub.publishSync('deficienteEstaPreparado');
+                PubSub.publishSync(EVENTO.DEFICIENTE_ESTA_PREPARADO);
                 passaram1500Milisegundos();
                 expect(ponteiro.offset().top).toBe(50);
             });
             it('acompanha os gestos', () => {
-                PubSub.publishSync('deficienteNaoEstaPreparado');
+                PubSub.publishSync(EVENTO.DEFICIENTE_NAO_ESTA_PREPARADO);
                 quadroA.css({
                     top: '50px',
                     height: '300px'
@@ -1593,7 +1582,7 @@ describe('AuxiliarDePlaca', () => {
                 quadroB.addClass('quadro_oculto');
                 passaram1500Milisegundos();
                 deficienteGesticulou();
-                PubSub.publishSync('deficienteEstaPreparado');
+                PubSub.publishSync(EVENTO.DEFICIENTE_ESTA_PREPARADO);
                 passaram1500Milisegundos();
                 deficienteGesticulou();
                 passaram1500Milisegundos();

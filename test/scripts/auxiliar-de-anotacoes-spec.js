@@ -8,10 +8,10 @@ describe('AuxiliarDeAnotacoes', () => {
     beforeEach(() => {        
         AuxiliarDeAnotacoes();
         anotacao = $('<div>').addClass('anotacao__texto');
-        celulaEspaco = $('<div>').html('Es&shy;pa&shy;ço');
-        celulaApagarLetra = $('<div>').html('A&shy;pa&shy;gar le&shy;tra');
-        celulaApagarPalavra = $('<div>').html('A&shy;pa&shy;gar pa&shy;la&shy;vra');
-        celulaApagarTudo = $('<div>').html('A&shy;pa&shy;gar tu&shy;do');
+        celulaEspaco = $('<div>').html(SIMBOLO.ES_PA_CO);
+        celulaApagarLetra = $('<div>').html(SIMBOLO.A_PA_GAR_LE_TRA);
+        celulaApagarPalavra = $('<div>').html(SIMBOLO.A_PA_GAR_PA_LA_VRA);
+        celulaApagarTudo = $('<div>').html(SIMBOLO.A_PA_GAR_TU_DO);
 
         $(document.body).append(anotacao).append(celulaEspaco).append(celulaApagarLetra).append(celulaApagarPalavra).append(celulaApagarTudo);
     });
@@ -24,10 +24,10 @@ describe('AuxiliarDeAnotacoes', () => {
         celulaApagarTudo.remove();
     })
     let deficienteEscolheuOSimbolo = (simbolo) => {
-        PubSub.publishSync('deficienteEscolheuOSimbolo', simbolo);
+        PubSub.publishSync(EVENTO.DEFICIENTE_ESCOLHEU_O_SIMBOLO, simbolo);
     }
     let passaram500Milisegundos = () => {
-        PubSub.publishSync('passaram500Milisegundos');
+        PubSub.publishSync(EVENTO.PASSARAM_500_MILISEGUNDOS);
     }
     describe('ao escolher o símbolo "Espaço"', () => {
         it('anota um espaço', () => {
@@ -58,7 +58,7 @@ describe('AuxiliarDeAnotacoes', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
             deficienteEscolheuOSimbolo('.');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
     });
@@ -78,7 +78,7 @@ describe('AuxiliarDeAnotacoes', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
             deficienteEscolheuOSimbolo(',');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
     });
@@ -98,7 +98,7 @@ describe('AuxiliarDeAnotacoes', () => {
                 sinon.spy(PubSub, 'publish');
                 anotacao.text('a');
                 deficienteEscolheuOSimbolo(celulaApagarLetra.text());
-                expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
+                expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
                 PubSub.publish.restore();
             });
         });
@@ -156,20 +156,20 @@ describe('AuxiliarDeAnotacoes', () => {
         it('passa a última palavra para o auxiliar de sugestões de palavras', () => {
             sinon.spy(PubSub, 'publish');
             deficienteEscolheuOSimbolo('X');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', 'X')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, 'X')).toBe(true);
             PubSub.publish.restore();
         });
         it('passa outra última palavra para o auxiliar de sugestões de palavras', () => {
             sinon.spy(PubSub, 'publish');
             deficienteEscolheuOSimbolo('W');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', 'W')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, 'W')).toBe(true);
             PubSub.publish.restore();
         });
         it('não passa a primeira palavra para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primeira segund');
             deficienteEscolheuOSimbolo('a');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', 'segunda')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, 'segunda')).toBe(true);
             PubSub.publish.restore();
         });
     });
@@ -178,7 +178,7 @@ describe('AuxiliarDeAnotacoes', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
             deficienteEscolheuOSimbolo('?');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
     });
@@ -187,7 +187,7 @@ describe('AuxiliarDeAnotacoes', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
             deficienteEscolheuOSimbolo('!');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
     });
@@ -196,7 +196,7 @@ describe('AuxiliarDeAnotacoes', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
             deficienteEscolheuOSimbolo('-');
-            expect(PubSub.publish.calledOnceWith('ultimaPalavraAnotada', '')).toBe(true);
+            expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
     });

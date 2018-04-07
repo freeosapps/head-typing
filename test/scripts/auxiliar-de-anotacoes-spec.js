@@ -44,40 +44,40 @@ describe('AuxiliarDeAnotacoes', () => {
     });
     describe('ao escolher o símbolo "."', () => {
         it('anota um ponto final', () => {
-            deficienteEscolheuOSimbolo('.');
-            expect(anotacao.text()).toBe('.');
+            deficienteEscolheuOSimbolo(SIMBOLO.PONTO_FINAL);
+            expect(anotacao.text()).toBe(SIMBOLO.PONTO_FINAL);
         });
         describe('e já tiver anotação', () => {
             it('acrescenta um ponto final no final', () => {
                 anotacao.text('palavra');
-                deficienteEscolheuOSimbolo('.');
+                deficienteEscolheuOSimbolo(SIMBOLO.PONTO_FINAL);
                 expect(anotacao.text()).toBe('palavra.');
             });            
         });
         it('não passa palavra com "." no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
-            deficienteEscolheuOSimbolo('.');
+            deficienteEscolheuOSimbolo(SIMBOLO.PONTO_FINAL);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
     });
     describe('ao escolher o símbolo ","', () => {
         it('anota uma vírgua', () => {
-            deficienteEscolheuOSimbolo(',');
-            expect(anotacao.text()).toBe(',');
+            deficienteEscolheuOSimbolo(SIMBOLO.VIRGULA);
+            expect(anotacao.text()).toBe(SIMBOLO.VIRGULA);
         });
         describe('e já tiver anotação', () => {
             it('acrescenta uma vírgula no final', () => {
                 anotacao.text('palavra');
-                deficienteEscolheuOSimbolo(',');
+                deficienteEscolheuOSimbolo(SIMBOLO.VIRGULA);
                 expect(anotacao.text()).toBe('palavra,');
             });
         });
         it('não passa palavra com "," no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
-            deficienteEscolheuOSimbolo(',');
+            deficienteEscolheuOSimbolo(SIMBOLO.VIRGULA);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
@@ -177,7 +177,7 @@ describe('AuxiliarDeAnotacoes', () => {
         it('não passa palavra com "?" no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
-            deficienteEscolheuOSimbolo('?');
+            deficienteEscolheuOSimbolo(SIMBOLO.INTERROGACAO);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
@@ -186,7 +186,7 @@ describe('AuxiliarDeAnotacoes', () => {
         it('não passa palavra com "!" no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
-            deficienteEscolheuOSimbolo('!');
+            deficienteEscolheuOSimbolo(SIMBOLO.EXCLAMACAO);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });
@@ -195,7 +195,7 @@ describe('AuxiliarDeAnotacoes', () => {
         it('não passa palavra com "-" no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
             anotacao.text('primei');
-            deficienteEscolheuOSimbolo('-');
+            deficienteEscolheuOSimbolo(SIMBOLO.HIFEN);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
         });

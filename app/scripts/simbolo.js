@@ -15,5 +15,10 @@ const SIMBOLO = {
     ACENTUADAS: 'Acentuadas',
     NAO_A_CEN_TU_A_DAS: 'Não a&shy;cen&shy;tu&shy;a&shy;das',
     NAO_ACENTUADAS: 'Não acentuadas',
-    CONTINUAR: 'Continuar'
+    CONTINUAR: 'Continuar',
+    VIRGULA: ',',
+    PONTO_FINAL: '.',
+    HIFEN: '-',
+    INTERROGACAO: '?',
+    EXCLAMACAO: '!'
 };

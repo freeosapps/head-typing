@@ -20,7 +20,7 @@ describe('AuxiliarDePlaca', () => {
         AuxiliarDePlaca();
         sugestoes = $('<div>')
         .addClass('sugestoes');
-        $.fx.off = true; // Desabilita animações do jQuery                
+        $.fx.off = true; // Desabilita animações do jQuery
         ponteiro = $('<div>').addClass('ponteiro').css({
             position: 'absolute',
             top: 0,

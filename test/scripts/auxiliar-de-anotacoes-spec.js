@@ -1,13 +1,17 @@
 describe('AuxiliarDeAnotacoes', () => {
     let anotacao = null;
+    let textoAnotacao = null;
     let celulaEspaco = null;
     let celulaApagarLetra = null;
     let celulaApagarPalavra = null;
     let celulaApagarTudo = null;
 
-    beforeEach(() => {        
+    beforeEach(() => {
+        $.fx.off = true; // Desabilita animações do jQuery
         AuxiliarDeAnotacoes();
-        anotacao = $('<div>').addClass('anotacao__texto');
+        anotacao = $('<div>').addClass('anotacao');
+        textoAnotacao = $('<span>').addClass('anotacao__texto');
+        anotacao.append(textoAnotacao);
         celulaEspaco = $('<div>').html(SIMBOLO.ES_PA_CO);
         celulaApagarLetra = $('<div>').html(SIMBOLO.A_PA_GAR_LE_TRA);
         celulaApagarPalavra = $('<div>').html(SIMBOLO.A_PA_GAR_PA_LA_VRA);
@@ -17,6 +21,7 @@ describe('AuxiliarDeAnotacoes', () => {
     });
     afterEach(() => {
         PubSub.clearAllSubscriptions();
+        textoAnotacao.remove();
         anotacao.remove();
         celulaEspaco.remove();
         celulaApagarLetra.remove();
@@ -32,31 +37,31 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "Espaço"', () => {
         it('anota um espaço', () => {
             deficienteEscolheuOSimbolo(celulaEspaco.text());
-            expect(anotacao.text()).toBe(' ');
+            expect(textoAnotacao.text()).toBe(' ');
         });
         describe('e já tiver anotação', () => {
             it('acrescenta um espaço no final', () => {
-                anotacao.text('palavra');
+                textoAnotacao.text('palavra');
                 deficienteEscolheuOSimbolo(celulaEspaco.text());
-                expect(anotacao.text()).toBe('palavra ');
+                expect(textoAnotacao.text()).toBe('palavra ');
             });
         });
     });
     describe('ao escolher o símbolo "."', () => {
         it('anota um ponto final', () => {
             deficienteEscolheuOSimbolo(SIMBOLO.PONTO_FINAL);
-            expect(anotacao.text()).toBe(SIMBOLO.PONTO_FINAL);
+            expect(textoAnotacao.text()).toBe(SIMBOLO.PONTO_FINAL);
         });
         describe('e já tiver anotação', () => {
             it('acrescenta um ponto final no final', () => {
-                anotacao.text('palavra');
+                textoAnotacao.text('palavra');
                 deficienteEscolheuOSimbolo(SIMBOLO.PONTO_FINAL);
-                expect(anotacao.text()).toBe('palavra.');
+                expect(textoAnotacao.text()).toBe('palavra.');
             });            
         });
         it('não passa palavra com "." no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
-            anotacao.text('primei');
+            textoAnotacao.text('primei');
             deficienteEscolheuOSimbolo(SIMBOLO.PONTO_FINAL);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
@@ -65,18 +70,18 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo ","', () => {
         it('anota uma vírgua', () => {
             deficienteEscolheuOSimbolo(SIMBOLO.VIRGULA);
-            expect(anotacao.text()).toBe(SIMBOLO.VIRGULA);
+            expect(textoAnotacao.text()).toBe(SIMBOLO.VIRGULA);
         });
         describe('e já tiver anotação', () => {
             it('acrescenta uma vírgula no final', () => {
-                anotacao.text('palavra');
+                textoAnotacao.text('palavra');
                 deficienteEscolheuOSimbolo(SIMBOLO.VIRGULA);
-                expect(anotacao.text()).toBe('palavra,');
+                expect(textoAnotacao.text()).toBe('palavra,');
             });
         });
         it('não passa palavra com "," no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
-            anotacao.text('primei');
+            textoAnotacao.text('primei');
             deficienteEscolheuOSimbolo(SIMBOLO.VIRGULA);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
@@ -84,19 +89,19 @@ describe('AuxiliarDeAnotacoes', () => {
     });
     describe('ao escolher o símbolo "Apagar letra"', () => {
         it('apaga uma letra de uma palavra', () => {
-            anotacao.text('palavra');
+            textoAnotacao.text('palavra');
             deficienteEscolheuOSimbolo(celulaApagarLetra.text());
-            expect(anotacao.text()).toBe('palavr');
+            expect(textoAnotacao.text()).toBe('palavr');
         });
         it('apaga uma letra de outra palavra', () => {
-            anotacao.text('outra');
+            textoAnotacao.text('outra');
             deficienteEscolheuOSimbolo(celulaApagarLetra.text());
-            expect(anotacao.text()).toBe('outr');
+            expect(textoAnotacao.text()).toBe('outr');
         });
         describe('e tiver apenas uma letra', () => {
             it('passa vazio para o auxiliar de sugestões de palavras', () => {
                 sinon.spy(PubSub, 'publish');
-                anotacao.text('a');
+                textoAnotacao.text('a');
                 deficienteEscolheuOSimbolo(celulaApagarLetra.text());
                 expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
                 PubSub.publish.restore();
@@ -105,51 +110,51 @@ describe('AuxiliarDeAnotacoes', () => {
     });
     describe('ao escolher o símbolo "Apagar palavra"', () => {
         it('apaga uma palavra', () => {
-            anotacao.text('palavra');
+            textoAnotacao.text('palavra');
             deficienteEscolheuOSimbolo(celulaApagarPalavra.text());
-            expect(anotacao.text()).toBe('');
+            expect(textoAnotacao.text()).toBe('');
         });
         it('apaga outra palavra', () => {
-            anotacao.text('outra palavra');
+            textoAnotacao.text('outra palavra');
             deficienteEscolheuOSimbolo(celulaApagarPalavra.text());
-            expect(anotacao.text()).toBe('outra ');
+            expect(textoAnotacao.text()).toBe('outra ');
         });
         it('apaga uma palavra com espaço no final', () => {
-            anotacao.text('outra ');
+            textoAnotacao.text('outra ');
             deficienteEscolheuOSimbolo(celulaApagarPalavra.text());
-            expect(anotacao.text()).toBe('');
+            expect(textoAnotacao.text()).toBe('');
         });      
     });
     describe('ao passar o tempo 1 vez', () => {
         it('aponta o final do texto', () => {
             passaram500Milisegundos();
-            expect(anotacao.hasClass('anotacao__texto_cursor')).toBe(true);
+            expect(textoAnotacao.hasClass('anotacao__texto_cursor')).toBe(true);
         });
     });
     describe('ao passar o tempo 2 vezes', () => {
         it('não aponta o final do texto', () => {
             passaram500Milisegundos();
             passaram500Milisegundos();
-            expect(anotacao.hasClass('anotacao__texto_cursor')).toBe(false);
+            expect(textoAnotacao.hasClass('anotacao__texto_cursor')).toBe(false);
         });
     });
     describe('ao escolher uma letra', () => {
         it('anota a letra', () => {
             deficienteEscolheuOSimbolo('A');
-            expect(anotacao.text()).toBe('A');
+            expect(textoAnotacao.text()).toBe('A');
         });
         describe('e já tiver anotação', () => {
             it('acrescenta a letra no final', () => {
-                anotacao.text('palavra');
+                textoAnotacao.text('palavra');
                 deficienteEscolheuOSimbolo('C');
-                expect(anotacao.text()).toBe('palavraC');
+                expect(textoAnotacao.text()).toBe('palavraC');
             });            
         });
     });
     describe('ao escolher outra letra', () => {
         it('anota outra letra', () => {
             deficienteEscolheuOSimbolo('B');
-            expect(anotacao.text()).toBe('B');
+            expect(textoAnotacao.text()).toBe('B');
         });
     });
     describe('ao escolher um símbolo', () => {
@@ -167,7 +172,7 @@ describe('AuxiliarDeAnotacoes', () => {
         });
         it('não passa a primeira palavra para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
-            anotacao.text('primeira segund');
+            textoAnotacao.text('primeira segund');
             deficienteEscolheuOSimbolo('a');
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, 'segunda')).toBe(true);
             PubSub.publish.restore();
@@ -176,7 +181,7 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "?"', () => {
         it('não passa palavra com "?" no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
-            anotacao.text('primei');
+            textoAnotacao.text('primei');
             deficienteEscolheuOSimbolo(SIMBOLO.INTERROGACAO);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
@@ -185,7 +190,7 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "!"', () => {
         it('não passa palavra com "!" no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
-            anotacao.text('primei');
+            textoAnotacao.text('primei');
             deficienteEscolheuOSimbolo(SIMBOLO.EXCLAMACAO);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
@@ -194,7 +199,7 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "-"', () => {
         it('não passa palavra com "-" no final para o auxiliar de sugestões', () => {
             sinon.spy(PubSub, 'publish');
-            anotacao.text('primei');
+            textoAnotacao.text('primei');
             deficienteEscolheuOSimbolo(SIMBOLO.HIFEN);
             expect(PubSub.publish.calledOnceWith(EVENTO.ULTIMA_PALAVRA_ANOTADA, '')).toBe(true);
             PubSub.publish.restore();
@@ -202,9 +207,50 @@ describe('AuxiliarDeAnotacoes', () => {
     });
     describe('ao escolher o símbolo "Apagar tudo"', () => {
         it('apaga tudo o que foi anotado', () => {
-            anotacao.text('tudo o que foi anotado');
+            textoAnotacao.text('tudo o que foi anotado');
             deficienteEscolheuOSimbolo(celulaApagarTudo.text());
-            expect(anotacao.text()).toBe('');
+            expect(textoAnotacao.text()).toBe('');
+        });
+    });
+    describe('ao quebrar uma linha', () => {
+        it('mostra o final do texto', () => {
+            textoAnotacao.css({
+                fontFamily: 'arial',
+                fontSize: '20px',
+                padding: 0,
+                margin: 0,
+                wordWrap: 'break-word',
+                whiteSpace: 'pre-wrap'
+            })
+            .text('A');
+            anotacao.css({
+                height: '23px',
+                width: '14px',
+                overflow: 'auto'
+            });
+            deficienteEscolheuOSimbolo('B');
+            expect(anotacao.scrollTop()).toBe(23);
+        });
+    });
+    describe('ao quebrar duas linhas', () => {
+        it('mostra o final do texto', () => {
+            textoAnotacao.css({
+                fontFamily: 'arial',
+                fontSize: '20px',
+                padding: 0,
+                margin: 0,
+                wordWrap: 'break-word',
+                whiteSpace: 'pre-wrap'
+            })
+            .text('A');
+            anotacao.css({
+                height: '23px',
+                width: '14px',
+                overflow: 'auto'
+            });
+            deficienteEscolheuOSimbolo('B');
+            deficienteEscolheuOSimbolo('C');
+            expect(anotacao.scrollTop()).toBe(46);
         });
     });
     xdescribe('ao escolher o símbolo "Falar"', () => {

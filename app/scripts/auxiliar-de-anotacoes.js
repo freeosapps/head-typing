@@ -10,6 +10,9 @@ let AuxiliarDeAnotacoes = function() {
             $('.anotacao__texto').text('');
         } else {
             $('.anotacao__texto').append(simbolo);
+            $('.anotacao').animate({
+                scrollTop: $('.anotacao').prop('scrollHeight')
+            });
         }
         let ultimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,\?\!\-]+$/);
         if (ultimaPalavra) {

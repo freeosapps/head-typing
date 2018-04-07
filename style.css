@@ -85,11 +85,11 @@
     border-color: lightgray;
     box-sizing: border-box;
     color: dimgray;
-    padding: 5px;
-    overflow: hidden;
+    padding: 5px;    
     height: 20%;
     background-color: white;
     font-size: 4vmin;
+    overflow-y: scroll;
 }
 .anotacao__texto {
     word-wrap: break-word;

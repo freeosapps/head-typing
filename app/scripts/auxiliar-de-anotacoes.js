@@ -5,7 +5,10 @@ let AuxiliarDeAnotacoes = function() {
         } else if (simbolo.localeCompare(SIMBOLO.APAGAR_PALAVRA) == 0) {
             $('.anotacao__texto').text($('.anotacao__texto').text().replace(/[^\s]+(\s+)?$/, ''));
         } else if (simbolo.localeCompare(SIMBOLO.ESPACO) == 0) {
-            $('.anotacao__texto').append(' ');
+            $('.anotacao__texto').append('&nbsp;');
+            $('.anotacao').animate({
+                scrollTop: $('.anotacao').prop('scrollHeight')
+            });
         } else if (simbolo.localeCompare(SIMBOLO.APAGAR_TUDO) == 0) {
             $('.anotacao__texto').text('');
         } else {

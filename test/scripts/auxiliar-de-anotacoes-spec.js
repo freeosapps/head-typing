@@ -5,6 +5,7 @@ describe('AuxiliarDeAnotacoes', () => {
     let celulaApagarLetra = null;
     let celulaApagarPalavra = null;
     let celulaApagarTudo = null;
+    let espacoHtml = null;
 
     beforeEach(() => {
         $.fx.off = true; // Desabilita animações do jQuery
@@ -16,8 +17,9 @@ describe('AuxiliarDeAnotacoes', () => {
         celulaApagarLetra = $('<div>').html(SIMBOLO.A_PA_GAR_LE_TRA);
         celulaApagarPalavra = $('<div>').html(SIMBOLO.A_PA_GAR_PA_LA_VRA);
         celulaApagarTudo = $('<div>').html(SIMBOLO.A_PA_GAR_TU_DO);
+        espacoHtml = $('<div>').append('&nbsp;');
 
-        $(document.body).append(anotacao).append(celulaEspaco).append(celulaApagarLetra).append(celulaApagarPalavra).append(celulaApagarTudo);
+        $(document.body).append(anotacao).append(celulaEspaco).append(celulaApagarLetra).append(celulaApagarPalavra).append(celulaApagarTudo).append(espacoHtml);
     });
     afterEach(() => {
         PubSub.clearAllSubscriptions();
@@ -37,13 +39,13 @@ describe('AuxiliarDeAnotacoes', () => {
     describe('ao escolher o símbolo "Espaço"', () => {
         it('anota um espaço', () => {
             deficienteEscolheuOSimbolo(celulaEspaco.text());
-            expect(textoAnotacao.text()).toBe(' ');
+            expect(textoAnotacao.text()).toBe(espacoHtml.text());
         });
         describe('e já tiver anotação', () => {
             it('acrescenta um espaço no final', () => {
                 textoAnotacao.text('palavra');
                 deficienteEscolheuOSimbolo(celulaEspaco.text());
-                expect(textoAnotacao.text()).toBe('palavra ');
+                expect(textoAnotacao.text()).toBe(`palavra${espacoHtml.text()}`);
             });
         });
     });
@@ -226,10 +228,10 @@ describe('AuxiliarDeAnotacoes', () => {
             anotacao.css({
                 height: '23px',
                 width: '14px',
-                overflow: 'auto'
+                overflowY: 'scroll'
             });
             deficienteEscolheuOSimbolo('B');
-            expect(anotacao.scrollTop()).toBe(23);
+            expect(anotacao.scrollTop()).toBe(38);
         });
     });
     describe('ao quebrar duas linhas', () => {
@@ -246,11 +248,31 @@ describe('AuxiliarDeAnotacoes', () => {
             anotacao.css({
                 height: '23px',
                 width: '14px',
-                overflow: 'auto'
+                overflowY: 'scroll'
             });
             deficienteEscolheuOSimbolo('B');
             deficienteEscolheuOSimbolo('C');
-            expect(anotacao.scrollTop()).toBe(46);
+            expect(anotacao.scrollTop()).toBe(61);
+        });
+    });
+    describe('ao quebrar uma linha com "Espaço"', () => {
+        it('mostra o final do texto', () => {
+            textoAnotacao.css({
+                fontFamily: 'arial',
+                fontSize: '20px',
+                padding: 0,
+                margin: 0,
+                wordWrap: 'break-word',
+                whiteSpace: 'pre-wrap'
+            })
+            .text('A');
+            anotacao.css({
+                height: '23px',
+                width: '14px',
+                overflowY: 'scroll'
+            });
+            deficienteEscolheuOSimbolo(SIMBOLO.ESPACO);
+            expect(anotacao.scrollTop()).toBe(38);
         });
     });
     xdescribe('ao escolher o símbolo "Falar"', () => {

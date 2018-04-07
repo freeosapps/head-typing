@@ -22,7 +22,6 @@
     display: none;
 }
 .linha {
-    font-size: 0;
     display: flex;
 }
 .celula {
@@ -31,11 +30,11 @@
     line-height: calc(8vh - 2px);
     width: calc(20% - 2px);
     background-color: floralwhite;
-    font-size: 4vmin;
     box-sizing: border-box;
     border-width: 1px;
     border-style: solid;
     border-color: linen;
+    font-size: 4vmin;
 }
 .celula_oculta {
     margin: 1px;

@@ -663,6 +663,21 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // Maiúsculas
             expect(celulaALinhaAQuadroC.text().localeCompare(MINUSCULAS)).toBe(0);
         });
+        it('troca o texto de "Maiúsculas" para "Minúsculas" com hífen', () => {
+            deficienteEstaPreparado();
+            quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
+            quadroB.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').css('top', '150px');
+            quadroC.removeClass('quadro_oculto').css('top', '250px');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MAI_US_CU_LAS);
+            passaram1500Milisegundos();
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // quadroC
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // linha 1, quadro C
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // Maiúsculas
+            expect(celulaALinhaAQuadroC.text()).not.toBe(MINUSCULAS); // não é "Minúsculas" sem hífen
+        });
         it('não troca o texto de "Acentuadas" para "Não acentuadas"', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_oculto').css('top', '50px');
@@ -694,6 +709,21 @@ describe('AuxiliarDePlaca', () => {
             passaram1500Milisegundos();
             deficienteGesticulou(); // Minúsculas
             expect(celulaALinhaAQuadroC.text().localeCompare(MAIUSCULAS)).toBe(0);
+        });
+        it('troca o texto de "Minúsculas" para "Maiúsculas" com hífen', () => {
+            deficienteEstaPreparado();
+            quadroA.addClass('quadro_maiusculas').addClass('quadro_acentuadas').addClass('quadro_oculto').css('top', '50px');
+            quadroB.addClass('quadro_minusculas').addClass('quadro_nao-acentuadas').css('top', '150px');
+            quadroC.removeClass('quadro_oculto').css('top', '250px');
+            celulaALinhaAQuadroC.addClass('celula_maiusculas-minusculas').html(MI_NUS_CU_LAS);
+            passaram1500Milisegundos();
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // quadroC
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // linha 1, quadro C
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // Minúsculas
+            expect(celulaALinhaAQuadroC.text()).not.toBe(MAIUSCULAS); // não é "Maiúsculas" sem hífen
         });
         it('exibe o quadro de minúsculas', () => {
             deficienteEstaPreparado();
@@ -823,6 +853,20 @@ describe('AuxiliarDePlaca', () => {
             deficienteGesticulou(); // Acentuadas
             expect(celulaALinhaAQuadroC.text().localeCompare(NAO_ACENTUADAS)).toBe(0);
         });
+        it('troca o texto de "Acentuadas" para "Não acentuadas" com hífen', () => {
+            deficienteEstaPreparado();
+            quadroA.addClass('quadro_oculto').css('top', '50px');
+            quadroB.addClass('quadro_oculto').css('top', '150px');
+            quadroC.removeClass('quadro_oculto').css('top', '250px');
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(A_CEN_TU_A_DAS);
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // quadroC
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // linha 1, quadro C
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // Acentuadas
+            expect(celulaALinhaAQuadroC.text()).not.toBe(NAO_ACENTUADAS); // não é "Não acentuadas" sem hífen
+        });
         it('exibe o quadro de acentuadas', () => {
             deficienteEstaPreparado();
             quadroA.addClass('quadro_oculto').addClass('quadro_acentuadas').addClass('quadro_minusculas').css('top', '50px');
@@ -918,6 +962,20 @@ describe('AuxiliarDePlaca', () => {
             passaram1500Milisegundos();
             deficienteGesticulou(); // Não acentuadas
             expect(celulaALinhaAQuadroC.text().localeCompare(ACENTUADAS)).toBe(0);
+        });
+        it('troca o texto de "Não acentuadas" para "Acentuadas" com hífen', () => {
+            deficienteEstaPreparado();
+            quadroA.addClass('quadro_oculto').css('top', '50px');
+            quadroB.addClass('quadro_oculto').css('top', '150px');
+            quadroC.removeClass('quadro_oculto').css('top', '250px');
+            celulaALinhaAQuadroC.addClass('celula_acentuadas-nao-acentuadas').html(NAO_A_CEN_TU_A_DAS);
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // quadroC
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // linha 1, quadro C
+            passaram1500Milisegundos();
+            deficienteGesticulou(); // Não acentuadas
+            expect(celulaALinhaAQuadroC.text()).not.toBe(ACENTUADAS); // não é "Acentuadas" sem hífen
         });
         it('exibe o quadro de não acentuadas', () => {
             deficienteEstaPreparado();

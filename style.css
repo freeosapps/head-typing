@@ -97,7 +97,10 @@
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: dimgray;
-    padding: 1vmin 0;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: dimgray;    
+    padding: 1vmin 5px;
     line-height: 7vmin;
 }
 .anotacao__texto_cursor {

@@ -82,7 +82,7 @@
 .anotacao {
     border-width: 1px 0;
     border-style: solid;
-    border-color: lightgray;
+    border-color: linen;
     box-sizing: border-box;
     color: dimgray;
     padding: 5px;    
@@ -96,15 +96,12 @@
     white-space: pre-wrap;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    border-bottom-color: dimgray;
+    border-bottom-color: lightgray;
     border-right-width: 1px;
     border-right-style: solid;
-    border-right-color: dimgray;    
+    border-right-color: lightgray;    
     padding: 1vmin 0;
     line-height: 7vmin;
-}
-.anotacao__texto_cursor {
-    
 }
 .tela__aplicativo {
     display: none;

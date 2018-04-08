@@ -1,6 +1,6 @@
 let AuxiliarDeSugestoesDePalavras = function(dicionario) {
     PubSub.subscribe(EVENTO.ULTIMA_PALAVRA_ANOTADA, (message, data) => {
-        let encontradas = dicionario.match(new RegExp(`\n${data}.+`, 'g'));
+        let encontradas = dicionario.match(new RegExp(`\n${data}.+`, 'gi'));
         if (!encontradas) {
             encontradas = [];
         }

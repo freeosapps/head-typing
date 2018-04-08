@@ -55,4 +55,12 @@ describe('AuxiliarDeSugestoesDePalavras', () => {
             PubSub.publish.restore();
         });
     });
+    describe('ao anotar uma palavra com letra maiúscula', () => {
+        it('sugere palavras minúsculas', () => {
+            sinon.spy(PubSub, 'publish');
+            ultimaPalavraAnotada('D');
+            expect(PubSub.publish.calledWith(EVENTO.PALAVRAS_SUGERIDAS, ['e', 'o'])).toBe(true);
+            PubSub.publish.restore();
+        });
+    });
 });

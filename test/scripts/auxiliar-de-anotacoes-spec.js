@@ -33,9 +33,6 @@ describe('AuxiliarDeAnotacoes', () => {
     let deficienteEscolheuOSimbolo = (simbolo) => {
         PubSub.publishSync(EVENTO.DEFICIENTE_ESCOLHEU_O_SIMBOLO, simbolo);
     }
-    let passaram500Milisegundos = () => {
-        PubSub.publishSync(EVENTO.PASSARAM_500_MILISEGUNDOS);
-    }
     describe('ao escolher o símbolo "Espaço"', () => {
         it('anota um espaço', () => {
             deficienteEscolheuOSimbolo(celulaEspaco.text());
@@ -126,19 +123,6 @@ describe('AuxiliarDeAnotacoes', () => {
             deficienteEscolheuOSimbolo(celulaApagarPalavra.text());
             expect(textoAnotacao.text()).toBe('');
         });      
-    });
-    describe('ao passar o tempo 1 vez', () => {
-        it('aponta o final do texto', () => {
-            passaram500Milisegundos();
-            expect(textoAnotacao.hasClass('anotacao__texto_cursor')).toBe(true);
-        });
-    });
-    describe('ao passar o tempo 2 vezes', () => {
-        it('não aponta o final do texto', () => {
-            passaram500Milisegundos();
-            passaram500Milisegundos();
-            expect(textoAnotacao.hasClass('anotacao__texto_cursor')).toBe(false);
-        });
     });
     describe('ao escolher uma letra', () => {
         it('anota a letra', () => {

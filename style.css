@@ -94,11 +94,14 @@
 .anotacao__texto {
     word-wrap: break-word;
     white-space: pre-wrap;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: dimgray;
+    padding: 1vmin 0;
+    line-height: 7vmin;
 }
 .anotacao__texto_cursor {
-    border-right-width: 1px;
-    border-right-style: solid;
-    border-right-color: dimgray;
+    
 }
 .tela__aplicativo {
     display: none;

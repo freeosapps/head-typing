@@ -25,11 +25,6 @@ let AuxiliarDeAnotacoes = function() {
         }
         PubSub.publish(EVENTO.ULTIMA_PALAVRA_ANOTADA, ultimaPalavra);
     }
-
-    let passaram500Milisegundos = () => {
-        $('.anotacao__texto').toggleClass('anotacao__texto_cursor');
-    }
     
     PubSub.subscribe(EVENTO.DEFICIENTE_ESCOLHEU_O_SIMBOLO, (message, data) => deficienteEscolheuOSimbolo(data));
-    PubSub.subscribe(EVENTO.PASSARAM_500_MILISEGUNDOS, (message, data) => passaram500Milisegundos(data));
 }

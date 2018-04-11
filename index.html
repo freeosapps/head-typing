@@ -5,8 +5,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pubsub-js/1.6.0/pubsub.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tracking.js/1.1.3/tracking-min.js"></script>
+        <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+
         <script src="app/scripts/evento.js"></script>
         <script src="app/scripts/simbolo.js"></script>
+        <script src="app/scripts/megafone.js"></script>
         <script src="app/scripts/auxiliar-de-sugestoes-de-palavras.js"></script>
         <script src="app/scripts/auxiliar-de-anotacoes.js"></script>
         <script src="app/scripts/auxiliar-de-placa.js"></script>
@@ -16,7 +19,6 @@
         <script>
 
         $(() => {
-            
             navigator.getUserMedia (
             // constraints
             {
@@ -47,6 +49,7 @@
                         AuxiliarDeAnotacoes();
                         AuxiliarDePlaca();
                         Relogio(1500);
+                        Megafone();
 
                         $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
                             let documentElement = document.documentElement;

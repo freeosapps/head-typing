@@ -11,12 +11,14 @@ let AuxiliarDeAnotacoes = function() {
             });
         } else if (simbolo.localeCompare(SIMBOLO.APAGAR_TUDO) == 0) {
             $('.anotacao__texto').text('');
+        } else if (simbolo.localeCompare(SIMBOLO.FALAR) == 0) {
+            PubSub.publish(EVENTO.DEFICIENTE_PEDIU_PARA_FALAR, $('.anotacao__texto').text());
         } else {
             $('.anotacao__texto').append(simbolo);
             $('.anotacao').animate({
                 scrollTop: $('.anotacao').prop('scrollHeight')
             });
-        }
+        }        
         let ultimaPalavra = $('.anotacao__texto').text().match(/[^\s\.\,\?\!\-]+$/);
         if (ultimaPalavra) {
             ultimaPalavra = ultimaPalavra[0];

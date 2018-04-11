@@ -6,5 +6,6 @@ const EVENTO = {
     DEFICIENTE_ESTA_PREPARADO: 'deficienteEstaPreparado',
     PASSARAM_1500_MILISEGUNDOS: 'passaram1500Milisegundos',
     PALAVRAS_SUGERIDAS: 'palavrasSugeridas',
-    DEFICIENTE_GESTICULOU: 'deficienteGesticulou'
+    DEFICIENTE_GESTICULOU: 'deficienteGesticulou',
+    DEFICIENTE_PEDIU_PARA_FALAR: 'deficientePediuParaFalar'
 };

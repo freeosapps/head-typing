@@ -215,7 +215,7 @@ describe('AuxiliarDeAnotacoes', () => {
                 overflowY: 'scroll'
             });
             deficienteEscolheuOSimbolo('B');
-            expect(anotacao.scrollTop()).toBe(38);
+            expect(anotacao.scrollTop()).toBe(23);
         });
     });
     describe('ao quebrar duas linhas', () => {
@@ -236,7 +236,7 @@ describe('AuxiliarDeAnotacoes', () => {
             });
             deficienteEscolheuOSimbolo('B');
             deficienteEscolheuOSimbolo('C');
-            expect(anotacao.scrollTop()).toBe(61);
+            expect(anotacao.scrollTop()).toBe(46);
         });
     });
     describe('ao quebrar uma linha com "Espaço"', () => {
@@ -256,10 +256,23 @@ describe('AuxiliarDeAnotacoes', () => {
                 overflowY: 'scroll'
             });
             deficienteEscolheuOSimbolo(SIMBOLO.ESPACO);
-            expect(anotacao.scrollTop()).toBe(38);
+            expect(anotacao.scrollTop()).toBe(23);
         });
     });
-    xdescribe('ao escolher o símbolo "Falar"', () => {
-        it('');
+    describe('ao escolher o símbolo "Falar"', () => {
+        it('fala as palavras', () => {
+            sinon.spy(PubSub, 'publish');
+            textoAnotacao.text('palavras');
+            deficienteEscolheuOSimbolo(SIMBOLO.FALAR);
+            expect(PubSub.publish.calledWith(EVENTO.DEFICIENTE_PEDIU_PARA_FALAR, 'palavras')).toBe(true);
+            PubSub.publish.restore();
+        });
+        it('fala outras palavras', () => {
+            sinon.spy(PubSub, 'publish');
+            textoAnotacao.text('outras palavras');
+            deficienteEscolheuOSimbolo(SIMBOLO.FALAR);
+            expect(PubSub.publish.calledWith(EVENTO.DEFICIENTE_PEDIU_PARA_FALAR, 'outras palavras')).toBe(true);
+            PubSub.publish.restore();
+        });
     });
 });

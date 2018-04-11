@@ -20,5 +20,7 @@ const SIMBOLO = {
     PONTO_FINAL: '.',
     HIFEN: '-',
     INTERROGACAO: '?',
-    EXCLAMACAO: '!'
+    EXCLAMACAO: '!',
+    FA_LAR: 'Fa&shy;lar',
+    FALAR: 'Falar'
 };

@@ -1,27 +1,37 @@
 describe('Megafone', () => {
-    let backupResponsiveVoiceSpeak = null;
-    let responsiveVoiceSpeakSpy = null;
+    let speechSynthesisUtteranceMock = null;
+    let speechSynthesisSpy = null;
+    let speechSynthesisBackup = null;
     beforeEach(() => {
-        Megafone();
-        backupResponsiveVoiceSpeak = responsiveVoice.speak;
-        responsiveVoiceSpeakSpy = sinon.spy();
-        responsiveVoice.speak = responsiveVoiceSpeakSpy;
+        speechSynthesisSpeakSpy = sinon.spy();
+        speechSynthesisSpeakBackup = speechSynthesis.speak;
+        speechSynthesis.speak = speechSynthesisSpeakSpy;
+        speechSynthesisUtteranceMock = sinon.mock(new SpeechSynthesisUtterance());
+        Megafone(speechSynthesisUtteranceMock);
     });
     afterEach(() => {
         PubSub.clearAllSubscriptions();
-        responsiveVoice.speak = backupResponsiveVoiceSpeak;
+        speechSynthesis.speak = speechSynthesisSpeakBackup;
     });
     let falou = (palavras) => {
         PubSub.publishSync(EVENTO.DEFICIENTE_PEDIU_PARA_FALAR, palavras);        
     };
     describe('ao falar', () => {
+        it('reproduz o que for dito', () => {
+            falou('dito');
+            expect(speechSynthesis.speak.calledOnceWith(speechSynthesisUtteranceMock)).toBe(true);            
+        });
         it('reproduz as palavras', () => {
             falou('palavras');
-            expect(responsiveVoice.speak.calledOnceWith('palavras', 'Brazilian Portuguese Female')).toBe(true);            
+            expect(speechSynthesisUtteranceMock.text).toBe('palavras');
         });
         it('reproduz outras palavras', () => {
             falou('outras palavras');
-            expect(responsiveVoice.speak.calledOnceWith('outras palavras', 'Brazilian Portuguese Female')).toBe(true);
+            expect(speechSynthesisUtteranceMock.text).toBe('outras palavras');
+        });
+        it('reproduz as palavras em português do Brasil', () => {
+            falou('palavras');
+            expect(speechSynthesisUtteranceMock.lang).toBe('pt-BR');
         });
     });
 });

@@ -1,6 +1,8 @@
-let Megafone = function() {
+let Megafone = function(speechSynthesisUtterance) {
     let deficientePediuParaFalar = (palavras) => {
-        responsiveVoice.speak(palavras, 'Brazilian Portuguese Female');
+        speechSynthesisUtterance.text = palavras;
+        speechSynthesisUtterance.lang = 'pt-BR';
+        speechSynthesis.speak(speechSynthesisUtterance);
     };    
     PubSub.subscribe(EVENTO.DEFICIENTE_PEDIU_PARA_FALAR, (message, data) => deficientePediuParaFalar(data));
 };

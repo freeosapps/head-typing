@@ -48,6 +48,11 @@
                         AuxiliarDeAnotacoes();
                         AuxiliarDePlaca();
                         Relogio(1500);
+                        SpeechSynthesisUtterance = webkitSpeechSynthesisUtterance ||
+                                           mozSpeechSynthesisUtterance ||
+                                           msSpeechSynthesisUtterance ||
+                                           oSpeechSynthesisUtterance ||
+                                           SpeechSynthesisUtterance;
                         Megafone(new SpeechSynthesisUtterance());
 
                         $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {

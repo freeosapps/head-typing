@@ -52,8 +52,12 @@
                         AuxiliarDeAnotacoes();
                         AuxiliarDePlaca();
                         Relogio(1500);
-                        //Megafone(new SpeechSynthesisUtterance());
-                        Megafone();
+                        window.SpeechSynthesisUtterance = window.SpeechSynthesisUtterance ||
+                            window.webkitSpeechSynthesisUtterance ||
+                            window.mozSpeechSynthesisUtterance ||
+                            window.oSpeechSynthesisUtterance ||
+                            window.msSpeechSynthesisUtterance;
+                        Megafone(new SpeechSynthesisUtterance());
 
                         $('.tela__botao_iniciar, .tela__botao_continuar').bind('click', () => {
                             let documentElement = document.documentElement;

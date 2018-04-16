@@ -215,7 +215,7 @@ describe('AuxiliarDeAnotacoes', () => {
                 overflowY: 'scroll'
             });
             deficienteEscolheuOSimbolo('B');
-            expect(anotacao.scrollTop()).toBe(38);
+            expect(anotacao.scrollTop()).toBe(23);
         });
     });
     describe('ao quebrar duas linhas', () => {
@@ -236,7 +236,7 @@ describe('AuxiliarDeAnotacoes', () => {
             });
             deficienteEscolheuOSimbolo('B');
             deficienteEscolheuOSimbolo('C');
-            expect(anotacao.scrollTop()).toBe(61);
+            expect(anotacao.scrollTop()).toBe(46);
         });
     });
     describe('ao quebrar uma linha com "Espaço"', () => {
@@ -256,7 +256,7 @@ describe('AuxiliarDeAnotacoes', () => {
                 overflowY: 'scroll'
             });
             deficienteEscolheuOSimbolo(SIMBOLO.ESPACO);
-            expect(anotacao.scrollTop()).toBe(38);
+            expect(anotacao.scrollTop()).toBe(23);
         });
     });
     describe('ao escolher o símbolo "Falar"', () => {
